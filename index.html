@@ -6,7 +6,7 @@
     <title>โปรแกรมวางแผนภาษีคู่รักสร้างตัว</title>
     <style>
         /* ================= Core Styles ================= */
-        * { box-sizing: border-box; } /* ป้องกันปัญหา Padding ดันจนล้นจอ */
+        * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; color: #333; margin: 0; padding: 15px; overflow-x: hidden; }
         .container { max-width: 1200px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); width: 100%; }
         h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; font-size: 1.5em; }
@@ -40,16 +40,22 @@
         .tabs { display: flex; background: #f8f9fa; border-bottom: 2px solid #2980b9; }
         .tab-button { flex: 1; padding: 12px 10px; text-align: center; background: none; border: none; font-size: 0.95em; font-weight: bold; cursor: pointer; color: #95a5a6; transition: 0.3s; }
         .tab-button.active { background: #2980b9; color: #fff; }
-        .tab-content { display: none; padding: 15px; height: 550px; overflow-y: auto; }
+        .tab-content { display: none; padding: 15px; height: 580px; overflow-y: auto; }
         .tab-content.active { display: block; }
         
-        /* ================= Forms & Inputs ================= */
+        /* ================= Deduction Group Box ================= */
+        .deduct-group { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+        .group-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #1e293b; font-size: 0.92em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #cbd5e1; flex-wrap: wrap; gap: 6px; }
+        .group-title { color: #1e3a8a; }
+        .group-badge { font-size: 0.82em; color: #1e40af; background: #dbeafe; padding: 3px 8px; border-radius: 4px; border: 1px solid #bfdbfe; font-weight: 600; white-space: nowrap; }
+        .group-badge.capped { color: #065f46; background: #d1fae5; border-color: #a7f3d0; }
+
         details.sub-detail { background: #f8f9fa; border-radius: 6px; padding: 10px; margin-bottom: 15px; border: 1px solid #e1e8ed; }
         summary.sub-summary { font-weight: bold; color: #2980b9; cursor: pointer; outline: none; padding: 5px 0; }
         
-        .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 6px 10px; border-radius: 4px; flex-wrap: wrap; gap: 8px;}
-        .form-group label { flex: 1 1 50%; font-size: 0.9em; color: #34495e; min-width: 120px;}
-        input[type="text"] { width: 120px; flex: 1 1 auto; padding: 8px 10px; border: 1px solid #bdc3c7; border-radius: 4px; text-align: right; font-size: 1em; }
+        .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 4px 0; flex-wrap: wrap; gap: 8px;}
+        .form-group label { flex: 1 1 50%; font-size: 0.88em; color: #34495e; min-width: 120px;}
+        input[type="text"] { width: 120px; flex: 1 1 auto; padding: 7px 10px; border: 1px solid #bdc3c7; border-radius: 4px; text-align: right; font-size: 0.95em; }
         input[type="text"]:focus { outline: none; border-color: #2980b9; }
         input:disabled { background: #ecf0f1; color: #7f8c8d; }
 
@@ -60,7 +66,7 @@
         .calc-row span { font-size: 0.9em; color: #7f8c8d; white-space: nowrap; }
         .calc-row input.yr-input { background-color: #eaf2f8; border-color: #2980b9; font-weight: bold; color: #2c3e50; }
         
-        .section-title { font-weight: bold; color: #2980b9; margin-top: 15px; margin-bottom: 10px; font-size: 0.95em; padding-bottom: 4px; border-bottom: 2px solid #eaf2f8; }
+        .section-title { font-weight: bold; color: #2980b9; margin-top: 10px; margin-bottom: 8px; font-size: 0.95em; padding-bottom: 4px; border-bottom: 2px solid #eaf2f8; }
         
         .result-panel { background: #f8f9fa; padding: 15px; border-top: 1px solid #e1e8ed; }
         .res-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95em; color: #34495e; }
@@ -129,10 +135,10 @@
             h2 { font-size: 1.3em; margin-bottom: 15px;}
             
             .action-section { flex-direction: column; gap: 10px; padding: 15px; }
-            .btn { width: 100%; box-sizing: border-box; } /* แก้ปัญหาปุ่มล้นจอ */
+            .btn { width: 100%; box-sizing: border-box; }
             
             .grid-container { flex-direction: column; }
-            .person-card { flex: 1 1 100%; min-width: 0; } /* แก้ปัญหาการ์ดดันจอออกด้านข้าง */
+            .person-card { flex: 1 1 100%; min-width: 0; }
             
             .tips-search-bar { flex-direction: column; }
             .tips-search-bar input[type="text"], .tips-search-bar button { width: 100%; box-sizing: border-box; }
@@ -147,7 +153,7 @@
             
             .tab-content { height: auto; max-height: none; overflow-y: visible; }
             
-            .slider-wrapper { margin: 100px 0 15px 0; } /* เพิ่มพื้นที่ให้ป้ายหมุดตอนอยู่บนมือถือ */
+            .slider-wrapper { margin: 100px 0 15px 0; }
             .advice-panel { padding: 15px; border-left-width: 4px; }
         }
     </style>
@@ -157,7 +163,6 @@
 <div class="container">
     <h2>โปรแกรมวางแผนภาษีคู่รักสร้างตัว</h2>
 
-    <!-- คู่มือการใช้งาน -->
     <details class="guide-box">
         <summary>📖 คู่มือการใช้งานเบื้องต้น (คลิกเพื่ออ่าน)</summary>
         <div class="guide-content">
@@ -188,7 +193,6 @@
     </div>
 
     <div class="grid-container">
-        <!-- ======================= ส่วนของภรรยา ======================= -->
         <div class="person-card">
             <div class="person-header">ภรรยา (ข้อมูลปัจจุบัน)</div>
             <div class="tabs">
@@ -218,21 +222,58 @@
             </div>
 
             <div id="w_deduct" class="tab-content w-content">
-                <div class="section-title">ส่วนตัวและครอบครัว</div>
-                <div class="form-group"><label>ส่วนตัว</label><input type="text" value="60,000" disabled></div>
-                <div class="form-group"><label>บิดา/มารดา (30k/คน)</label><input type="text" inputmode="numeric" id="w_d_parents" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="section-title">ประกันและการลงทุน</div>
-                <div class="form-group"><label>ประกันสังคม</label><input type="text" inputmode="numeric" id="w_d_ss" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>ประกันชีวิต / MRTA</label><input type="text" inputmode="numeric" id="w_d_life" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>ประกันสุขภาพ (25k)</label><input type="text" inputmode="numeric" id="w_d_health" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>กองทุนสำรองเลี้ยงชีพ</label><input type="text" inputmode="numeric" id="w_d_pvd" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>กองทุน RMF / SSF</label><input type="text" inputmode="numeric" id="w_d_rmf" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>กองทุน Thai ESG</label><input type="text" inputmode="numeric" id="w_d_esg" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="section-title">อสังหาฯ และเงินบริจาค</div>
-                <div class="form-group"><label>ดอกเบี้ยบ้าน (100k)</label><input type="text" inputmode="numeric" id="w_d_home" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>e-Receipt</label><input type="text" inputmode="numeric" id="w_d_shop" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>บริจาค e-Donation</label><input type="text" inputmode="numeric" id="w_d_don2" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>บริจาคทั่วไป</label><input type="text" inputmode="numeric" id="w_d_don1" placeholder="0" oninput="formatAndCalc(this)"></div>
+                
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">👨‍👩‍👧 กลุ่มส่วนตัวและครอบครัว</span>
+                    </div>
+                    <div class="form-group"><label>ส่วนตัว (ระบบคำนวณให้)</label><input type="text" value="60,000" disabled></div>
+                    <div class="form-group"><label>บิดา/มารดา (30k/คน)</label><input type="text" inputmode="numeric" id="w_d_parents" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">🛡️ กลุ่มประกันชีวิตและสุขภาพ</span>
+                        <span class="group-badge" id="w_grp_life_badge">ยอดรวม: 0 / 100,000 บาท</span>
+                    </div>
+                    <div class="form-group"><label>ประกันสังคม</label><input type="text" inputmode="numeric" id="w_d_ss" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>ประกันชีวิตทั่วไป / MRTA</label><input type="text" inputmode="numeric" id="w_d_life" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>ประกันสุขภาพ (สูงสุด 25k)</label><input type="text" inputmode="numeric" id="w_d_health" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">📈 กลุ่มออมเพื่อการเกษียณ (PVD + RMF/SSF)</span>
+                        <span class="group-badge" id="w_grp_retire_badge">ยอดรวม: 0 / 500,000 บาท</span>
+                    </div>
+                    <div class="form-group"><label>กองทุนสำรองเลี้ยงชีพ (PVD)</label><input type="text" inputmode="numeric" id="w_d_pvd" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>กองทุน RMF / SSF</label><input type="text" inputmode="numeric" id="w_d_rmf" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">🌱 กลุ่มกองทุน Thai ESG</span>
+                        <span class="group-badge" id="w_grp_esg_badge">ยอดรวม: 0 / 300,000 บาท</span>
+                    </div>
+                    <div class="form-group"><label>กองทุน Thai ESG</label><input type="text" inputmode="numeric" id="w_d_esg" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">🏠 กลุ่มอสังหาฯ และนโยบายรัฐ</span>
+                    </div>
+                    <div class="form-group"><label>ดอกเบี้ยบ้าน (สูงสุด 100k)</label><input type="text" inputmode="numeric" id="w_d_home" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>Easy E-Receipt</label><input type="text" inputmode="numeric" id="w_d_shop" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">❤️ กลุ่มเงินบริจาค</span>
+                    </div>
+                    <div class="form-group"><label>บริจาค e-Donation (สิทธิ 2 เท่า)</label><input type="text" inputmode="numeric" id="w_d_don2" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>บริจาคทั่วไป (ตามจริง)</label><input type="text" inputmode="numeric" id="w_d_don1" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
             </div>
             
             <div class="result-panel">
@@ -243,7 +284,6 @@
             </div>
         </div>
 
-        <!-- ======================= ส่วนของสามี ======================= -->
         <div class="person-card">
             <div class="person-header">สามี (ข้อมูลปัจจุบัน)</div>
             <div class="tabs">
@@ -273,21 +313,58 @@
             </div>
 
             <div id="h_deduct" class="tab-content h-content">
-                <div class="section-title">ส่วนตัวและครอบครัว</div>
-                <div class="form-group"><label>ส่วนตัว</label><input type="text" value="60,000" disabled></div>
-                <div class="form-group"><label>บิดา/มารดา (30k/คน)</label><input type="text" inputmode="numeric" id="h_d_parents" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="section-title">ประกันและการลงทุน</div>
-                <div class="form-group"><label>ประกันสังคม</label><input type="text" inputmode="numeric" id="h_d_ss" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>ประกันชีวิต / MRTA</label><input type="text" inputmode="numeric" id="h_d_life" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>ประกันสุขภาพ (25k)</label><input type="text" inputmode="numeric" id="h_d_health" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>กองทุนสำรองเลี้ยงชีพ</label><input type="text" inputmode="numeric" id="h_d_pvd" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>กองทุน RMF / SSF</label><input type="text" inputmode="numeric" id="h_d_rmf" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>กองทุน Thai ESG</label><input type="text" inputmode="numeric" id="h_d_esg" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="section-title">อสังหาฯ และเงินบริจาค</div>
-                <div class="form-group"><label>ดอกเบี้ยบ้าน (100k)</label><input type="text" inputmode="numeric" id="h_d_home" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>e-Receipt</label><input type="text" inputmode="numeric" id="h_d_shop" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>บริจาค e-Donation</label><input type="text" inputmode="numeric" id="h_d_don2" placeholder="0" oninput="formatAndCalc(this)"></div>
-                <div class="form-group"><label>บริจาคทั่วไป</label><input type="text" inputmode="numeric" id="h_d_don1" placeholder="0" oninput="formatAndCalc(this)"></div>
+                
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">👨‍👩‍👧 กลุ่มส่วนตัวและครอบครัว</span>
+                    </div>
+                    <div class="form-group"><label>ส่วนตัว (ระบบคำนวณให้)</label><input type="text" value="60,000" disabled></div>
+                    <div class="form-group"><label>บิดา/มารดา (30k/คน)</label><input type="text" inputmode="numeric" id="h_d_parents" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">🛡️ กลุ่มประกันชีวิตและสุขภาพ</span>
+                        <span class="group-badge" id="h_grp_life_badge">ยอดรวม: 0 / 100,000 บาท</span>
+                    </div>
+                    <div class="form-group"><label>ประกันสังคม</label><input type="text" inputmode="numeric" id="h_d_ss" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>ประกันชีวิตทั่วไป / MRTA</label><input type="text" inputmode="numeric" id="h_d_life" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>ประกันสุขภาพ (สูงสุด 25k)</label><input type="text" inputmode="numeric" id="h_d_health" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">📈 กลุ่มออมเพื่อการเกษียณ (PVD + RMF/SSF)</span>
+                        <span class="group-badge" id="h_grp_retire_badge">ยอดรวม: 0 / 500,000 บาท</span>
+                    </div>
+                    <div class="form-group"><label>กองทุนสำรองเลี้ยงชีพ (PVD)</label><input type="text" inputmode="numeric" id="h_d_pvd" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>กองทุน RMF / SSF</label><input type="text" inputmode="numeric" id="h_d_rmf" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">🌱 กลุ่มกองทุน Thai ESG</span>
+                        <span class="group-badge" id="h_grp_esg_badge">ยอดรวม: 0 / 300,000 บาท</span>
+                    </div>
+                    <div class="form-group"><label>กองทุน Thai ESG</label><input type="text" inputmode="numeric" id="h_d_esg" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">🏠 กลุ่มอสังหาฯ และนโยบายรัฐ</span>
+                    </div>
+                    <div class="form-group"><label>ดอกเบี้ยบ้าน (สูงสุด 100k)</label><input type="text" inputmode="numeric" id="h_d_home" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>Easy E-Receipt</label><input type="text" inputmode="numeric" id="h_d_shop" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">❤️ กลุ่มเงินบริจาค</span>
+                    </div>
+                    <div class="form-group"><label>บริจาค e-Donation (สิทธิ 2 เท่า)</label><input type="text" inputmode="numeric" id="h_d_don2" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    <div class="form-group"><label>บริจาคทั่วไป (ตามจริง)</label><input type="text" inputmode="numeric" id="h_d_don1" placeholder="0" oninput="formatAndCalc(this)"></div>
+                </div>
+
             </div>
             
             <div class="result-panel">
@@ -299,10 +376,8 @@
         </div>
     </div>
 
-    <!-- Recommendation & Simulator Panel -->
     <div class="advice-panel" id="advicePanel" style="display: none;">
         
-        <!-- Online Report & Search Engine Section -->
         <div class="tips-header">
             <div class="tips-title">📊 รายงานสรุปกลยุทธ์ภาษี (Tax Strategy Insight)</div>
             <div class="tips-search-bar">
@@ -311,16 +386,12 @@
             </div>
         </div>
         <div class="online-tips-content" id="online_tips_box">
-            <!-- Dynamic Content based on search -->
-        </div>
+            </div>
 
-        <!-- Comparison Summary -->
         <div class="comparison-box" id="comparison_box">
-            <!-- Populated by JS -->
-        </div>
+            </div>
         <div id="bestChoiceResult" class="best-choice"></div>
         
-        <!-- Filing Option for Simulator -->
         <div class="filing-options-sim">
             <span style="font-size:1.1em;">⚙️ <b>เลือกรูปแบบเพื่อเข้าสู่โหมดจำลองลดหย่อน:</b></span>
             <div class="radio-group">
@@ -330,11 +401,9 @@
         </div>
 
         <div id="joint_bracket_info_top" style="display:none; background: #fff8e1; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f39c12; text-align:center; font-size: 1.1em; color: #d35400;">
-            <!-- Populated by JS -->
-        </div>
+            </div>
 
         <div class="grid-container">
-            <!-- ซิมูเลเตอร์ ภรรยา -->
             <div class="bracket-box">
                 <div class="bracket-title" id="w_sim_title">💡 จำลองลดหย่อนเพิ่ม (ภรรยา)</div>
                 <div id="w_bracket_info" style="margin-bottom: 10px; font-size: 0.95em;"></div>
@@ -366,7 +435,6 @@
                 </div>
             </div>
 
-            <!-- ซิมูเลเตอร์ สามี -->
             <div class="bracket-box">
                 <div class="bracket-title" id="h_sim_title">💡 จำลองลดหย่อนเพิ่ม (สามี)</div>
                 <div id="h_bracket_info" style="margin-bottom: 10px; font-size: 0.95em;"></div>
@@ -399,7 +467,6 @@
             </div>
         </div>
 
-        <!-- Joint Sim Result Box -->
         <div id="joint_sim_result_box" class="joint-sim-result" style="display:none;">
             <h3>📊 ผลการจำลองแบบยื่นรวมครอบครัว (Combined Result)</h3>
             <div style="font-size: 1.05em; color: #34495e; margin-bottom: 10px;">
@@ -415,7 +482,6 @@
 
     </div>
 
-    <!-- ======================= ส่วน Footer ======================= -->
     <div class="footer-credit">
         <p>💻 พัฒนาโดย <b>Tharit Kirdphoksap</b></p>
         <p>หากโปรแกรมนี้ช่วยให้คุณจัดการภาษีได้ง่ายขึ้น สามารถสนับสนุนค่ากาแฟผู้สร้างได้ที่ QR Code ด้านล่างนี้ครับ ☕</p>
@@ -579,6 +645,9 @@
         let d_esg = Math.min(getV(prefix+'_d_esg') + simAdditions.esg, 300000); 
         let d_home = Math.min(getV(prefix+'_d_home'), 100000), d_shop = getV(prefix+'_d_shop');
 
+        // สรุปยอดกลุ่มลงใน UI Badges
+        updateGroupBadges(prefix, d_life + d_health, d_pvd + d_rmf, d_esg);
+
         let sumDeductBase = d_personal + d_parents + d_ss + d_life_health + retirement_total + d_esg + d_home + d_shop;
         let netBeforeDon = Math.max(0, totalInc - totalExp - sumDeductBase);
         
@@ -591,6 +660,25 @@
         let totalDeductAll = sumDeductBase + allowedDon2 + allowedDon1;
 
         return { totalInc, totalExp, totalDeductAll, finalNet, baseTax: calcTaxBracket(finalNet) };
+    }
+
+    function updateGroupBadges(prefix, lifeSum, retireSum, esgSum) {
+        let lifeBadge = document.getElementById(prefix + '_grp_life_badge');
+        let retireBadge = document.getElementById(prefix + '_grp_retire_badge');
+        let esgBadge = document.getElementById(prefix + '_grp_esg_badge');
+
+        if (lifeBadge) {
+            lifeBadge.innerText = `ยอดรวม: ${fmt(lifeSum)} / 100,000 บาท`;
+            if (lifeSum >= 100000) lifeBadge.classList.add('capped'); else lifeBadge.classList.remove('capped');
+        }
+        if (retireBadge) {
+            retireBadge.innerText = `ยอดรวม: ${fmt(retireSum)} / 500,000 บาท`;
+            if (retireSum >= 500000) retireBadge.classList.add('capped'); else retireBadge.classList.remove('capped');
+        }
+        if (esgBadge) {
+            esgBadge.innerText = `ยอดรวม: ${fmt(esgSum)} / 300,000 บาท`;
+            if (esgSum >= 300000) esgBadge.classList.add('capped'); else esgBadge.classList.remove('capped');
+        }
     }
 
     let baseData = { w: null, h: null, joint: null };
@@ -723,7 +811,6 @@
         let hMaxEsg = Math.max(0, 300000 - getV('h_d_esg'));
         let hMaxRmf = Math.max(0, 500000 - getV('h_d_pvd') - getV('h_d_rmf'));
 
-        // ตั้งค่า Max ให้กับ Sliders ทุกตัวและรีเซ็ตค่าเป็น 0
         ['w', 'h'].forEach(p => {
             document.getElementById(p+'_sim_esg').max = (p==='w'?wMaxEsg:hMaxEsg);
             document.getElementById(p+'_sim_esg').value = 0;
@@ -762,7 +849,6 @@
             jointInfoTop.style.display = 'block';
             jointInfoTop.innerHTML = `💡 <b>ฐานภาษีปัจจุบัน (ยื่นรวม):</b> เงินได้สุทธิรวม <b>${fmt(baseData.joint.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.joint.finalNet).rate}%</b>)`;
 
-            // วาดหมุดโดยอิงเป้าหมายจากฐานภาษี Joint
             drawMarkers('w', 'esg', wMaxEsg, baseData.joint.finalNet);
             drawMarkers('w', 'rmf', wMaxRmf, baseData.joint.finalNet);
             drawMarkers('h', 'esg', hMaxEsg, baseData.joint.finalNet);
@@ -864,7 +950,6 @@
             let resultHTML = "";
             
             if (keyword === "") {
-                // แสดง Default Report
                 resultHTML = `
                     <div style="font-size: 1.05em; margin-bottom: 12px; color: #2c3e50;">
                         <b>รายงานสรุปกลยุทธ์ภาษีสำหรับคู่สมรส และวิชาชีพอิสระ (ฉบับอัปเดต 2026)</b>
@@ -878,7 +963,6 @@
                     </ul>
                 `;
             } else {
-                // โหมด Search ค้นหาตาม Keyword
                 let matchedTips = taxDatabase.filter(item => 
                     item.keywords.some(k => k.includes(keyword) || keyword.includes(k)) || 
                     item.text.toLowerCase().includes(keyword) ||
@@ -916,7 +1000,7 @@
 
     window.onload = function() {
         calculate();
-        fetchOnlineTips(); // โหลด Default ตอนเปิดเว็บ
+        fetchOnlineTips(); 
     };
 </script>
 </body>
