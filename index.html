@@ -9,7 +9,8 @@
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; color: #333; margin: 0; padding: 15px; overflow-x: hidden; }
         .container { max-width: 1200px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); width: 100%; }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; font-size: 1.5em; }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; font-size: 1.5em; line-height: 1.2; }
+        .version-text { display: block; font-size: 0.55em; color: #95a5a6; font-weight: normal; margin-top: 5px; letter-spacing: 0.5px;}
         
         /* ================= User Guide ================= */
         .guide-box { background: #fff; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e1e8ed; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
@@ -131,16 +132,27 @@
             .input-wrapper { max-width: none; width: 100%; }
             .tab-content { height: auto; max-height: none; overflow-y: visible; }
             
-            /* ป้องกัน Tooltip ตกขอบจอเมื่อดูบนมือถือ */
-            .tooltip-text { left: auto; right: -10px; transform: none; width: 240px; }
-            .tooltip-text::after { left: auto; right: 15px; margin-left: 0; }
+            /* ป้องกัน Tooltip ล้นจอ เปลี่ยนพฤติกรรมเป็น Bottom Toast บนมือถือ */
+            .tooltip-text { 
+                position: fixed; 
+                bottom: 25px; 
+                left: 50%; 
+                transform: translateX(-50%); 
+                width: 90vw; 
+                max-width: 350px; 
+                text-align: center; 
+                font-size: 13px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                z-index: 10000;
+            }
+            .tooltip-text::after { display: none; } /* ซ่อนลูกศรเมื่ออยู่บนมือถือ */
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>โปรแกรมวางแผนภาษีคู่รักสร้างตัว</h2>
+    <h2>โปรแกรมวางแผนภาษีคู่รักสร้างตัว<br><span class="version-text">เวอร์ชัน 1.0.4</span></h2>
 
     <!-- คู่มือการใช้งาน -->
     <details class="guide-box">
@@ -210,7 +222,6 @@
                     </div>
                 </div>
 
-                <!-- แยกประกันสังคมออกมาเป็นกลุ่มเดี่ยว -->
                 <div class="deduct-group">
                     <div class="group-header"><span class="group-title">💼 กลุ่มประกันสังคม</span></div>
                     <div class="form-group">
@@ -306,7 +317,6 @@
                     <div class="form-group">
                         <label>บริจาค 2 เท่า (e-Donation) <span class="info-icon" data-tooltip="ได้สิทธิ 2 เท่า (เช่น บริจาค รพ.รัฐ, สถานศึกษา) เพดานสูงสุดคือ 10% ของเงินได้หลังหักค่าลดหย่อนข้ออื่นๆ ไปแล้วทั้งหมด (โปรแกรมจะคำนวณและแสดงเพดานให้ด้านบน)">i</span></label>
                         <div class="input-wrapper">
-                            <!-- เราไม่ใส่ data-max เพราะมัน dynamic คำนวณจากรายได้ -->
                             <input type="text" inputmode="numeric" id="w_d_don2" placeholder="0" oninput="formatAndCalc(this)">
                         </div>
                     </div>
