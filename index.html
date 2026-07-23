@@ -9,6 +9,18 @@
         .container { max-width: 1200px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
         
+        /* User Guide Styles */
+        .guide-box { background: #fff; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e1e8ed; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .guide-box summary { background: #fdfae6; padding: 12px 20px; font-weight: bold; color: #b97a00; cursor: pointer; outline: none; transition: background 0.3s; list-style: none; position: relative; }
+        .guide-box summary::-webkit-details-marker { display: none; }
+        .guide-box summary:hover { background: #fcf4c7; }
+        .guide-box summary::after { content: '▼'; position: absolute; right: 20px; font-size: 0.8em; color: #b97a00; transition: transform 0.3s; }
+        .guide-box[open] summary::after { transform: rotate(180deg); }
+        .guide-content { padding: 20px; font-size: 0.95em; color: #34495e; line-height: 1.6; background: #fafbfc; border-top: 1px solid #eee; }
+        .guide-content h4 { margin-top: 0; color: #2980b9; margin-bottom: 10px; }
+        .guide-content ol { margin-top: 5px; padding-left: 20px; }
+        .guide-content li { margin-bottom: 5px; }
+
         .action-section { text-align: center; margin-bottom: 25px; padding: 15px; background: #eaf2f8; border-radius: 8px; display: flex; justify-content: center; gap: 15px; align-items: center; flex-wrap: wrap;}
         .btn { display: inline-block; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; border: none; font-size: 1em; }
         .btn-upload { background: #2980b9; color: white; }
@@ -26,8 +38,8 @@
         .tab-content { display: none; padding: 20px; height: 520px; overflow-y: auto; }
         .tab-content.active { display: block; }
         
-        details { background: #f8f9fa; border-radius: 6px; padding: 10px; margin-bottom: 15px; border: 1px solid #e1e8ed; }
-        summary { font-weight: bold; color: #2980b9; cursor: pointer; outline: none; padding: 5px 0; }
+        details.sub-detail { background: #f8f9fa; border-radius: 6px; padding: 10px; margin-bottom: 15px; border: 1px solid #e1e8ed; }
+        summary.sub-summary { font-weight: bold; color: #2980b9; cursor: pointer; outline: none; padding: 5px 0; }
         
         .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 6px 10px; border-radius: 4px; }
         .form-group label { flex: 1; font-size: 0.9em; color: #34495e; }
@@ -59,16 +71,16 @@
         .refresh-btn { background: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9em; font-weight: bold; transition: 0.2s; }
         .refresh-btn:hover { background: #2980b9; }
         .online-tips-content { background: #f4f6f7; padding: 15px; border-radius: 6px; border-left: 4px solid #3498db; margin-bottom: 25px; font-size: 0.95em; color: #34495e; min-height: 80px; line-height: 1.5;}
-        .online-tips-content strong { color: #2980b9; }
-
+        
         /* Simulator Styles & Anti-Overlap Markers */
         .sim-section { margin-top: 15px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e1e8ed; }
         .sim-title { font-weight: bold; color: #2980b9; margin-bottom: 15px; }
         .sim-row { margin-bottom: 20px; }
-        .sim-label { display: flex; justify-content: space-between; font-size: 0.9em; color: #2c3e50; margin-bottom: 5px; }
-        .sim-limit-text { color: #7f8c8d; font-size: 0.85em; }
+        .sim-label { display: flex; justify-content: space-between; font-size: 0.9em; color: #2c3e50; margin-bottom: 5px; position: relative; z-index: 5; background: #fff; padding-bottom: 5px; }
+        .sim-limit-text { color: #7f8c8d; font-size: 0.85em; font-weight: bold; }
         
-        .slider-wrapper { position: relative; margin: 70px 0 10px 0; height: 25px; }
+        /* ปรับพื้นที่ด้านบนให้กว้างขึ้น ป้องกันหมุดบังตัวเลข Limit */
+        .slider-wrapper { position: relative; margin: 85px 0 10px 0; height: 25px; }
         .marker-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; }
         input[type="range"] { position: absolute; width: 100%; top: 0; margin: 0; z-index: 2; cursor: pointer; }
         
@@ -111,7 +123,7 @@
             justify-content: center;
         }
         .qr-container img {
-            width: 260px; /* ปรับขนาดให้ภาพแนวตั้งดูพอดี */
+            width: 260px; 
             height: auto;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -123,6 +135,26 @@
 
 <div class="container">
     <h2>โปรแกรมวางแผนภาษีคู่รักสร้างตัว</h2>
+
+    <!-- คู่มือการใช้งาน -->
+    <details class="guide-box">
+        <summary>📖 คู่มือการใช้งานเบื้องต้น (คลิกเพื่ออ่าน)</summary>
+        <div class="guide-content">
+            <h4>💡 วิธีที่ 1: กรอกข้อมูลโดยตรง (Manual)</h4>
+            <p>คุณสามารถสลับแท็บ "หมวดรายได้" และ "หมวดค่าลดหย่อน" ของทั้งสามีและภรรยา แล้วกรอกตัวเลขลงไปได้เลย โปรแกรมจะคำนวณและเปรียบเทียบการยื่นรวม/แยก ให้โดยอัตโนมัติ</p>
+            
+            <h4 style="margin-top: 15px;">💡 วิธีที่ 2: นำเข้าผ่านไฟล์ CSV (รวดเร็ว)</h4>
+            <ol>
+                <li>กดปุ่ม <b>"💾 เซฟข้อมูล (Export CSV)"</b> ด้านล่างนี้ เพื่อดาวน์โหลดไฟล์ Template ออกมาก่อน</li>
+                <li>เปิดไฟล์ <code>my_tax_plan.csv</code> ด้วยโปรแกรม Excel หรือ Numbers</li>
+                <li>แก้ไขตัวเลขในคอลัมน์ <b>Husband_Amount</b> (สามี) และ <b>Wife_Amount</b> (ภรรยา) ตามรายการที่ต้องการ และทำการ Save ไฟล์</li>
+                <li>กดปุ่ม <b>"📂 นำเข้าข้อมูล (Upload CSV)"</b> แล้วเลือกไฟล์ที่คุณเพิ่งเซฟ ข้อมูลทั้งหมดจะถูกดึงเข้าโปรแกรมทันที</li>
+            </ol>
+            
+            <h4 style="margin-top: 15px;">🎯 วิธีใช้ Simulator (จำลองการซื้อลดหย่อนเพิ่ม)</h4>
+            <p>เมื่อกรอกข้อมูลรายได้เรียบร้อยแล้ว แผง <b>"จำลองลดหย่อนเพิ่ม"</b> จะแสดงขึ้นมาด้านล่าง คุณสามารถเลื่อนแถบ Slider เพื่อดูว่าควรซื้อกองทุน Thai ESG หรือ RMF/SSF เพิ่มอีกกี่บาท จึงจะคุ้มค่าที่สุด โดยคลิกที่ป้าย <b>"⭐ คุ้มสุด"</b> เพื่อให้ระบบล็อกยอดซื้อที่ลดฐานภาษีได้ทันที</p>
+        </div>
+    </details>
 
     <div class="action-section">
         <label for="csvFileInput" class="btn btn-upload">📂 นำเข้าข้อมูล (Upload CSV)</label>
@@ -152,8 +184,8 @@
                     <label>40(6) วิชาชีพอิสระ (แพทย์ ฯลฯ)</label>
                     <div class="calc-row"><input type="text" inputmode="numeric" id="w_inc6_m" placeholder="เดือนละ" oninput="calcY('w', 6)"><span>x12 = ปีละ</span><input type="text" inputmode="numeric" id="w_inc6" class="yr-input" placeholder="รวม" oninput="calcM('w', 6)"></div>
                 </div>
-                <details>
-                    <summary>▶ คลิกเพื่อเพิ่มรายได้ประเภทอื่นๆ</summary>
+                <details class="sub-detail">
+                    <summary class="sub-summary">▶ คลิกเพื่อเพิ่มรายได้ประเภทอื่นๆ</summary>
                     <div class="form-group-complex"><label>40(2) รับจ้างทั่วไป</label><div class="calc-row"><input type="text" id="w_inc2_m" oninput="calcY('w', 2)"><span>x12=</span><input type="text" id="w_inc2" class="yr-input" oninput="calcM('w', 2)"></div></div>
                     <div class="form-group-complex"><label>40(3) ค่าลิขสิทธิ์</label><div class="calc-row"><input type="text" id="w_inc3_m" oninput="calcY('w', 3)"><span>x12=</span><input type="text" id="w_inc3" class="yr-input" oninput="calcM('w', 3)"></div></div>
                     <div class="form-group-complex"><label>40(4) ดอกเบี้ย, ปันผล</label><div class="calc-row"><input type="text" id="w_inc4_m" oninput="calcY('w', 4)"><span>x12=</span><input type="text" id="w_inc4" class="yr-input" oninput="calcM('w', 4)"></div></div>
@@ -207,8 +239,8 @@
                     <label>40(6) วิชาชีพอิสระ (แพทย์ ฯลฯ)</label>
                     <div class="calc-row"><input type="text" inputmode="numeric" id="h_inc6_m" placeholder="เดือนละ" oninput="calcY('h', 6)"><span>x12 = ปีละ</span><input type="text" inputmode="numeric" id="h_inc6" class="yr-input" placeholder="รวม" oninput="calcM('h', 6)"></div>
                 </div>
-                <details>
-                    <summary>▶ คลิกเพื่อเพิ่มรายได้ประเภทอื่นๆ</summary>
+                <details class="sub-detail">
+                    <summary class="sub-summary">▶ คลิกเพื่อเพิ่มรายได้ประเภทอื่นๆ</summary>
                     <div class="form-group-complex"><label>40(2) รับจ้างทั่วไป</label><div class="calc-row"><input type="text" id="h_inc2_m" oninput="calcY('h', 2)"><span>x12=</span><input type="text" id="h_inc2" class="yr-input" oninput="calcM('h', 2)"></div></div>
                     <div class="form-group-complex"><label>40(3) ค่าลิขสิทธิ์</label><div class="calc-row"><input type="text" id="h_inc3_m" oninput="calcY('h', 3)"><span>x12=</span><input type="text" id="h_inc3" class="yr-input" oninput="calcM('h', 3)"></div></div>
                     <div class="form-group-complex"><label>40(4) ดอกเบี้ย, ปันผล</label><div class="calc-row"><input type="text" id="h_inc4_m" oninput="calcY('h', 4)"><span>x12=</span><input type="text" id="h_inc4" class="yr-input" oninput="calcM('h', 4)"></div></div>
@@ -248,10 +280,10 @@
     <!-- Recommendation & Simulator Panel -->
     <div class="advice-panel" id="advicePanel" style="display: none;">
         
-        <!-- Online Tips Section -->
+        <!-- Online Report Section -->
         <div class="tips-header">
-            <div class="tips-title">💡 Insight: เทคนิคและกลยุทธ์วางแผนภาษี</div>
-            <button class="refresh-btn" onclick="fetchOnlineTips()">🔄 สุ่มทริคใหม่</button>
+            <div class="tips-title">📊 รายงานสรุปกลยุทธ์ภาษี (Tax Strategy Insight)</div>
+            <button class="refresh-btn" onclick="fetchOnlineTips()">🔄 อัปเดตข้อมูลล่าสุด</button>
         </div>
         <div class="online-tips-content" id="online_tips_box">
             <!-- Dynamic Content -->
@@ -439,8 +471,8 @@
         link.click();
         document.body.removeChild(link);
         
-        document.getElementById('fileStatus').innerText = "✅ เซฟไฟล์ my_tax_plan.csv สำเร็จ!";
-        setTimeout(() => document.getElementById('fileStatus').innerText = "", 3000);
+        document.getElementById('fileStatus').innerText = "✅ เซฟไฟล์ my_tax_plan.csv สำเร็จ! สามารถนำไปเป็น Template กรอกข้อมูลได้เลย";
+        setTimeout(() => document.getElementById('fileStatus').innerText = "", 4000);
     }
 
     function openTab(person, tabName) {
@@ -630,11 +662,11 @@
 
         let esgSlider = document.getElementById(person + '_sim_esg');
         esgSlider.max = maxEsg; esgSlider.value = 0;
-        document.getElementById(person + '_esg_limit_txt').innerText = `สูงสุด: ${fmt(maxEsg)}`;
+        document.getElementById(person + '_esg_limit_txt').innerText = `สูงสุด: ${fmt(maxEsg)} บาท`;
         
         let rmfSlider = document.getElementById(person + '_sim_rmf');
         rmfSlider.max = maxRmf; rmfSlider.value = 0;
-        document.getElementById(person + '_rmf_limit_txt').innerText = `สูงสุด: ${fmt(maxRmf)}`;
+        document.getElementById(person + '_rmf_limit_txt').innerText = `สูงสุด: ${fmt(maxRmf)} บาท`;
 
         drawMarkers(person, 'esg', maxEsg, currentData[person].finalNet);
         drawMarkers(person, 'rmf', maxRmf, currentData[person].finalNet);
@@ -661,36 +693,31 @@
         document.getElementById(person + '_sim_final_tax').innerText = fmt(simTax) + " บาท";
     }
 
-    // --- อัปเกรดเนื้อหา Insight ทริคทางภาษีเชิงลึก ---
-    const onlineTaxTips = [
-        "<strong>📌 กลยุทธ์จัดพอร์ต (วิชาชีพอิสระ):</strong> แนะนำให้ซื้อ Thai ESG เต็มโควตาก่อน (สูงสุด 300,000) เพราะใช้เวลาถือครองสั้นเพียง 5 ปี นับจากวันที่ซื้อ คล่องตัวกว่า SSF/RMF มาก",
-        "<strong>📌 e-Donation 2 เท่า:</strong> บริจาคให้ รพ.รัฐ (เช่น สภากาชาด, ศิริราช, รามาฯ) ผ่านระบบ e-Donation ลดหย่อนได้ 2 เท่า แต่เพดานรวมต้องไม่เกิน 10% ของเงินได้หลังหักค่าใช้จ่ายและลดหย่อนอื่นๆ ควรคำนวณฐานสุทธิก่อนบริจาคปลายปี",
-        "<strong>📌 ยื่นแยกหรือรวมดี?:</strong> หากทั้งคู่มีรายได้จากการทำงาน (40(1) และ 40(6)) <strong>การแยกยื่นภาษีประหยัดกว่าเกือบ 100%</strong> เพราะได้สิทธิหักเหมาค่าใช้จ่ายแยกกัน (สูงสุด 100,000/คน) และฐานภาษีไม่ถูกดันให้สูงขึ้น",
-        "<strong>📌 RMF vs SSF:</strong> หากอายุเกิน 45 ปี RMF เป็นตัวเลือกที่น่าสนใจกว่า SSF เพราะถือครองจนถึงอายุ 55 (ใช้เวลาไม่ถึง 10 ปี) ในขณะที่ SSF บังคับถือ 10 ปีเต็มจากวันที่ซื้อทุกช่วงอายุ",
-        "<strong>📌 ดอกเบี้ยบ้าน:</strong> หากมีการรีไฟแนนซ์ (Refinance) ในปีภาษีนี้ คุณสามารถนำใบเสร็จดอกเบี้ยจาก 'ทั้งธนาคารเก่าและธนาคารใหม่' มารวมกันเพื่อลดหย่อนได้ (รวมสูงสุดไม่เกิน 100,000 บาท)",
-        "<strong>📌 กองทุนสำรองเลี้ยงชีพ (PVD):</strong> เป็นวิธีลดภาษีที่ง่ายที่สุด แนะนำให้แจ้ง HR ปรับเพิ่มอัตราหักสะสมเป็นเพดานสูงสุด (15%) นอกจากประหยัดภาษีแล้วยังได้เงินสมทบจากโรงพยาบาล/บริษัทเพิ่มด้วย",
-        "<strong>📌 วางแผนเงินบริจาค:</strong> หากภรรยามีฐานภาษีสูงกว่า (เช่น 25% ส่วนสามี 15%) การให้ภรรยาเป็นผู้สแกนบริจาค e-Donation ทั้งหมด จะประหยัดภาษีของครอบครัวได้มากกว่า"
-    ];
-
+    // --- Report ข้อมูลการจัดการภาษีเชิงลึก ---
     function fetchOnlineTips() {
         let box = document.getElementById('online_tips_box');
-        box.innerHTML = '<span style="font-size:1.2em;">⏳</span> กำลังวิเคราะห์กลยุทธ์ที่ดีที่สุด...';
+        box.innerHTML = '<span style="font-size:1.2em;">⏳</span> กำลังประมวลผลดึงข้อมูลรายงานการวางแผนภาษีล่าสุด...';
         
         setTimeout(() => {
-            let shuffled = onlineTaxTips.sort(() => 0.5 - Math.random());
-            let selectedTips = shuffled.slice(0, 2);
             let timeStr = new Date().toLocaleTimeString('th-TH');
+            let dateStr = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
             
             box.innerHTML = `
-                <ul style="margin:0; padding-left: 20px;">
-                    <li style="margin-bottom: 12px;">${selectedTips[0]}</li>
-                    <li>${selectedTips[1]}</li>
+                <div style="font-size: 1.05em; margin-bottom: 12px; color: #2c3e50;">
+                    <b>รายงานสรุปกลยุทธ์ภาษีสำหรับคู่สมรส และวิชาชีพอิสระ (ฉบับอัปเดตล่าสุด)</b>
+                </div>
+                <p style="margin-top:0; color: #34495e;">จากการวิเคราะห์โครงสร้างภาษีปัจจุบัน ขอแนะนำแนวทางในการบริหารจัดการเพื่อความคุ้มค่าสูงสุดดังนี้:</p>
+                <ul style="padding-left: 20px; color: #34495e;">
+                    <li style="margin-bottom: 10px;"><b>รูปแบบการยื่นภาษี:</b> สำหรับคู่สมรสที่มีรายได้ทั้งคู่ (โดยเฉพาะแพทย์หรืออาชีพที่มีรายได้ 40(6) ควบคู่กับเงินเดือน 40(1)) การ <strong>"แยกยื่นภาษี"</strong> มักเกิดประโยชน์สูงสุด เนื่องจากแต่ละฝ่ายสามารถใช้สิทธิหักค่าใช้จ่ายแบบเหมาได้เต็มจำนวน (สูงสุด 100,000 บาทต่อคน) ช่วยกระจายฐานเงินได้สุทธิไม่ให้ตกอยู่ในขั้นบันไดภาษีที่สูงเกินไป</li>
+                    <li style="margin-bottom: 10px;"><b>ลำดับการลดหย่อน (Tax Shield Priority):</b> ควรให้ความสำคัญกับการซื้อกองทุน <strong>Thai ESG</strong> เป็นอันดับแรก (หากยังมีโควตา) เนื่องจากมีระยะเวลาถือครองที่ยืดหยุ่นกว่า (เพียง 5 ปีนับจากวันที่ลงทุน) จากนั้นหากต้องการลดฐานภาษีเพิ่มเติม จึงค่อยพิจารณาลงทุนใน <strong>RMF หรือ SSF</strong> ตามระดับความเสี่ยงที่ยอมรับได้</li>
+                    <li style="margin-bottom: 10px;"><b>การบริหารสัดส่วนเงินบริจาค:</b> เงินบริจาคผ่านระบบ e-Donation ให้กับสถานพยาบาลของรัฐ (เช่น รพ.ศิริราช, สภากาชาด) ได้รับสิทธิลดหย่อนถึง 2 เท่า แนะนำให้ผู้ที่มี <strong>"ฐานภาษีสูงกว่า"</strong> เป็นผู้รับหน้าที่สแกนบริจาคผ่านแอปธนาคาร เพื่อให้ครอบครัวดึงเงินคืนจากภาษีได้มากที่สุด</li>
+                    <li><b>เทคนิคดอกเบี้ยบ้าน:</b> หากมีการรีไฟแนนซ์ (Refinance) ในช่วงปีภาษีนี้ คุณสามารถนำใบเสร็จรับเงินที่ระบุดอกเบี้ยจ่ายจาก "ทั้งธนาคารเก่าและธนาคารใหม่" มารวมกันเพื่อลดหย่อนได้ตามจ่ายจริง แต่รวมกันแล้วต้องไม่เกิน 100,000 บาท</li>
                 </ul>
-                <div style="text-align: right; font-size: 0.85em; color: #7f8c8d; margin-top: 10px;">
-                    ดึงข้อมูลล่าสุดเมื่อ: ${timeStr}
+                <div style="text-align: right; font-size: 0.85em; color: #7f8c8d; margin-top: 15px; border-top: 1px dashed #bdc3c7; padding-top: 10px;">
+                    ดึงข้อมูลอัปเดตล่าสุดเมื่อ: ${dateStr} เวลา ${timeStr}
                 </div>
             `;
-        }, 500);
+        }, 800);
     }
 
     window.onload = function() {
