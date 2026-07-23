@@ -5,129 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>โปรแกรมวางแผนภาษีคู่รักสร้างตัว</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
+        /* ================= Core Styles ================= */
+        * { box-sizing: border-box; } /* ป้องกันปัญหา Padding ดันจนล้นจอ */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; color: #333; margin: 0; padding: 15px; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); width: 100%; }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; font-size: 1.5em; }
         
-        /* User Guide Styles */
+        /* ================= User Guide ================= */
         .guide-box { background: #fff; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e1e8ed; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .guide-box summary { background: #fdfae6; padding: 12px 20px; font-weight: bold; color: #b97a00; cursor: pointer; outline: none; transition: background 0.3s; list-style: none; position: relative; }
         .guide-box summary::-webkit-details-marker { display: none; }
         .guide-box summary:hover { background: #fcf4c7; }
         .guide-box summary::after { content: '▼'; position: absolute; right: 20px; font-size: 0.8em; color: #b97a00; transition: transform 0.3s; }
         .guide-box[open] summary::after { transform: rotate(180deg); }
-        .guide-content { padding: 20px; font-size: 0.95em; color: #34495e; line-height: 1.6; background: #fafbfc; border-top: 1px solid #eee; }
-        .guide-content h4 { margin-top: 0; color: #2980b9; margin-bottom: 10px; }
+        .guide-content { padding: 15px 20px; font-size: 0.95em; color: #34495e; line-height: 1.6; background: #fafbfc; border-top: 1px solid #eee; }
+        .guide-content h4 { margin-top: 0; color: #2980b9; margin-bottom: 10px; font-size: 1.05em; }
         .guide-content ol { margin-top: 5px; padding-left: 20px; }
         .guide-content li { margin-bottom: 5px; }
 
+        /* ================= Actions (CSV) ================= */
         .action-section { text-align: center; margin-bottom: 25px; padding: 15px; background: #eaf2f8; border-radius: 8px; display: flex; justify-content: center; gap: 15px; align-items: center; flex-wrap: wrap;}
-        .btn { display: inline-block; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; border: none; font-size: 1em; }
+        .btn { display: inline-flex; justify-content: center; align-items: center; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; border: none; font-size: 1em; text-align: center; width: auto; }
         .btn-upload { background: #2980b9; color: white; }
         .btn-upload:hover { background: #1f6391; }
         .btn-export { background: #27ae60; color: white; }
         .btn-export:hover { background: #1e8449; }
         
+        /* ================= Layout & Grid ================= */
         .grid-container { display: flex; flex-wrap: wrap; gap: 20px; }
-        .person-card { flex: 1; min-width: 440px; border: 1px solid #e1e8ed; border-radius: 10px; background: #ffffff; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .person-card { flex: 1 1 300px; min-width: 400px; border: 1px solid #e1e8ed; border-radius: 10px; background: #ffffff; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .person-header { background: #2c3e50; color: #fff; padding: 12px; text-align: center; font-size: 1.1em; font-weight: bold; }
         
+        /* ================= Tabs ================= */
         .tabs { display: flex; background: #f8f9fa; border-bottom: 2px solid #2980b9; }
-        .tab-button { flex: 1; padding: 10px; text-align: center; background: none; border: none; font-size: 1em; font-weight: bold; cursor: pointer; color: #95a5a6; transition: 0.3s; }
+        .tab-button { flex: 1; padding: 12px 10px; text-align: center; background: none; border: none; font-size: 0.95em; font-weight: bold; cursor: pointer; color: #95a5a6; transition: 0.3s; }
         .tab-button.active { background: #2980b9; color: #fff; }
-        .tab-content { display: none; padding: 20px; height: 520px; overflow-y: auto; }
+        .tab-content { display: none; padding: 15px; height: 550px; overflow-y: auto; }
         .tab-content.active { display: block; }
         
+        /* ================= Forms & Inputs ================= */
         details.sub-detail { background: #f8f9fa; border-radius: 6px; padding: 10px; margin-bottom: 15px; border: 1px solid #e1e8ed; }
         summary.sub-summary { font-weight: bold; color: #2980b9; cursor: pointer; outline: none; padding: 5px 0; }
         
-        .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 6px 10px; border-radius: 4px; }
-        .form-group label { flex: 1; font-size: 0.9em; color: #34495e; }
-        input[type="text"] { width: 120px; padding: 6px 10px; border: 1px solid #bdc3c7; border-radius: 4px; text-align: right; font-size: 1em; }
+        .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 6px 10px; border-radius: 4px; flex-wrap: wrap; gap: 8px;}
+        .form-group label { flex: 1 1 50%; font-size: 0.9em; color: #34495e; min-width: 120px;}
+        input[type="text"] { width: 120px; flex: 1 1 auto; padding: 8px 10px; border: 1px solid #bdc3c7; border-radius: 4px; text-align: right; font-size: 1em; }
         input[type="text"]:focus { outline: none; border-color: #2980b9; }
         input:disabled { background: #ecf0f1; color: #7f8c8d; }
 
-        .form-group-complex { background: #fff; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #eee; }
+        .form-group-complex { background: #fff; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #eee; }
         .form-group-complex label { display: block; font-size: 0.9em; color: #2c3e50; margin-bottom: 8px; font-weight: bold; }
-        .calc-row { display: flex; align-items: center; gap: 6px; }
-        .calc-row input[type="text"] { flex: 1; min-width: 60px; padding: 6px 8px; font-size: 0.9em; }
+        .calc-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .calc-row input[type="text"] { flex: 1 1 60px; min-width: 70px; padding: 8px; font-size: 0.95em; }
+        .calc-row span { font-size: 0.9em; color: #7f8c8d; white-space: nowrap; }
         .calc-row input.yr-input { background-color: #eaf2f8; border-color: #2980b9; font-weight: bold; color: #2c3e50; }
         
-        .section-title { font-weight: bold; color: #2980b9; margin-top: 10px; margin-bottom: 8px; font-size: 0.95em; padding-bottom: 4px; border-bottom: 2px solid #eaf2f8; }
+        .section-title { font-weight: bold; color: #2980b9; margin-top: 15px; margin-bottom: 10px; font-size: 0.95em; padding-bottom: 4px; border-bottom: 2px solid #eaf2f8; }
         
         .result-panel { background: #f8f9fa; padding: 15px; border-top: 1px solid #e1e8ed; }
         .res-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95em; color: #34495e; }
         .res-row.highlight { font-weight: bold; font-size: 1.1em; color: #c0392b; margin-top: 10px; padding-top: 10px; border-top: 1px solid #bdc3c7; }
         
-        /* Recommendation Panel */
-        .advice-panel { background: #fff; border-left: 6px solid #f39c12; padding: 25px; margin-top: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .best-choice { background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; text-align: center; font-size: 1.3em; font-weight: bold; margin-bottom: 20px; border: 1px solid #c3e6cb; }
-        .bracket-box { background: #fdfae6; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #f9e28f; }
-        .bracket-title { font-weight: bold; color: #b97a00; font-size: 1.1em; margin-bottom: 8px; border-bottom: 1px dashed #f1d36d; padding-bottom: 5px;}
+        /* ================= Recommendation Panel ================= */
+        .advice-panel { background: #fff; border-left: 6px solid #f39c12; padding: 20px; margin-top: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .comparison-box { background: #fdfae6; border: 1px solid #f9e28f; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 1.1em; color: #2c3e50; line-height: 1.6;}
+        .best-choice { background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; text-align: center; font-size: 1.2em; font-weight: bold; margin-bottom: 25px; border: 1px solid #c3e6cb; }
         
-        /* Online Tips Box */
-        .tips-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
-        .tips-title { font-weight: bold; color: #2c3e50; font-size: 1.2em; }
-        .refresh-btn { background: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9em; font-weight: bold; transition: 0.2s; }
+        .bracket-box { background: #f4f6f7; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #ecf0f1; flex: 1 1 300px; }
+        .bracket-title { font-weight: bold; color: #2c3e50; font-size: 1.1em; margin-bottom: 8px; border-bottom: 1px dashed #bdc3c7; padding-bottom: 5px;}
+        
+        /* ================= Online Tips Box / Search Bar ================= */
+        .tips-header { margin-bottom: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 15px; }
+        .tips-title { font-weight: bold; color: #2c3e50; font-size: 1.15em; margin-bottom: 10px; }
+        
+        .tips-search-bar { display: flex; gap: 10px; flex-wrap: wrap; }
+        .tips-search-bar input[type="text"] { flex: 1 1 200px; padding: 12px 15px; font-size: 1em; border: 2px solid #bdc3c7; border-radius: 6px; }
+        .tips-search-bar input[type="text"]:focus { border-color: #3498db; outline: none; }
+        
+        .refresh-btn { background: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 1em; font-weight: bold; transition: 0.2s; white-space: nowrap; flex: 0 1 auto;}
         .refresh-btn:hover { background: #2980b9; }
-        .online-tips-content { background: #f4f6f7; padding: 15px; border-radius: 6px; border-left: 4px solid #3498db; margin-bottom: 25px; font-size: 0.95em; color: #34495e; min-height: 80px; line-height: 1.5;}
-        
-        /* Simulator Styles & Anti-Overlap Markers */
+        .online-tips-content { background: #f4f6f7; padding: 20px; border-radius: 6px; border-left: 4px solid #3498db; margin-bottom: 25px; font-size: 0.95em; color: #34495e; min-height: 80px; line-height: 1.6; overflow-x: auto;}
+        .online-tips-content b { color: #2980b9; }
+
+        /* ================= Mode Selector ================= */
+        .filing-options-sim { background: #fff; padding: 15px; border-radius: 8px; border: 2px solid #3498db; text-align: center; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15); }
+        .filing-options-sim .radio-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 15px; }
+        .filing-options-sim label { cursor: pointer; font-weight: bold; color: #2c3e50; font-size: 1.05em; display: flex; align-items: center; gap: 8px;}
+        .filing-options-sim input[type="radio"] { transform: scale(1.3); margin: 0; }
+
+        /* ================= Simulator Styles ================= */
         .sim-section { margin-top: 15px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e1e8ed; }
-        .sim-title { font-weight: bold; color: #2980b9; margin-bottom: 15px; }
-        .sim-row { margin-bottom: 20px; }
+        .sim-row { margin-bottom: 25px; }
         .sim-label { display: flex; justify-content: space-between; font-size: 0.9em; color: #2c3e50; margin-bottom: 5px; position: relative; z-index: 5; background: #fff; padding-bottom: 5px; }
         .sim-limit-text { color: #7f8c8d; font-size: 0.85em; font-weight: bold; }
         
-        /* ปรับพื้นที่ด้านบนให้กว้างขึ้น ป้องกันหมุดบังตัวเลข Limit */
-        .slider-wrapper { position: relative; margin: 85px 0 10px 0; height: 25px; }
+        .slider-wrapper { position: relative; margin: 90px 0 15px 0; height: 30px; }
         .marker-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; }
-        input[type="range"] { position: absolute; width: 100%; top: 0; margin: 0; z-index: 2; cursor: pointer; }
+        input[type="range"] { position: absolute; width: 100%; top: 5px; margin: 0; z-index: 2; cursor: pointer; }
         
-        .sim-marker { position: absolute; top: -5px; width: 2px; background: #e74c3c; pointer-events: none; transition: height 0.3s;}
+        .sim-marker { position: absolute; top: 0px; width: 2px; background: #e74c3c; pointer-events: none; transition: height 0.3s;}
         
-        .marker-label { 
-            position: absolute; left: 50%; transform: translateX(-50%); 
-            font-size: 0.75em; background: #fff; border: 1px solid #e74c3c; color: #e74c3c; 
-            padding: 4px 8px; border-radius: 4px; white-space: nowrap; 
-            pointer-events: auto; cursor: pointer; transition: all 0.2s ease; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .marker-label:hover { 
-            background: #fdfae6; transform: translateX(-50%) scale(1.05); 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15); z-index: 10; 
-        }
-        .marker-label.recommend { 
-            background: #fff8e1; border-color: #f39c12; color: #d35400; font-weight: bold; 
-            border-width: 2px; z-index: 3;
-        }
+        .marker-label { position: absolute; left: 50%; transform: translateX(-50%); font-size: 0.75em; background: #fff; border: 1px solid #e74c3c; color: #e74c3c; padding: 4px 8px; border-radius: 4px; white-space: nowrap; pointer-events: auto; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .marker-label:hover { background: #fdfae6; transform: translateX(-50%) scale(1.05); box-shadow: 0 4px 8px rgba(0,0,0,0.15); z-index: 10; }
+        .marker-label.recommend { background: #fff8e1; border-color: #f39c12; color: #d35400; font-weight: bold; border-width: 2px; z-index: 3; }
 
         .sim-result-box { background: #eaf2f8; padding: 15px; border-radius: 6px; text-align: center; margin-top: 15px; border: 1px solid #bee5eb; }
         .sim-save-amt { font-size: 1.2em; font-weight: bold; color: #27ae60; }
-        .sim-final-tax { font-size: 1.3em; font-weight: bold; color: #c0392b; margin-top: 8px; border-top: 1px dashed #bdc3c7; padding-top: 8px; }
+        .sim-final-tax { font-size: 1.2em; font-weight: bold; color: #c0392b; margin-top: 10px; border-top: 1px dashed #bdc3c7; padding-top: 10px; }
 
-        /* Footer / Credit Styles */
-        .footer-credit {
-            margin-top: 40px;
-            padding-top: 25px;
-            border-top: 1px dashed #bdc3c7;
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 0.95em;
-        }
+        .joint-sim-result { background: #eaf2f8; border: 2px solid #3498db; padding: 20px; border-radius: 8px; text-align: center; margin-top: 20px; box-shadow: 0 4px 10px rgba(52,152,219,0.1); }
+        .joint-sim-result h3 { margin-top: 0; color: #2c3e50; margin-bottom: 15px; font-size: 1.2em;}
+
+        /* ================= Footer ================= */
+        .footer-credit { margin-top: 40px; padding-top: 25px; border-top: 1px dashed #bdc3c7; text-align: center; color: #7f8c8d; font-size: 0.9em; line-height: 1.5;}
         .footer-credit p { margin: 8px 0; }
         .footer-credit b { color: #2c3e50; }
-        .qr-container {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .qr-container img {
-            width: 260px; 
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border: 2px solid #ecf0f1;
+        .qr-container { margin-top: 20px; display: flex; justify-content: center; }
+        .qr-container img { width: 100%; max-width: 260px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 2px solid #ecf0f1; }
+
+        /* ================= Responsive (Mobile) ================= */
+        @media (max-width: 768px) {
+            .container { padding: 15px; border-radius: 8px; width: 100%; }
+            h2 { font-size: 1.3em; margin-bottom: 15px;}
+            
+            .action-section { flex-direction: column; gap: 10px; padding: 15px; }
+            .btn { width: 100%; box-sizing: border-box; } /* แก้ปัญหาปุ่มล้นจอ */
+            
+            .grid-container { flex-direction: column; }
+            .person-card { flex: 1 1 100%; min-width: 0; } /* แก้ปัญหาการ์ดดันจอออกด้านข้าง */
+            
+            .tips-search-bar { flex-direction: column; }
+            .tips-search-bar input[type="text"], .tips-search-bar button { width: 100%; box-sizing: border-box; }
+            
+            .filing-options-sim .radio-group { flex-direction: column; align-items: flex-start; gap: 12px; display: inline-flex;}
+            
+            .comparison-box { font-size: 1em; }
+            .comparison-box b { display: block; margin-top: 5px; }
+            
+            .form-group label { flex: 1 1 100%; margin-bottom: 4px; }
+            input[type="text"] { width: 100%; }
+            
+            .tab-content { height: auto; max-height: none; overflow-y: visible; }
+            
+            .slider-wrapper { margin: 100px 0 15px 0; } /* เพิ่มพื้นที่ให้ป้ายหมุดตอนอยู่บนมือถือ */
+            .advice-panel { padding: 15px; border-left-width: 4px; }
         }
     </style>
 </head>
@@ -141,18 +162,19 @@
         <summary>📖 คู่มือการใช้งานเบื้องต้น (คลิกเพื่ออ่าน)</summary>
         <div class="guide-content">
             <h4>💡 วิธีที่ 1: กรอกข้อมูลโดยตรง (Manual)</h4>
-            <p>คุณสามารถสลับแท็บ "หมวดรายได้" และ "หมวดค่าลดหย่อน" ของทั้งสามีและภรรยา แล้วกรอกตัวเลขลงไปได้เลย โปรแกรมจะคำนวณและเปรียบเทียบการยื่นรวม/แยก ให้โดยอัตโนมัติ</p>
+            <p>คุณสามารถสลับแท็บ "หมวดรายได้" และ "หมวดค่าลดหย่อน" ของทั้งสามีและภรรยา แล้วกรอกตัวเลขลงไปได้เลย โปรแกรมจะคำนวณและเปรียบเทียบการยื่นรวม/แยก ให้โดยอัตโนมัติที่ด้านล่าง</p>
             
             <h4 style="margin-top: 15px;">💡 วิธีที่ 2: นำเข้าผ่านไฟล์ CSV (รวดเร็ว)</h4>
             <ol>
                 <li>กดปุ่ม <b>"💾 เซฟข้อมูล (Export CSV)"</b> ด้านล่างนี้ เพื่อดาวน์โหลดไฟล์ Template ออกมาก่อน</li>
-                <li>เปิดไฟล์ <code>my_tax_plan.csv</code> ด้วยโปรแกรม Excel หรือ Numbers</li>
-                <li>แก้ไขตัวเลขในคอลัมน์ <b>Husband_Amount</b> (สามี) และ <b>Wife_Amount</b> (ภรรยา) ตามรายการที่ต้องการ และทำการ Save ไฟล์</li>
+                <li>เปิดไฟล์ <code>my_tax_plan.csv</code> ด้วยโปรแกรม Excel, Numbers หรือ Google Sheets</li>
+                <li>แก้ไขตัวเลขในคอลัมน์ <b>Husband_Amount</b> (สามี) และ <b>Wife_Amount</b> (ภรรยา) ตามรายการที่มี และทำการ Save ทับไฟล์เดิม (เป็นนามสกุล .csv)</li>
                 <li>กดปุ่ม <b>"📂 นำเข้าข้อมูล (Upload CSV)"</b> แล้วเลือกไฟล์ที่คุณเพิ่งเซฟ ข้อมูลทั้งหมดจะถูกดึงเข้าโปรแกรมทันที</li>
             </ol>
             
             <h4 style="margin-top: 15px;">🎯 วิธีใช้ Simulator (จำลองการซื้อลดหย่อนเพิ่ม)</h4>
-            <p>เมื่อกรอกข้อมูลรายได้เรียบร้อยแล้ว แผง <b>"จำลองลดหย่อนเพิ่ม"</b> จะแสดงขึ้นมาด้านล่าง คุณสามารถเลื่อนแถบ Slider เพื่อดูว่าควรซื้อกองทุน Thai ESG หรือ RMF/SSF เพิ่มอีกกี่บาท จึงจะคุ้มค่าที่สุด โดยคลิกที่ป้าย <b>"⭐ คุ้มสุด"</b> เพื่อให้ระบบล็อกยอดซื้อที่ลดฐานภาษีได้ทันที</p>
+            <p>เมื่อกรอกข้อมูลเรียบร้อยแล้ว ให้เลื่อนลงไปที่ <b>แผงจำลองลดหย่อนเพิ่ม</b> ด้านล่าง คุณสามารถเลือก Option ได้ว่าอยากจำลองในโหมด <b>"แยกยื่น"</b> หรือ <b>"ยื่นรวม"</b><br>
+            จากนั้นให้เลื่อนแถบ Slider เพื่อดูว่าควรซื้อกองทุน Thai ESG หรือ RMF/SSF เพิ่มอีกกี่บาท จึงจะคุ้มค่าที่สุด โดยแนะนำให้คลิกที่ป้าย <b>"⭐ คุ้มสุด"</b> เพื่อให้ระบบล็อกยอดซื้อในจุดที่ฐานภาษีลดลงพอดี!</p>
         </div>
     </details>
 
@@ -162,7 +184,7 @@
         
         <button class="btn btn-export" onclick="exportToCSV()">💾 เซฟข้อมูล (Export CSV)</button>
         
-        <div id="fileStatus" style="width: 100%; color: #27ae60; font-size: 0.95em; font-weight: bold;"></div>
+        <div id="fileStatus" style="width: 100%; color: #27ae60; font-size: 0.95em; font-weight: bold; margin-top: 5px;"></div>
     </div>
 
     <div class="grid-container">
@@ -217,7 +239,7 @@
                 <div class="res-row"><span>รวมรายได้:</span> <span id="w_res_inc">0</span></div>
                 <div class="res-row"><span>หักลดหย่อนทั้งหมด:</span> <span id="w_res_ded">0</span></div>
                 <div class="res-row"><span>เงินได้สุทธิ:</span> <span id="w_res_net">0</span></div>
-                <div class="res-row highlight"><span>ภาษีภรรยา (ยื่นแยก):</span> <span id="w_res_tax">0</span></div>
+                <div class="res-row highlight"><span>ภาษีคำนวณเบื้องต้น:</span> <span id="w_res_tax">0</span></div>
             </div>
         </div>
 
@@ -272,7 +294,7 @@
                 <div class="res-row"><span>รวมรายได้:</span> <span id="h_res_inc">0</span></div>
                 <div class="res-row"><span>หักลดหย่อนทั้งหมด:</span> <span id="h_res_ded">0</span></div>
                 <div class="res-row"><span>เงินได้สุทธิ:</span> <span id="h_res_net">0</span></div>
-                <div class="res-row highlight"><span>ภาษีสามี (ยื่นแยก):</span> <span id="h_res_tax">0</span></div>
+                <div class="res-row highlight"><span>ภาษีคำนวณเบื้องต้น:</span> <span id="h_res_tax">0</span></div>
             </div>
         </div>
     </div>
@@ -280,30 +302,49 @@
     <!-- Recommendation & Simulator Panel -->
     <div class="advice-panel" id="advicePanel" style="display: none;">
         
-        <!-- Online Report Section -->
+        <!-- Online Report & Search Engine Section -->
         <div class="tips-header">
             <div class="tips-title">📊 รายงานสรุปกลยุทธ์ภาษี (Tax Strategy Insight)</div>
-            <button class="refresh-btn" onclick="fetchOnlineTips()">🔄 อัปเดตข้อมูลล่าสุด</button>
+            <div class="tips-search-bar">
+                <input type="text" id="taxKeyword" placeholder="🔍 ค้นหากลยุทธ์ (เช่น เงินเดือน, หมอ, กองทุน, บริจาค...)" onkeypress="if(event.key === 'Enter') fetchOnlineTips()">
+                <button class="refresh-btn" onclick="fetchOnlineTips()">ค้นหา / อัปเดตข้อมูล</button>
+            </div>
         </div>
         <div class="online-tips-content" id="online_tips_box">
-            <!-- Dynamic Content -->
+            <!-- Dynamic Content based on search -->
         </div>
 
+        <!-- Comparison Summary -->
+        <div class="comparison-box" id="comparison_box">
+            <!-- Populated by JS -->
+        </div>
         <div id="bestChoiceResult" class="best-choice"></div>
         
+        <!-- Filing Option for Simulator -->
+        <div class="filing-options-sim">
+            <span style="font-size:1.1em;">⚙️ <b>เลือกรูปแบบเพื่อเข้าสู่โหมดจำลองลดหย่อน:</b></span>
+            <div class="radio-group">
+                <label><input type="radio" name="filing_type" value="separate" checked onchange="initSimulator()"> แยกยื่น (คำนวณรายบุคคล)</label>
+                <label><input type="radio" name="filing_type" value="joint" onchange="initSimulator()"> ยื่นรวม (คำนวณฐานครอบครัว)</label>
+            </div>
+        </div>
+
+        <div id="joint_bracket_info_top" style="display:none; background: #fff8e1; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f39c12; text-align:center; font-size: 1.1em; color: #d35400;">
+            <!-- Populated by JS -->
+        </div>
+
         <div class="grid-container">
             <!-- ซิมูเลเตอร์ ภรรยา -->
-            <div class="bracket-box" style="flex:1;" id="w_sim_container">
-                <div class="bracket-title">💡 จำลองลดหย่อนเพิ่ม (ภรรยา)</div>
-                <div id="w_bracket_info"></div>
+            <div class="bracket-box">
+                <div class="bracket-title" id="w_sim_title">💡 จำลองลดหย่อนเพิ่ม (ภรรยา)</div>
+                <div id="w_bracket_info" style="margin-bottom: 10px; font-size: 0.95em;"></div>
                 
                 <div class="sim-section">
-                    <div class="sim-title">🎛️ ลองปรับแผนซื้อเพิ่ม (Simulator)</div>
                     <div class="sim-row">
                         <div class="sim-label"><span>Thai ESG</span><span class="sim-limit-text" id="w_esg_limit_txt">สูงสุด: 0</span></div>
                         <div class="slider-wrapper">
                             <div id="w_esg_markers" class="marker-container"></div>
-                            <input type="range" id="w_sim_esg" min="0" max="0" step="1000" value="0" oninput="runSimulator('w')">
+                            <input type="range" id="w_sim_esg" min="0" max="0" step="1000" value="0" oninput="runSimulator()">
                         </div>
                         <div style="text-align: right; font-weight: bold; color: #2980b9;" id="w_sim_esg_val">0 บาท</div>
                     </div>
@@ -312,31 +353,30 @@
                         <div class="sim-label"><span>RMF / SSF</span><span class="sim-limit-text" id="w_rmf_limit_txt">สูงสุด: 0</span></div>
                         <div class="slider-wrapper">
                             <div id="w_rmf_markers" class="marker-container"></div>
-                            <input type="range" id="w_sim_rmf" min="0" max="0" step="1000" value="0" oninput="runSimulator('w')">
+                            <input type="range" id="w_sim_rmf" min="0" max="0" step="1000" value="0" oninput="runSimulator()">
                         </div>
                         <div style="text-align: right; font-weight: bold; color: #2980b9;" id="w_sim_rmf_val">0 บาท</div>
                     </div>
 
-                    <div class="sim-result-box">
+                    <div id="w_sim_result_box" class="sim-result-box">
                         <div style="font-size: 0.9em; color: #34495e;">หากซื้อตามแผน ฐานภาษีจะกลายเป็น: <b id="w_sim_new_bracket" style="color: #d35400;">0%</b></div>
                         <div style="margin-top: 5px;">ประหยัดภาษีได้เพิ่มขึ้นอีก: <span class="sim-save-amt" id="w_sim_tax_saved">0 บาท</span></div>
-                        <div class="sim-final-tax">🔥 สรุปภาษีที่ต้องชำระสุทธิ: <span id="w_sim_final_tax">0 บาท</span></div>
+                        <div class="sim-final-tax">🔥 สรุปภาษีที่ต้องชำระสุทธิ:<br><span id="w_sim_final_tax">0 บาท</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- ซิมูเลเตอร์ สามี -->
-            <div class="bracket-box" style="flex:1;" id="h_sim_container">
-                <div class="bracket-title">💡 จำลองลดหย่อนเพิ่ม (สามี)</div>
-                <div id="h_bracket_info"></div>
+            <div class="bracket-box">
+                <div class="bracket-title" id="h_sim_title">💡 จำลองลดหย่อนเพิ่ม (สามี)</div>
+                <div id="h_bracket_info" style="margin-bottom: 10px; font-size: 0.95em;"></div>
                 
                 <div class="sim-section">
-                    <div class="sim-title">🎛️ ลองปรับแผนซื้อเพิ่ม (Simulator)</div>
                     <div class="sim-row">
                         <div class="sim-label"><span>Thai ESG</span><span class="sim-limit-text" id="h_esg_limit_txt">สูงสุด: 0</span></div>
                         <div class="slider-wrapper">
                             <div id="h_esg_markers" class="marker-container"></div>
-                            <input type="range" id="h_sim_esg" min="0" max="0" step="1000" value="0" oninput="runSimulator('h')">
+                            <input type="range" id="h_sim_esg" min="0" max="0" step="1000" value="0" oninput="runSimulator()">
                         </div>
                         <div style="text-align: right; font-weight: bold; color: #2980b9;" id="h_sim_esg_val">0 บาท</div>
                     </div>
@@ -345,19 +385,34 @@
                         <div class="sim-label"><span>RMF / SSF</span><span class="sim-limit-text" id="h_rmf_limit_txt">สูงสุด: 0</span></div>
                         <div class="slider-wrapper">
                             <div id="h_rmf_markers" class="marker-container"></div>
-                            <input type="range" id="h_sim_rmf" min="0" max="0" step="1000" value="0" oninput="runSimulator('h')">
+                            <input type="range" id="h_sim_rmf" min="0" max="0" step="1000" value="0" oninput="runSimulator()">
                         </div>
                         <div style="text-align: right; font-weight: bold; color: #2980b9;" id="h_sim_rmf_val">0 บาท</div>
                     </div>
 
-                    <div class="sim-result-box">
+                    <div id="h_sim_result_box" class="sim-result-box">
                         <div style="font-size: 0.9em; color: #34495e;">หากซื้อตามแผน ฐานภาษีจะกลายเป็น: <b id="h_sim_new_bracket" style="color: #d35400;">0%</b></div>
                         <div style="margin-top: 5px;">ประหยัดภาษีได้เพิ่มขึ้นอีก: <span class="sim-save-amt" id="h_sim_tax_saved">0 บาท</span></div>
-                        <div class="sim-final-tax">🔥 สรุปภาษีที่ต้องชำระสุทธิ: <span id="h_sim_final_tax">0 บาท</span></div>
+                        <div class="sim-final-tax">🔥 สรุปภาษีที่ต้องชำระสุทธิ:<br><span id="h_sim_final_tax">0 บาท</span></div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Joint Sim Result Box -->
+        <div id="joint_sim_result_box" class="joint-sim-result" style="display:none;">
+            <h3>📊 ผลการจำลองแบบยื่นรวมครอบครัว (Combined Result)</h3>
+            <div style="font-size: 1.05em; color: #34495e; margin-bottom: 10px;">
+                หากซื้อตามแผนของทั้งคู่ ฐานภาษีรวมจะกลายเป็น: <br><b id="joint_sim_new_bracket" style="color: #d35400; font-size: 1.3em;">0%</b>
+            </div>
+            <div style="margin-bottom: 15px;">
+                ประหยัดภาษีครอบครัวได้เพิ่มขึ้นอีก: <br><span class="sim-save-amt" id="joint_sim_tax_saved" style="font-size: 1.5em;">0 บาท</span>
+            </div>
+            <div class="sim-final-tax" style="border-top: 2px dashed #bdc3c7; padding-top: 15px;">
+                🔥 สรุปภาษีครอบครัวที่ต้องชำระสุทธิ: <br><span id="joint_sim_final_tax">0 บาท</span>
+            </div>
+        </div>
+
     </div>
 
     <!-- ======================= ส่วน Footer ======================= -->
@@ -538,16 +593,22 @@
         return { totalInc, totalExp, totalDeductAll, finalNet, baseTax: calcTaxBracket(finalNet) };
     }
 
-    let currentData = { w: null, h: null };
+    let baseData = { w: null, h: null, joint: null };
 
     function calculate() {
         let w = processPerson('w'); let h = processPerson('h');
-        currentData.w = w; currentData.h = h;
+        
+        let jointInc = w.totalInc + h.totalInc, jointExp = w.totalExp + h.totalExp;
+        let jointDeduct = w.totalDeductAll + h.totalDeductAll;
+        let jointNet = Math.max(0, jointInc - jointExp - jointDeduct);
+        let jointTax = calcTaxBracket(jointNet);
+        
+        baseData = {
+            w: w, h: h,
+            joint: { totalInc: jointInc, totalExp: jointExp, totalDeductAll: jointDeduct, finalNet: jointNet, baseTax: jointTax }
+        };
         
         let totalSep = w.baseTax + h.baseTax;
-        let jointInc = w.totalInc + h.totalInc, jointExp = w.totalExp + h.totalExp;
-        let jointNet = Math.max(0, jointInc - jointExp - w.totalDeductAll - h.totalDeductAll);
-        let jointTax = calcTaxBracket(jointNet);
 
         document.getElementById('w_res_inc').innerText = fmt(w.totalInc); document.getElementById('w_res_ded').innerText = fmt(w.totalDeductAll);
         document.getElementById('w_res_net').innerText = fmt(w.finalNet); document.getElementById('w_res_tax').innerText = fmt(w.baseTax);
@@ -556,28 +617,34 @@
 
         let advicePanel = document.getElementById('advicePanel');
         let bestChoiceBox = document.getElementById('bestChoiceResult');
+        let compBox = document.getElementById('comparison_box');
         
         if (w.totalInc === 0 && h.totalInc === 0) { advicePanel.style.display = 'none'; return; }
         advicePanel.style.display = 'block';
 
+        // Update Comparison Box
+        compBox.innerHTML = `
+            <b>เปรียบเทียบข้อมูลเบื้องต้น:</b><br>
+            แยกยื่น เสียภาษีรวม <b style="color:#e74c3c; font-size:1.15em;">${fmt(totalSep)}</b> บาท 
+            <span style="color:#bdc3c7; margin: 0 10px;">|</span> 
+            ยื่นรวม เสียภาษีรวม <b style="color:#e74c3c; font-size:1.15em;">${fmt(jointTax)}</b> บาท
+        `;
+
         if (totalSep < jointTax) {
-            bestChoiceBox.innerHTML = `🌟 <b>ระบบแนะนำ: ยื่นแยก (ประหยัดกว่า ${fmt(jointTax - totalSep)} บาท)</b>`;
+            bestChoiceBox.innerHTML = `🌟 <b>ระบบแนะนำ: เลือก "แยกยื่น" <br>(ประหยัดกว่า ${fmt(jointTax - totalSep)} บาท)</b>`;
             bestChoiceBox.style.color = "#155724"; bestChoiceBox.style.backgroundColor = "#d4edda"; bestChoiceBox.style.borderColor = "#c3e6cb";
         } else if (jointTax < totalSep) {
-            bestChoiceBox.innerHTML = `🌟 <b>ระบบแนะนำ: ยื่นรวม (ประหยัดกว่า ${fmt(totalSep - jointTax)} บาท)</b>`;
+            bestChoiceBox.innerHTML = `🌟 <b>ระบบแนะนำ: เลือก "ยื่นรวม" <br>(ประหยัดกว่า ${fmt(totalSep - jointTax)} บาท)</b>`;
             bestChoiceBox.style.color = "#004085"; bestChoiceBox.style.backgroundColor = "#cce5ff"; bestChoiceBox.style.borderColor = "#b8daff";
         } else {
             bestChoiceBox.innerHTML = `⚖️ <b>ระบบแนะนำ: เลือกยื่นแบบไหนก็ได้ (เสียภาษีเท่ากัน)</b>`;
             bestChoiceBox.style.color = "#383d41"; bestChoiceBox.style.backgroundColor = "#e2e3e5"; bestChoiceBox.style.borderColor = "#d6d8db";
         }
 
-        document.getElementById('w_bracket_info').innerHTML = `เงินได้สุทธิปัจจุบัน: <b>${fmt(w.finalNet)}</b> บาท (ฐานภาษี <b>${getBracketInfo(w.finalNet).rate}%</b>)`;
-        document.getElementById('h_bracket_info').innerHTML = `เงินได้สุทธิปัจจุบัน: <b>${fmt(h.finalNet)}</b> บาท (ฐานภาษี <b>${getBracketInfo(h.finalNet).rate}%</b>)`;
-
-        initSimulator('w'); initSimulator('h');
+        initSimulator();
     }
 
-    // --- ระบบวาดหมุด (Smart Anti-Overlap Markers) ---
+    // --- ระบบวาดหมุดอัจฉริยะ (Smart Staggering Anti-Overlap) ---
     const thresholds = [5000000, 2000000, 1000000, 750000, 500000, 300000, 150000];
 
     function drawMarkers(person, type, maxLimit, currentNet) {
@@ -606,7 +673,7 @@
                     label.onclick = function() {
                         let slider = document.getElementById(person + '_sim_' + type);
                         slider.value = dropNeeded;
-                        runSimulator(person);
+                        runSimulator();
                     };
                     
                     let isRecommend = false;
@@ -620,15 +687,15 @@
                     }
 
                     // --- Smart Staggering Logic ---
-                    let baseTop = isRecommend ? -50 : -35;
+                    let baseTop = isRecommend ? -55 : -40; 
                     let finalTop = baseTop;
                     
                     let overlap = true;
                     while(overlap) {
                         overlap = false;
                         for (let pm of placedMarkers) {
-                            if (Math.abs(pm.pct - pct) < 18 && Math.abs(pm.top - finalTop) < 25) {
-                                finalTop -= 30; 
+                            if (Math.abs(pm.pct - pct) < 18 && Math.abs(pm.top - finalTop) < 30) {
+                                finalTop -= 35; 
                                 overlap = true;
                                 break;
                             }
@@ -648,81 +715,208 @@
         });
     }
 
-    function initSimulator(person) {
-        let container = document.getElementById(person + '_sim_container');
-        if (currentData[person].totalInc === 0) { container.style.display = 'none'; return; }
-        container.style.display = 'block';
+    function initSimulator() {
+        let mode = document.querySelector('input[name="filing_type"]:checked').value;
 
-        let currentEsg = getV(person + '_d_esg');
-        let maxEsg = Math.max(0, 300000 - currentEsg);
-        
-        let currentPvd = getV(person + '_d_pvd');
-        let currentRmf = getV(person + '_d_rmf');
-        let maxRmf = Math.max(0, 500000 - currentPvd - currentRmf);
+        let wMaxEsg = Math.max(0, 300000 - getV('w_d_esg'));
+        let wMaxRmf = Math.max(0, 500000 - getV('w_d_pvd') - getV('w_d_rmf'));
+        let hMaxEsg = Math.max(0, 300000 - getV('h_d_esg'));
+        let hMaxRmf = Math.max(0, 500000 - getV('h_d_pvd') - getV('h_d_rmf'));
 
-        let esgSlider = document.getElementById(person + '_sim_esg');
-        esgSlider.max = maxEsg; esgSlider.value = 0;
-        document.getElementById(person + '_esg_limit_txt').innerText = `สูงสุด: ${fmt(maxEsg)} บาท`;
-        
-        let rmfSlider = document.getElementById(person + '_sim_rmf');
-        rmfSlider.max = maxRmf; rmfSlider.value = 0;
-        document.getElementById(person + '_rmf_limit_txt').innerText = `สูงสุด: ${fmt(maxRmf)} บาท`;
+        // ตั้งค่า Max ให้กับ Sliders ทุกตัวและรีเซ็ตค่าเป็น 0
+        ['w', 'h'].forEach(p => {
+            document.getElementById(p+'_sim_esg').max = (p==='w'?wMaxEsg:hMaxEsg);
+            document.getElementById(p+'_sim_esg').value = 0;
+            document.getElementById(p+'_sim_rmf').max = (p==='w'?wMaxRmf:hMaxRmf);
+            document.getElementById(p+'_sim_rmf').value = 0;
+            document.getElementById(p+'_esg_limit_txt').innerText = `สูงสุด: ${fmt(p==='w'?wMaxEsg:hMaxEsg)} บาท`;
+            document.getElementById(p+'_rmf_limit_txt').innerText = `สูงสุด: ${fmt(p==='w'?wMaxRmf:hMaxRmf)} บาท`;
+        });
 
-        drawMarkers(person, 'esg', maxEsg, currentData[person].finalNet);
-        drawMarkers(person, 'rmf', maxRmf, currentData[person].finalNet);
+        if (mode === 'separate') {
+            document.getElementById('w_sim_title').innerText = "💡 จำลองลดหย่อนเพิ่ม (ภรรยา - ยื่นแยก)";
+            document.getElementById('h_sim_title').innerText = "💡 จำลองลดหย่อนเพิ่ม (สามี - ยื่นแยก)";
+            document.getElementById('w_bracket_info').innerHTML = `เงินได้สุทธิปัจจุบัน: <b>${fmt(baseData.w.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.w.finalNet).rate}%</b>)`;
+            document.getElementById('h_bracket_info').innerHTML = `เงินได้สุทธิปัจจุบัน: <b>${fmt(baseData.h.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.h.finalNet).rate}%</b>)`;
+            
+            document.getElementById('w_sim_result_box').style.display = 'block';
+            document.getElementById('h_sim_result_box').style.display = 'block';
+            document.getElementById('joint_sim_result_box').style.display = 'none';
+            document.getElementById('joint_bracket_info_top').style.display = 'none';
 
-        runSimulator(person);
+            drawMarkers('w', 'esg', wMaxEsg, baseData.w.finalNet);
+            drawMarkers('w', 'rmf', wMaxRmf, baseData.w.finalNet);
+            drawMarkers('h', 'esg', hMaxEsg, baseData.h.finalNet);
+            drawMarkers('h', 'rmf', hMaxRmf, baseData.h.finalNet);
+        } else {
+            document.getElementById('w_sim_title').innerText = "💡 ซื้อในชื่อภรรยา (ยื่นรวม)";
+            document.getElementById('h_sim_title').innerText = "💡 ซื้อในชื่อสามี (ยื่นรวม)";
+            document.getElementById('w_bracket_info').innerHTML = `<span style="color:#7f8c8d;">(ยอดซื้อจะถูกนำไปคำนวณหักในฐานภาษีครอบครัว)</span>`;
+            document.getElementById('h_bracket_info').innerHTML = `<span style="color:#7f8c8d;">(ยอดซื้อจะถูกนำไปคำนวณหักในฐานภาษีครอบครัว)</span>`;
+            
+            document.getElementById('w_sim_result_box').style.display = 'none';
+            document.getElementById('h_sim_result_box').style.display = 'none';
+            document.getElementById('joint_sim_result_box').style.display = 'block';
+            
+            let jointInfoTop = document.getElementById('joint_bracket_info_top');
+            jointInfoTop.style.display = 'block';
+            jointInfoTop.innerHTML = `💡 <b>ฐานภาษีปัจจุบัน (ยื่นรวม):</b> เงินได้สุทธิรวม <b>${fmt(baseData.joint.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.joint.finalNet).rate}%</b>)`;
+
+            // วาดหมุดโดยอิงเป้าหมายจากฐานภาษี Joint
+            drawMarkers('w', 'esg', wMaxEsg, baseData.joint.finalNet);
+            drawMarkers('w', 'rmf', wMaxRmf, baseData.joint.finalNet);
+            drawMarkers('h', 'esg', hMaxEsg, baseData.joint.finalNet);
+            drawMarkers('h', 'rmf', hMaxRmf, baseData.joint.finalNet);
+        }
+
+        runSimulator();
     }
 
-    function runSimulator(person) {
-        let esgAdd = parseFloat(document.getElementById(person + '_sim_esg').value) || 0;
-        let rmfAdd = parseFloat(document.getElementById(person + '_sim_rmf').value) || 0;
-        
-        document.getElementById(person + '_sim_esg_val').innerText = fmt(esgAdd) + " บาท";
-        document.getElementById(person + '_sim_rmf_val').innerText = fmt(rmfAdd) + " บาท";
+    function runSimulator() {
+        let w_esg = parseFloat(document.getElementById('w_sim_esg').value) || 0;
+        let w_rmf = parseFloat(document.getElementById('w_sim_rmf').value) || 0;
+        let h_esg = parseFloat(document.getElementById('h_sim_esg').value) || 0;
+        let h_rmf = parseFloat(document.getElementById('h_sim_rmf').value) || 0;
 
-        let simResult = processPerson(person, { esg: esgAdd, rmf: rmfAdd });
-        
-        let baseTax = currentData[person].baseTax;
-        let simTax = simResult.baseTax;
-        let taxSaved = Math.max(0, baseTax - simTax);
-        let newBracket = getBracketInfo(simResult.finalNet).rate;
+        document.getElementById('w_sim_esg_val').innerText = fmt(w_esg) + " บาท";
+        document.getElementById('w_sim_rmf_val').innerText = fmt(w_rmf) + " บาท";
+        document.getElementById('h_sim_esg_val').innerText = fmt(h_esg) + " บาท";
+        document.getElementById('h_sim_rmf_val').innerText = fmt(h_rmf) + " บาท";
 
-        document.getElementById(person + '_sim_new_bracket').innerText = newBracket + "%";
-        document.getElementById(person + '_sim_tax_saved').innerText = fmt(taxSaved) + " บาท";
-        document.getElementById(person + '_sim_final_tax').innerText = fmt(simTax) + " บาท";
+        let mode = document.querySelector('input[name="filing_type"]:checked').value;
+        let simW = processPerson('w', {esg: w_esg, rmf: w_rmf});
+        let simH = processPerson('h', {esg: h_esg, rmf: h_rmf});
+
+        if (mode === 'separate') {
+            let wTaxSaved = Math.max(0, baseData.w.baseTax - simW.baseTax);
+            document.getElementById('w_sim_new_bracket').innerText = getBracketInfo(simW.finalNet).rate + "%";
+            document.getElementById('w_sim_tax_saved').innerText = fmt(wTaxSaved) + " บาท";
+            document.getElementById('w_sim_final_tax').innerText = fmt(simW.baseTax) + " บาท";
+
+            let hTaxSaved = Math.max(0, baseData.h.baseTax - simH.baseTax);
+            document.getElementById('h_sim_new_bracket').innerText = getBracketInfo(simH.finalNet).rate + "%";
+            document.getElementById('h_sim_tax_saved').innerText = fmt(hTaxSaved) + " บาท";
+            document.getElementById('h_sim_final_tax').innerText = fmt(simH.baseTax) + " บาท";
+        } else {
+            let simJointNet = Math.max(0, (simW.totalInc + simH.totalInc) - (simW.totalExp + simH.totalExp) - (simW.totalDeductAll + simH.totalDeductAll));
+            let simJointTax = calcTaxBracket(simJointNet);
+            let jointTaxSaved = Math.max(0, baseData.joint.baseTax - simJointTax);
+            
+            document.getElementById('joint_sim_new_bracket').innerText = getBracketInfo(simJointNet).rate + "%";
+            document.getElementById('joint_sim_tax_saved').innerText = fmt(jointTaxSaved) + " บาท";
+            document.getElementById('joint_sim_final_tax').innerText = fmt(simJointTax) + " บาท";
+        }
     }
 
-    // --- Report ข้อมูลการจัดการภาษีเชิงลึก ---
+    // --- Search Engine สำหรับข้อมูลการจัดการภาษีเชิงลึก ---
+    const taxDatabase = [
+        { 
+            category: "พนักงานเงินเดือน และ โบนัส", 
+            keywords: ["พนักงานเงินเดือน", "เงินเดือน", "พนักงานออฟฟิศ", "มนุษย์เงินเดือน", "40(1)", "โบนัส", "พนักงาน"], 
+            text: "<b>กลยุทธ์พนักงานเงินเดือน (40(1)):</b> เนื่องจากรายได้กลุ่มเงินเดือนและโบนัส ถูกจำกัดการหักค่าใช้จ่ายไว้สูงสุดเพียง 100,000 บาท (หัก 50%) การลดฐานภาษีจึงต้องพึ่งพา 'ค่าลดหย่อน' เป็นหลัก แนะนำให้เริ่มจากการหักเงินสะสมเข้ากองทุนสำรองเลี้ยงชีพ (PVD) ให้เต็มโควตาบริษัท เพราะเป็นการลงทุนที่ใช้เงินก่อนหักภาษี และควรประเมินฐานภาษีตัวเองก่อนซื้อกองทุนหรือประกันเพิ่มเติม" 
+        },
+        { 
+            category: "การยื่นภาษีคู่สมรส", 
+            keywords: ["คู่สมรส", "ยื่นรวม", "แยกยื่น", "แต่งงาน", "ผัวเมีย", "สามี", "ภรรยา"], 
+            text: "<b>รูปแบบการยื่นภาษี:</b> สำหรับคู่สมรสที่มีรายได้ทั้งคู่ (โดยเฉพาะอาชีพที่มีรายได้ 40(6) ควบคู่กับเงินเดือน) การ <b>'แยกยื่นภาษี'</b> มักเกิดประโยชน์สูงสุด เนื่องจากแต่ละฝ่ายสามารถใช้สิทธิหักค่าใช้จ่ายแบบเหมาได้เต็มจำนวน (สูงสุด 100,000 บาทต่อคน) ช่วยกระจายฐานเงินได้สุทธิไม่ให้ตกอยู่ในขั้นบันไดภาษีที่สูงเกินไป" 
+        },
+        { 
+            category: "กองทุนลดหย่อน", 
+            keywords: ["กองทุน", "esg", "thai esg", "rmf", "ssf", "หุ้น", "เกษียณ", "ลดหย่อน"], 
+            text: "<b>ลำดับการลดหย่อน (Tax Shield Priority):</b> ควรให้ความสำคัญกับการซื้อกองทุน <b>Thai ESG</b> เป็นอันดับแรก (หากยังมีโควตา 300,000 บาท) เนื่องจากมีระยะเวลาถือครองที่ยืดหยุ่นกว่า (เพียง 5 ปีนับจากวันที่ลงทุน) จากนั้นหากต้องการลดฐานภาษีเพิ่มเติม จึงค่อยพิจารณาลงทุนใน <b>RMF หรือ SSF</b>" 
+        },
+        { 
+            category: "เงินบริจาค", 
+            keywords: ["บริจาค", "e-donation", "โรงพยาบาล", "สถานพยาบาล", "มูลนิธิ", "ทำบุญ", "กาชาด"], 
+            text: "<b>การบริหารสัดส่วนเงินบริจาค:</b> เงินบริจาคผ่านระบบ e-Donation ให้กับสถานพยาบาลของรัฐ (เช่น รพ.ศิริราช, สภากาชาด) ได้รับสิทธิลดหย่อน 2 เท่า แนะนำให้ผู้ที่มี <b>'ฐานภาษีสูงกว่า'</b> เป็นผู้รับหน้าที่สแกนบริจาคผ่านแอปธนาคาร เพื่อให้ครอบครัวดึงเงินคืนจากภาษีได้มากที่สุด" 
+        },
+        { 
+            category: "อสังหาริมทรัพย์และบ้าน", 
+            keywords: ["บ้าน", "ดอกเบี้ย", "รีไฟแนนซ์", "อสังหา", "ที่อยู่อาศัย", "คอนโด", "กู้บ้าน"], 
+            text: "<b>เทคนิคดอกเบี้ยบ้าน:</b> หากมีการรีไฟแนนซ์ (Refinance) ในช่วงปีภาษีนี้ คุณสามารถนำใบเสร็จรับเงินที่ระบุดอกเบี้ยจ่ายจาก 'ทั้งธนาคารเก่าและธนาคารใหม่' มารวมกันเพื่อลดหย่อนได้ตามที่จ่ายจริง (รวมกันแล้วต้องไม่เกิน 100,000 บาท)" 
+        },
+        { 
+            category: "ประกันสุขภาพและประกันชีวิต", 
+            keywords: ["ประกัน", "สุขภาพ", "ชีวิต", "บำนาญ", "mrta", "เคลม"], 
+            text: "<b>ประกันสุขภาพและประกันชีวิต:</b> สามารถนำมาลดหย่อนรวมกันได้สูงสุด 100,000 บาท (โดยประกันสุขภาพลดหย่อนได้ตามจริง แต่ไม่เกิน 25,000 บาท) แนะนำให้ใช้สิทธิให้เต็มโควตาเพื่อป้องกันความเสี่ยงและลดภาษีไปในตัว" 
+        },
+        { 
+            category: "วิชาชีพอิสระ (แพทย์/ฟรีแลนซ์)", 
+            keywords: ["หมอ", "แพทย์", "วิชาชีพอิสระ", "รับเหมา", "ฟรีแลนซ์", "40(6)", "คลินิก"], 
+            text: "<b>การบริหารรายได้วิชาชีพอิสระ:</b> รายได้ 40(6) อย่างเช่นวิชาชีพเวชกรรม สามารถหักค่าใช้จ่ายเหมาได้สูงถึง 60% (ไม่มีเพดานสูงสุด) ซึ่งได้เปรียบกว่ารายได้ 40(1) หรือ 40(2) มาก หากมีการรับงานหลายประเภท ควรระบุประเภทเงินได้ในหนังสือรับรองการหักภาษี ณ ที่จ่าย (50 ทวิ) ให้ชัดเจน" 
+        },
+        { 
+            category: "กองทุนสำรองเลี้ยงชีพ (PVD)", 
+            keywords: ["pvd", "สำรองเลี้ยงชีพ", "บริษัท", "hr"], 
+            text: "<b>กองทุนสำรองเลี้ยงชีพ (PVD):</b> เป็นวิธีลดภาษีที่ง่ายที่สุดหากที่ทำงานมีสวัสดิการนี้ แนะนำให้แจ้ง HR เพื่อปรับเพิ่มอัตราหักสะสมเป็นเพดานสูงสุดที่ทำได้ (เช่น 15%) นอกจากประหยัดภาษีแล้วยังเหมือนได้เงินออมก้อนโตในอนาคต" 
+        }
+    ];
+
     function fetchOnlineTips() {
+        let keyword = document.getElementById('taxKeyword').value.trim().toLowerCase();
         let box = document.getElementById('online_tips_box');
-        box.innerHTML = '<span style="font-size:1.2em;">⏳</span> กำลังประมวลผลดึงข้อมูลรายงานการวางแผนภาษีล่าสุด...';
+        box.innerHTML = '<span style="font-size:1.2em;">⏳</span> กำลังค้นหาและประมวลผลข้อมูล...';
         
         setTimeout(() => {
             let timeStr = new Date().toLocaleTimeString('th-TH');
             let dateStr = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
             
+            let resultHTML = "";
+            
+            if (keyword === "") {
+                // แสดง Default Report
+                resultHTML = `
+                    <div style="font-size: 1.05em; margin-bottom: 12px; color: #2c3e50;">
+                        <b>รายงานสรุปกลยุทธ์ภาษีสำหรับคู่สมรส และวิชาชีพอิสระ (ฉบับอัปเดต 2026)</b>
+                    </div>
+                    <p style="margin-top:0; color: #34495e;">จากการวิเคราะห์โครงสร้างภาษี ขอแนะนำแนวทางในการบริหารจัดการเพื่อความคุ้มค่าสูงสุดดังนี้:</p>
+                    <ul style="padding-left: 20px; color: #34495e;">
+                        <li style="margin-bottom: 10px;">${taxDatabase[1].text}</li>
+                        <li style="margin-bottom: 10px;">${taxDatabase[2].text}</li>
+                        <li style="margin-bottom: 10px;">${taxDatabase[3].text}</li>
+                        <li>${taxDatabase[4].text}</li>
+                    </ul>
+                `;
+            } else {
+                // โหมด Search ค้นหาตาม Keyword
+                let matchedTips = taxDatabase.filter(item => 
+                    item.keywords.some(k => k.includes(keyword) || keyword.includes(k)) || 
+                    item.text.toLowerCase().includes(keyword) ||
+                    item.category.toLowerCase().includes(keyword)
+                );
+                
+                if (matchedTips.length > 0) {
+                    resultHTML = `
+                        <div style="font-size: 1.05em; margin-bottom: 12px; color: #2980b9;">
+                            <b>🎯 ผลการค้นหากลยุทธ์สำหรับคีย์เวิร์ด: "${keyword}"</b>
+                        </div>
+                        <ul style="padding-left: 20px; color: #34495e;">
+                            ${matchedTips.map(item => `<li style="margin-bottom: 10px;">${item.text}</li>`).join('')}
+                        </ul>
+                    `;
+                } else {
+                    resultHTML = `
+                        <div style="text-align: center; padding: 15px; color: #e74c3c;">
+                            <span style="font-size: 1.5em;">🔍</span><br>
+                            <b>ไม่พบข้อมูลกลยุทธ์ที่ตรงกับคำว่า "${keyword}"</b><br>
+                            <span style="font-size: 0.9em; color: #7f8c8d;">ลองค้นหาด้วยคำอื่น เช่น เงินเดือน, กองทุน, บริจาค, ประกัน, บ้าน, คู่สมรส, แพทย์</span>
+                        </div>
+                    `;
+                }
+            }
+            
             box.innerHTML = `
-                <div style="font-size: 1.05em; margin-bottom: 12px; color: #2c3e50;">
-                    <b>รายงานสรุปกลยุทธ์ภาษีสำหรับคู่สมรส และวิชาชีพอิสระ (ฉบับอัปเดตล่าสุด)</b>
-                </div>
-                <p style="margin-top:0; color: #34495e;">จากการวิเคราะห์โครงสร้างภาษีปัจจุบัน ขอแนะนำแนวทางในการบริหารจัดการเพื่อความคุ้มค่าสูงสุดดังนี้:</p>
-                <ul style="padding-left: 20px; color: #34495e;">
-                    <li style="margin-bottom: 10px;"><b>รูปแบบการยื่นภาษี:</b> สำหรับคู่สมรสที่มีรายได้ทั้งคู่ (โดยเฉพาะแพทย์หรืออาชีพที่มีรายได้ 40(6) ควบคู่กับเงินเดือน 40(1)) การ <strong>"แยกยื่นภาษี"</strong> มักเกิดประโยชน์สูงสุด เนื่องจากแต่ละฝ่ายสามารถใช้สิทธิหักค่าใช้จ่ายแบบเหมาได้เต็มจำนวน (สูงสุด 100,000 บาทต่อคน) ช่วยกระจายฐานเงินได้สุทธิไม่ให้ตกอยู่ในขั้นบันไดภาษีที่สูงเกินไป</li>
-                    <li style="margin-bottom: 10px;"><b>ลำดับการลดหย่อน (Tax Shield Priority):</b> ควรให้ความสำคัญกับการซื้อกองทุน <strong>Thai ESG</strong> เป็นอันดับแรก (หากยังมีโควตา) เนื่องจากมีระยะเวลาถือครองที่ยืดหยุ่นกว่า (เพียง 5 ปีนับจากวันที่ลงทุน) จากนั้นหากต้องการลดฐานภาษีเพิ่มเติม จึงค่อยพิจารณาลงทุนใน <strong>RMF หรือ SSF</strong> ตามระดับความเสี่ยงที่ยอมรับได้</li>
-                    <li style="margin-bottom: 10px;"><b>การบริหารสัดส่วนเงินบริจาค:</b> เงินบริจาคผ่านระบบ e-Donation ให้กับสถานพยาบาลของรัฐ (เช่น รพ.ศิริราช, สภากาชาด) ได้รับสิทธิลดหย่อนถึง 2 เท่า แนะนำให้ผู้ที่มี <strong>"ฐานภาษีสูงกว่า"</strong> เป็นผู้รับหน้าที่สแกนบริจาคผ่านแอปธนาคาร เพื่อให้ครอบครัวดึงเงินคืนจากภาษีได้มากที่สุด</li>
-                    <li><b>เทคนิคดอกเบี้ยบ้าน:</b> หากมีการรีไฟแนนซ์ (Refinance) ในช่วงปีภาษีนี้ คุณสามารถนำใบเสร็จรับเงินที่ระบุดอกเบี้ยจ่ายจาก "ทั้งธนาคารเก่าและธนาคารใหม่" มารวมกันเพื่อลดหย่อนได้ตามจ่ายจริง แต่รวมกันแล้วต้องไม่เกิน 100,000 บาท</li>
-                </ul>
+                ${resultHTML}
                 <div style="text-align: right; font-size: 0.85em; color: #7f8c8d; margin-top: 15px; border-top: 1px dashed #bdc3c7; padding-top: 10px;">
-                    ดึงข้อมูลอัปเดตล่าสุดเมื่อ: ${dateStr} เวลา ${timeStr}
+                    🔄 อัปเดตข้อมูลล่าสุดเมื่อ: ${dateStr} เวลา ${timeStr}
                 </div>
             `;
-        }, 800);
+        }, 500);
     }
 
     window.onload = function() {
         calculate();
-        fetchOnlineTips();
+        fetchOnlineTips(); // โหลด Default ตอนเปิดเว็บ
     };
 </script>
 </body>
