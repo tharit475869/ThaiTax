@@ -23,7 +23,7 @@
         .guide-content ol { margin-top: 5px; padding-left: 20px; }
         .guide-content li { margin-bottom: 5px; }
 
-        /* ================= Actions (CSV) ================= */
+        /* ================= Actions ================= */
         .action-section { text-align: center; margin-bottom: 25px; padding: 15px; background: #eaf2f8; border-radius: 8px; display: flex; justify-content: center; gap: 15px; align-items: center; flex-wrap: wrap;}
         .btn { display: inline-flex; justify-content: center; align-items: center; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; border: none; font-size: 1em; text-align: center; width: auto; }
         .btn-upload { background: #2980b9; color: white; }
@@ -31,50 +31,39 @@
         .btn-export { background: #27ae60; color: white; }
         .btn-export:hover { background: #1e8449; }
         
-        /* ================= Layout & Grid ================= */
+        /* ================= Layout & Tabs ================= */
         .grid-container { display: flex; flex-wrap: wrap; gap: 20px; }
         .person-card { flex: 1 1 300px; min-width: 400px; border: 1px solid #e1e8ed; border-radius: 10px; background: #ffffff; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .person-header { background: #2c3e50; color: #fff; padding: 12px; text-align: center; font-size: 1.1em; font-weight: bold; }
         
-        /* ================= Tabs ================= */
         .tabs { display: flex; background: #f8f9fa; border-bottom: 2px solid #2980b9; }
         .tab-button { flex: 1; padding: 12px 10px; text-align: center; background: none; border: none; font-size: 0.95em; font-weight: bold; cursor: pointer; color: #95a5a6; transition: 0.3s; }
         .tab-button.active { background: #2980b9; color: #fff; }
-        .tab-content { display: none; padding: 15px; height: 620px; overflow-y: auto; }
+        .tab-content { display: none; padding: 15px; height: 680px; overflow-y: auto; }
         .tab-content.active { display: block; }
         
-        /* ================= Deduction Group Box ================= */
+        /* ================= Deduction Groups & Tooltips ================= */
         .deduct-group { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
         .group-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #1e293b; font-size: 0.92em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #cbd5e1; flex-wrap: wrap; gap: 6px; }
         .group-title { color: #1e3a8a; }
         .group-badge { font-size: 0.82em; color: #1e40af; background: #dbeafe; padding: 3px 8px; border-radius: 4px; border: 1px solid #bfdbfe; font-weight: 600; white-space: nowrap; }
         .group-badge.capped { color: #065f46; background: #d1fae5; border-color: #a7f3d0; }
+        .group-badge.warning { color: #b45309; background: #fef3c7; border-color: #fde68a; }
 
-        /* ================= Tooltips (Icon i) ================= */
-        .info-icon { display: inline-flex; justify-content: center; align-items: center; width: 18px; height: 18px; border-radius: 50%; background: #95a5a6; color: #fff; font-size: 11px; font-weight: bold; cursor: help; margin-left: 5px; position: relative; transition: background 0.3s; }
+        /* การทำ Tooltip แบบใหม่ (รองรับการแตะบนมือถือ) */
+        .info-icon { display: inline-flex; justify-content: center; align-items: center; width: 18px; height: 18px; border-radius: 50%; background: #95a5a6; color: #fff; font-size: 11px; font-weight: bold; cursor: pointer; margin-left: 5px; position: relative; transition: background 0.2s; -webkit-tap-highlight-color: transparent;}
         .info-icon:hover { background: #3498db; }
-        .info-icon:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2c3e50;
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            white-space: normal;
-            width: max-content;
-            max-width: 220px;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-weight: normal;
-            text-align: left;
-            line-height: 1.4;
-        }
+        
+        .tooltip-text { display: none; position: absolute; bottom: 135%; left: 50%; transform: translateX(-50%); background: #2c3e50; color: #fff; padding: 10px 14px; border-radius: 6px; font-size: 12px; white-space: normal; width: max-content; max-width: 250px; z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: normal; text-align: left; line-height: 1.5; pointer-events: none; }
+        .tooltip-text::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px; border-width: 6px; border-style: solid; border-color: #2c3e50 transparent transparent transparent; }
+        
+        /* เมื่อมีการกด (JS จะใส่ class 'active' ให้) */
+        .info-icon.active .tooltip-text { display: block; }
+        
+        /* รองรับ Hover บนคอมพิวเตอร์ตามปกติ */
+        @media (hover: hover) { .info-icon:hover .tooltip-text { display: block; } }
 
-        /* ================= Inputs & Warn Msg ================= */
+        /* ================= Inputs ================= */
         .form-group { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; padding: 4px 0; flex-wrap: wrap; gap: 8px;}
         .form-group label { flex: 1 1 50%; font-size: 0.88em; color: #34495e; min-width: 140px; display: flex; align-items: center; margin-top: 6px;}
         .input-wrapper { display: flex; flex-direction: column; align-items: flex-end; flex: 1 1 auto; max-width: 130px;}
@@ -83,7 +72,7 @@
         input:disabled { background: #ecf0f1; color: #7f8c8d; }
         .warn-msg { color: #e74c3c; font-size: 0.75em; margin-top: 4px; display: none; text-align: right; width: 100%; font-weight: bold;}
 
-        /* ... อื่นๆ คงเดิม ... */
+        /* รายได้ */
         .form-group-complex { background: #fff; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #eee; }
         .form-group-complex label { display: block; font-size: 0.9em; color: #2c3e50; margin-bottom: 8px; font-weight: bold; }
         .calc-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -93,14 +82,13 @@
         
         details.sub-detail { background: #f8f9fa; border-radius: 6px; padding: 10px; margin-bottom: 15px; border: 1px solid #e1e8ed; }
         summary.sub-summary { font-weight: bold; color: #2980b9; cursor: pointer; outline: none; padding: 5px 0; }
-        
         .section-title { font-weight: bold; color: #2980b9; margin-top: 10px; margin-bottom: 8px; font-size: 0.95em; padding-bottom: 4px; border-bottom: 2px solid #eaf2f8; }
         
         .result-panel { background: #f8f9fa; padding: 15px; border-top: 1px solid #e1e8ed; }
         .res-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95em; color: #34495e; }
         .res-row.highlight { font-weight: bold; font-size: 1.1em; color: #c0392b; margin-top: 10px; padding-top: 10px; border-top: 1px solid #bdc3c7; }
         
-        /* ================= Recommendation Panel ================= */
+        /* ================= Recommendation & Simulator ================= */
         .advice-panel { background: #fff; border-left: 6px solid #f39c12; padding: 20px; margin-top: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .comparison-box { background: #fdfae6; border: 1px solid #f9e28f; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 1.1em; color: #2c3e50; line-height: 1.6;}
         .best-choice { background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; text-align: center; font-size: 1.2em; font-weight: bold; margin-bottom: 25px; border: 1px solid #c3e6cb; }
@@ -108,70 +96,44 @@
         .bracket-box { background: #f4f6f7; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #ecf0f1; flex: 1 1 300px; }
         .bracket-title { font-weight: bold; color: #2c3e50; font-size: 1.1em; margin-bottom: 8px; border-bottom: 1px dashed #bdc3c7; padding-bottom: 5px;}
         
-        /* ================= Search Bar ================= */
+        /* Search Bar */
         .tips-header { margin-bottom: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 15px; }
         .tips-title { font-weight: bold; color: #2c3e50; font-size: 1.15em; margin-bottom: 10px; }
-        
         .tips-search-bar { display: flex; gap: 10px; flex-wrap: wrap; }
         .tips-search-bar input[type="text"] { flex: 1 1 200px; max-width: none; padding: 12px 15px; font-size: 1em; border: 2px solid #bdc3c7; border-radius: 6px; }
         .tips-search-bar input[type="text"]:focus { border-color: #3498db; outline: none; }
-        
         .refresh-btn { background: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 1em; font-weight: bold; transition: 0.2s; white-space: nowrap; flex: 0 1 auto;}
         .refresh-btn:hover { background: #2980b9; }
-        .online-tips-content { background: #f4f6f7; padding: 20px; border-radius: 6px; border-left: 4px solid #3498db; margin-bottom: 25px; font-size: 0.95em; color: #34495e; min-height: 80px; line-height: 1.6; overflow-x: auto;}
-        .online-tips-content b { color: #2980b9; }
-
-        /* ================= Mode Selector ================= */
+        .online-tips-content { background: #f4f6f7; padding: 20px; border-radius: 6px; border-left: 4px solid #3498db; margin-bottom: 25px; font-size: 0.95em; color: #34495e; line-height: 1.6; overflow-x: auto;}
+        
+        /* Simulator Settings */
         .filing-options-sim { background: #fff; padding: 15px; border-radius: 8px; border: 2px solid #3498db; text-align: center; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15); }
         .filing-options-sim .radio-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 15px; }
         .filing-options-sim label { cursor: pointer; font-weight: bold; color: #2c3e50; font-size: 1.05em; display: flex; align-items: center; gap: 8px;}
-        .filing-options-sim input[type="radio"] { transform: scale(1.3); margin: 0; }
-
-        /* ================= Simulator Styles ================= */
-        .sim-section { margin-top: 15px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e1e8ed; }
-        .sim-row { margin-bottom: 25px; }
-        .sim-label { display: flex; justify-content: space-between; font-size: 0.9em; color: #2c3e50; margin-bottom: 5px; position: relative; z-index: 5; background: #fff; padding-bottom: 5px; }
-        .sim-limit-text { color: #7f8c8d; font-size: 0.85em; font-weight: bold; }
         
         .slider-wrapper { position: relative; margin: 90px 0 15px 0; height: 30px; }
         .marker-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; }
         input[type="range"] { position: absolute; width: 100%; top: 5px; margin: 0; z-index: 2; cursor: pointer; }
         .sim-marker { position: absolute; top: 0px; width: 2px; background: #e74c3c; pointer-events: none; transition: height 0.3s;}
-        
         .marker-label { position: absolute; left: 50%; transform: translateX(-50%); font-size: 0.75em; background: #fff; border: 1px solid #e74c3c; color: #e74c3c; padding: 4px 8px; border-radius: 4px; white-space: nowrap; pointer-events: auto; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .marker-label:hover { background: #fdfae6; transform: translateX(-50%) scale(1.05); box-shadow: 0 4px 8px rgba(0,0,0,0.15); z-index: 10; }
-        .marker-label.recommend { background: #fff8e1; border-color: #f39c12; color: #d35400; font-weight: bold; border-width: 2px; z-index: 3; }
-
+        .marker-label:hover { background: #fdfae6; transform: translateX(-50%) scale(1.05); z-index: 10; }
+        
         .sim-result-box { background: #eaf2f8; padding: 15px; border-radius: 6px; text-align: center; margin-top: 15px; border: 1px solid #bee5eb; }
-        .sim-save-amt { font-size: 1.2em; font-weight: bold; color: #27ae60; }
         .sim-final-tax { font-size: 1.2em; font-weight: bold; color: #c0392b; margin-top: 10px; border-top: 1px dashed #bdc3c7; padding-top: 10px; }
-        .joint-sim-result { background: #eaf2f8; border: 2px solid #3498db; padding: 20px; border-radius: 8px; text-align: center; margin-top: 20px; box-shadow: 0 4px 10px rgba(52,152,219,0.1); }
-        .joint-sim-result h3 { margin-top: 0; color: #2c3e50; margin-bottom: 15px; font-size: 1.2em;}
 
-        /* ================= Footer ================= */
-        .footer-credit { margin-top: 40px; padding-top: 25px; border-top: 1px dashed #bdc3c7; text-align: center; color: #7f8c8d; font-size: 0.9em; line-height: 1.5;}
-        .footer-credit p { margin: 8px 0; }
-        .footer-credit b { color: #2c3e50; }
         .qr-container { margin-top: 20px; display: flex; justify-content: center; }
         .qr-container img { width: 100%; max-width: 260px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 2px solid #ecf0f1; }
 
         /* ================= Responsive (Mobile) ================= */
         @media (max-width: 768px) {
-            .container { padding: 15px; border-radius: 8px; width: 100%; }
-            h2 { font-size: 1.3em; margin-bottom: 15px;}
-            .action-section { flex-direction: column; gap: 10px; padding: 15px; }
-            .btn { width: 100%; box-sizing: border-box; }
-            .grid-container { flex-direction: column; }
             .person-card { flex: 1 1 100%; min-width: 0; }
-            .tips-search-bar { flex-direction: column; }
-            .tips-search-bar input[type="text"], .tips-search-bar button { width: 100%; box-sizing: border-box; }
-            .filing-options-sim .radio-group { flex-direction: column; align-items: flex-start; gap: 12px; display: inline-flex;}
             .form-group label { flex: 1 1 100%; margin-bottom: 4px; }
             .input-wrapper { max-width: none; width: 100%; }
-            .info-icon:hover::after { left: auto; right: 0; transform: none; max-width: 200px;} /* ป้องกันกล่อง Tooltip ล้นจอมือถือ */
             .tab-content { height: auto; max-height: none; overflow-y: visible; }
-            .slider-wrapper { margin: 100px 0 15px 0; }
-            .advice-panel { padding: 15px; border-left-width: 4px; }
+            
+            /* ป้องกัน Tooltip ตกขอบจอเมื่อดูบนมือถือ */
+            .tooltip-text { left: auto; right: -10px; transform: none; width: 240px; }
+            .tooltip-text::after { left: auto; right: 15px; margin-left: 0; }
         }
     </style>
 </head>
@@ -185,28 +147,18 @@
         <summary>📖 คู่มือการใช้งานเบื้องต้น (คลิกเพื่ออ่าน)</summary>
         <div class="guide-content">
             <h4>💡 วิธีที่ 1: กรอกข้อมูลโดยตรง (Manual)</h4>
-            <p>คุณสามารถสลับแท็บ "หมวดรายได้" และ "หมวดค่าลดหย่อน" ของทั้งสามีและภรรยา แล้วกรอกตัวเลขลงไปได้เลย โปรแกรมจะคำนวณและเปรียบเทียบการยื่นรวม/แยก ให้โดยอัตโนมัติที่ด้านล่าง</p>
-            
+            <p>คุณสามารถสลับแท็บ "หมวดรายได้" และ "หมวดค่าลดหย่อน" ของทั้งสามีและภรรยา แล้วกรอกตัวเลขลงไปได้เลย</p>
             <h4 style="margin-top: 15px;">💡 วิธีที่ 2: นำเข้าผ่านไฟล์ CSV (รวดเร็ว)</h4>
-            <ol>
-                <li>กดปุ่ม <b>"💾 เซฟข้อมูล (Export CSV)"</b> ด้านล่างนี้ เพื่อดาวน์โหลดไฟล์ Template ออกมาก่อน</li>
-                <li>เปิดไฟล์ <code>my_tax_plan.csv</code> ด้วยโปรแกรม Excel, Numbers หรือ Google Sheets</li>
-                <li>แก้ไขตัวเลขในคอลัมน์ <b>Husband_Amount</b> (สามี) และ <b>Wife_Amount</b> (ภรรยา) ตามรายการที่มี และทำการ Save ทับไฟล์เดิม (เป็นนามสกุล .csv)</li>
-                <li>กดปุ่ม <b>"📂 นำเข้าข้อมูล (Upload CSV)"</b> แล้วเลือกไฟล์ที่คุณเพิ่งเซฟ ข้อมูลทั้งหมดจะถูกดึงเข้าโปรแกรมทันที</li>
-            </ol>
-            
+            <p>กดปุ่ม <b>"💾 เซฟข้อมูล"</b> ด้านล่างเพื่อโหลดไฟล์ Template เปิดแก้ใน Excel แล้วกดปุ่ม <b>"📂 นำเข้าข้อมูล"</b> โปรแกรมจะดึงตัวเลขมาใส่ให้อัตโนมัติ</p>
             <h4 style="margin-top: 15px;">🎯 วิธีใช้ Simulator (จำลองการซื้อลดหย่อนเพิ่ม)</h4>
-            <p>เมื่อกรอกข้อมูลเรียบร้อยแล้ว ให้เลื่อนลงไปที่ <b>แผงจำลองลดหย่อนเพิ่ม</b> ด้านล่าง คุณสามารถเลือก Option ได้ว่าอยากจำลองในโหมด <b>"แยกยื่น"</b> หรือ <b>"ยื่นรวม"</b><br>
-            จากนั้นให้เลื่อนแถบ Slider เพื่อดูว่าควรซื้อกองทุน Thai ESG หรือ RMF/SSF เพิ่มอีกกี่บาท จึงจะคุ้มค่าที่สุด โดยแนะนำให้คลิกที่ป้าย <b>"⭐ คุ้มสุด"</b> เพื่อให้ระบบล็อกยอดซื้อในจุดที่ฐานภาษีลดลงพอดี!</p>
+            <p>เลื่อนลงไปที่ <b>แผงจำลองลดหย่อนเพิ่ม</b> ด้านล่าง แล้วลองลากแถบเพื่อหาจุดที่คุ้มที่สุด (แนะนำให้กดปุ่ม "⭐ คุ้มสุด" ให้ระบบล็อกยอดซื้อที่ประหยัดภาษีให้พอดี)</p>
         </div>
     </details>
 
     <div class="action-section">
         <label for="csvFileInput" class="btn btn-upload">📂 นำเข้าข้อมูล (Upload CSV)</label>
         <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleFileUpload(event)">
-        
         <button class="btn btn-export" onclick="exportToCSV()">💾 เซฟข้อมูล (Export CSV)</button>
-        
         <div id="fileStatus" style="width: 100%; color: #27ae60; font-size: 0.95em; font-weight: bold; margin-top: 5px;"></div>
     </div>
 
@@ -216,7 +168,7 @@
             <div class="person-header">ภรรยา (ข้อมูลปัจจุบัน)</div>
             <div class="tabs">
                 <button class="tab-button w-tab active" onclick="openTab('w', 'income')">💵 หมวดรายได้</button>
-                <button class="tab-button w-tab" onclick="openTab('w', 'deduct')">🛡️ หมวดค่าลดหย่อน</button>
+                <button class="tab-button w-tab" onclick="openTab('w', 'deduct')">🛡️ หมวดลดหย่อน</button>
             </div>
             
             <div id="w_income" class="tab-content w-content active">
@@ -245,16 +197,26 @@
                 
                 <div class="deduct-group">
                     <div class="group-header"><span class="group-title">👨‍👩‍👧 กลุ่มส่วนตัวและครอบครัว</span></div>
-                    
                     <div class="form-group">
-                        <label>ส่วนตัว (ระบบคำนวณให้)</label>
+                        <label>ส่วนตัว</label>
                         <div class="input-wrapper"><input type="text" value="60,000" disabled></div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>บิดา/มารดา <span class="info-icon" data-tooltip="ลดหย่อนได้คนละ 30,000 บาท สูงสุด 4 คน (บิดา/มารดาของตนเองและคู่สมรส) ต้องอายุ 60 ปีขึ้นไปและมีรายได้ไม่เกิน 30,000 บ./ปี">i</span></label>
+                        <label>บิดา/มารดา <span class="info-icon" data-tooltip="ลดหย่อนได้คนละ 30,000 บาท (บิดา/มารดาของตนเองและคู่สมรส) เงื่อนไข: อายุ 60 ปีขึ้นไปและมีรายได้ไม่เกิน 30,000 บาท/ปี">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_parents" data-max="120000" placeholder="0" oninput="formatAndCalc(this)">
+                            <div class="warn-msg"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- แยกประกันสังคมออกมาเป็นกลุ่มเดี่ยว -->
+                <div class="deduct-group">
+                    <div class="group-header"><span class="group-title">💼 กลุ่มประกันสังคม</span></div>
+                    <div class="form-group">
+                        <label>ประกันสังคม <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 9,000 บาทต่อปี (ไม่ได้นับรวมในเพดานประกันชีวิต)">i</span></label>
+                        <div class="input-wrapper">
+                            <input type="text" inputmode="numeric" id="w_d_ss" data-max="9000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
@@ -263,27 +225,17 @@
                 <div class="deduct-group">
                     <div class="group-header">
                         <span class="group-title">🛡️ กลุ่มประกันชีวิตและสุขภาพ</span>
-                        <span class="group-badge" id="w_grp_life_badge">ยอดรวม: 0 / 100,000 บาท</span>
+                        <span class="group-badge" id="w_grp_life_badge">ยอดรวม: 0 / 100k</span>
                     </div>
-                    
                     <div class="form-group">
-                        <label>ประกันสังคม <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 9,000 บาทต่อปี">i</span></label>
-                        <div class="input-wrapper">
-                            <input type="text" inputmode="numeric" id="w_d_ss" data-max="9000" placeholder="0" oninput="formatAndCalc(this)">
-                            <div class="warn-msg"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>ประกันชีวิตทั่วไป/MRTA <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 100,000 บาท (โดยเมื่อนำไปรวมกับประกันสุขภาพแล้ว ต้องไม่เกิน 100,000 บ. ด้วย)">i</span></label>
+                        <label>ประกันชีวิตทั่วไป/MRTA <span class="info-icon" data-tooltip="เบี้ยประกันชีวิตลดหย่อนได้ตามจริง สูงสุด 100,000 บาท (เมื่อนำไปรวมกับประกันสุขภาพแล้ว ต้องไม่เกิน 100,000 บ.)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_life" data-max="100000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>ประกันสุขภาพ <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 25,000 บาท">i</span></label>
+                        <label>ประกันสุขภาพ <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง แต่กฎหมายกำหนดเพดานไว้สูงสุดไม่เกิน 25,000 บาท">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_health" data-max="25000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
@@ -293,18 +245,16 @@
 
                 <div class="deduct-group">
                     <div class="group-header">
-                        <span class="group-title">📈 กลุ่มออมเพื่อการเกษียณ (PVD+RMF/SSF)</span>
-                        <span class="group-badge" id="w_grp_retire_badge">ยอดรวม: 0 / 500,000 บาท</span>
+                        <span class="group-title">📈 กลุ่มออมเพื่อการเกษียณ</span>
+                        <span class="group-badge" id="w_grp_retire_badge">ยอดรวม: 0 / 500k</span>
                     </div>
-                    
                     <div class="form-group">
-                        <label>กองทุนสำรองเลี้ยงชีพ <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 15% ของค่าจ้าง และไม่เกิน 500,000 บาท (เมื่อรวมกับกองทุนกลุ่มเกษียณอื่นๆ)">i</span></label>
+                        <label>กองทุนสำรองเลี้ยงชีพ <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 15% ของค่าจ้าง และไม่เกิน 500,000 บาท (เมื่อรวมกับกองทุนกลุ่มเกษียณอื่นๆ เช่น RMF, SSF)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_pvd" data-max="500000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
-                    
                     <div class="form-group">
                         <label>กองทุน RMF / SSF <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 30% ของเงินได้ที่ต้องเสียภาษี และไม่เกิน 500,000 บาท (เมื่อรวมกับกองทุนกลุ่มเกษียณอื่นๆ)">i</span></label>
                         <div class="input-wrapper">
@@ -317,11 +267,10 @@
                 <div class="deduct-group">
                     <div class="group-header">
                         <span class="group-title">🌱 กลุ่มกองทุน Thai ESG</span>
-                        <span class="group-badge" id="w_grp_esg_badge">ยอดรวม: 0 / 300,000 บาท</span>
+                        <span class="group-badge" id="w_grp_esg_badge">ยอดรวม: 0 / 300k</span>
                     </div>
-                    
                     <div class="form-group">
-                        <label>กองทุน Thai ESG <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 30% ของเงินได้ที่ต้องเสียภาษี และสูงสุดไม่เกิน 300,000 บาท">i</span></label>
+                        <label>กองทุน Thai ESG <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 30% ของเงินได้ และสูงสุดไม่เกิน 300,000 บาท (โควตานี้แยกต่างหาก ไม่รวมกับกลุ่ม 500,000 บ.)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_esg" data-max="300000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
@@ -331,17 +280,15 @@
 
                 <div class="deduct-group">
                     <div class="group-header"><span class="group-title">🏠 กลุ่มอสังหาฯ และนโยบายรัฐ</span></div>
-                    
                     <div class="form-group">
-                        <label>ดอกเบี้ยบ้าน <span class="info-icon" data-tooltip="ลดหย่อนดอกเบี้ยกู้ยืมเพื่อที่อยู่อาศัยตามจริง สูงสุดไม่เกิน 100,000 บาท">i</span></label>
+                        <label>ดอกเบี้ยบ้าน <span class="info-icon" data-tooltip="ลดหย่อนดอกเบี้ยกู้ยืมเพื่อที่อยู่อาศัยตามที่จ่ายจริง สูงสุดไม่เกิน 100,000 บาทต่อปี">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_home" data-max="100000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Easy E-Receipt <span class="info-icon" data-tooltip="ลดหย่อนตามที่จ่ายจริง สูงสุดไม่เกิน 50,000 บาท (ต้องเป็น e-Tax Invoice/e-Receipt เท่านั้น)">i</span></label>
+                        <label>Easy E-Receipt <span class="info-icon" data-tooltip="ลดหย่อนตามที่จ่ายจริง สูงสุดไม่เกิน 50,000 บาท (ต้องใช้ใบกำกับภาษีเต็มรูปแบบอิเล็กทรอนิกส์ e-Tax Invoice/e-Receipt เท่านั้น)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_shop" data-max="50000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
@@ -350,18 +297,21 @@
                 </div>
 
                 <div class="deduct-group">
-                    <div class="group-header"><span class="group-title">❤️ กลุ่มเงินบริจาค</span></div>
-                    
+                    <div class="group-header">
+                        <span class="group-title">❤️ กลุ่มเงินบริจาค</span>
+                    </div>
+                    <div id="w_grp_don_badge" style="font-size: 0.85em; color: #b45309; margin-bottom: 8px; background: #fef3c7; padding: 6px 10px; border-radius: 4px; border: 1px solid #fde68a;">
+                        <!-- JS จะอัปเดตยอดเพดานบริจาคแบบ Real-time ตรงนี้ -->
+                    </div>
                     <div class="form-group">
-                        <label>บริจาค e-Donation <span class="info-icon" data-tooltip="ลดหย่อนได้ 2 เท่าของเงินบริจาคจริง (เช่น บริจาค รพ.รัฐ, การศึกษา) แต่รวมแล้วต้องไม่เกิน 10% ของเงินได้หลังหักค่าลดหย่อนอื่น">i</span></label>
+                        <label>บริจาค 2 เท่า (e-Donation) <span class="info-icon" data-tooltip="ได้สิทธิ 2 เท่า (เช่น บริจาค รพ.รัฐ, สถานศึกษา) เพดานสูงสุดคือ 10% ของเงินได้หลังหักค่าลดหย่อนข้ออื่นๆ ไปแล้วทั้งหมด (โปรแกรมจะคำนวณและแสดงเพดานให้ด้านบน)">i</span></label>
                         <div class="input-wrapper">
-                            <!-- บริจาคไม่มี max ตายตัว เพราะคิดเป็น 10% ของ net income -->
+                            <!-- เราไม่ใส่ data-max เพราะมัน dynamic คำนวณจากรายได้ -->
                             <input type="text" inputmode="numeric" id="w_d_don2" placeholder="0" oninput="formatAndCalc(this)">
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>บริจาคทั่วไป <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง แต่ต้องไม่เกิน 10% ของเงินได้หลังหักค่าลดหย่อนอื่นและหลังหัก e-Donation แล้ว">i</span></label>
+                        <label>บริจาคทั่วไป <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง เพดานสูงสุดคือ 10% ของเงินได้ที่เหลือจากการหักลดหย่อนทุกอย่าง รวมถึงหักการบริจาค 2 เท่าไปแล้ว">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="w_d_don1" placeholder="0" oninput="formatAndCalc(this)">
                         </div>
@@ -382,7 +332,7 @@
             <div class="person-header">สามี (ข้อมูลปัจจุบัน)</div>
             <div class="tabs">
                 <button class="tab-button h-tab active" onclick="openTab('h', 'income')">💵 หมวดรายได้</button>
-                <button class="tab-button h-tab" onclick="openTab('h', 'deduct')">🛡️ หมวดค่าลดหย่อน</button>
+                <button class="tab-button h-tab" onclick="openTab('h', 'deduct')">🛡️ หมวดลดหย่อน</button>
             </div>
             
             <div id="h_income" class="tab-content h-content active">
@@ -411,14 +361,12 @@
                 
                 <div class="deduct-group">
                     <div class="group-header"><span class="group-title">👨‍👩‍👧 กลุ่มส่วนตัวและครอบครัว</span></div>
-                    
                     <div class="form-group">
-                        <label>ส่วนตัว (ระบบคำนวณให้)</label>
+                        <label>ส่วนตัว</label>
                         <div class="input-wrapper"><input type="text" value="60,000" disabled></div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>บิดา/มารดา <span class="info-icon" data-tooltip="ลดหย่อนได้คนละ 30,000 บาท สูงสุด 4 คน (บิดา/มารดาของตนเองและคู่สมรส) ต้องอายุ 60 ปีขึ้นไปและมีรายได้ไม่เกิน 30,000 บ./ปี">i</span></label>
+                        <label>บิดา/มารดา <span class="info-icon" data-tooltip="ลดหย่อนได้คนละ 30,000 บาท (บิดา/มารดาของตนเองและคู่สมรส) เงื่อนไข: อายุ 60 ปีขึ้นไปและมีรายได้ไม่เกิน 30,000 บาท/ปี">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_parents" data-max="120000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
@@ -427,29 +375,30 @@
                 </div>
 
                 <div class="deduct-group">
-                    <div class="group-header">
-                        <span class="group-title">🛡️ กลุ่มประกันชีวิตและสุขภาพ</span>
-                        <span class="group-badge" id="h_grp_life_badge">ยอดรวม: 0 / 100,000 บาท</span>
-                    </div>
-                    
+                    <div class="group-header"><span class="group-title">💼 กลุ่มประกันสังคม</span></div>
                     <div class="form-group">
-                        <label>ประกันสังคม <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 9,000 บาทต่อปี">i</span></label>
+                        <label>ประกันสังคม <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 9,000 บาทต่อปี (ไม่ได้นับรวมในเพดานประกันชีวิต)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_ss" data-max="9000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
-                    
+                </div>
+
+                <div class="deduct-group">
+                    <div class="group-header">
+                        <span class="group-title">🛡️ กลุ่มประกันชีวิตและสุขภาพ</span>
+                        <span class="group-badge" id="h_grp_life_badge">ยอดรวม: 0 / 100k</span>
+                    </div>
                     <div class="form-group">
-                        <label>ประกันชีวิตทั่วไป/MRTA <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 100,000 บาท (โดยเมื่อนำไปรวมกับประกันสุขภาพแล้ว ต้องไม่เกิน 100,000 บ. ด้วย)">i</span></label>
+                        <label>ประกันชีวิตทั่วไป/MRTA <span class="info-icon" data-tooltip="เบี้ยประกันชีวิตลดหย่อนได้ตามจริง สูงสุด 100,000 บาท (เมื่อนำไปรวมกับประกันสุขภาพแล้ว ต้องไม่เกิน 100,000 บ.)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_life" data-max="100000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>ประกันสุขภาพ <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 25,000 บาท">i</span></label>
+                        <label>ประกันสุขภาพ <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง แต่กฎหมายกำหนดเพดานไว้สูงสุดไม่เกิน 25,000 บาท">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_health" data-max="25000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
@@ -459,18 +408,16 @@
 
                 <div class="deduct-group">
                     <div class="group-header">
-                        <span class="group-title">📈 กลุ่มออมเพื่อการเกษียณ (PVD+RMF/SSF)</span>
-                        <span class="group-badge" id="h_grp_retire_badge">ยอดรวม: 0 / 500,000 บาท</span>
+                        <span class="group-title">📈 กลุ่มออมเพื่อการเกษียณ</span>
+                        <span class="group-badge" id="h_grp_retire_badge">ยอดรวม: 0 / 500k</span>
                     </div>
-                    
                     <div class="form-group">
-                        <label>กองทุนสำรองเลี้ยงชีพ <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 15% ของค่าจ้าง และไม่เกิน 500,000 บาท (เมื่อรวมกับกองทุนกลุ่มเกษียณอื่นๆ)">i</span></label>
+                        <label>กองทุนสำรองเลี้ยงชีพ <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 15% ของค่าจ้าง และไม่เกิน 500,000 บาท (เมื่อรวมกับกองทุนกลุ่มเกษียณอื่นๆ เช่น RMF, SSF)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_pvd" data-max="500000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
-                    
                     <div class="form-group">
                         <label>กองทุน RMF / SSF <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 30% ของเงินได้ที่ต้องเสียภาษี และไม่เกิน 500,000 บาท (เมื่อรวมกับกองทุนกลุ่มเกษียณอื่นๆ)">i</span></label>
                         <div class="input-wrapper">
@@ -483,11 +430,10 @@
                 <div class="deduct-group">
                     <div class="group-header">
                         <span class="group-title">🌱 กลุ่มกองทุน Thai ESG</span>
-                        <span class="group-badge" id="h_grp_esg_badge">ยอดรวม: 0 / 300,000 บาท</span>
+                        <span class="group-badge" id="h_grp_esg_badge">ยอดรวม: 0 / 300k</span>
                     </div>
-                    
                     <div class="form-group">
-                        <label>กองทุน Thai ESG <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 30% ของเงินได้ที่ต้องเสียภาษี และสูงสุดไม่เกิน 300,000 บาท">i</span></label>
+                        <label>กองทุน Thai ESG <span class="info-icon" data-tooltip="ลดหย่อนได้ไม่เกิน 30% ของเงินได้ และสูงสุดไม่เกิน 300,000 บาท (โควตานี้แยกต่างหาก ไม่รวมกับกลุ่ม 500,000 บ.)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_esg" data-max="300000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
@@ -497,17 +443,15 @@
 
                 <div class="deduct-group">
                     <div class="group-header"><span class="group-title">🏠 กลุ่มอสังหาฯ และนโยบายรัฐ</span></div>
-                    
                     <div class="form-group">
-                        <label>ดอกเบี้ยบ้าน <span class="info-icon" data-tooltip="ลดหย่อนดอกเบี้ยกู้ยืมเพื่อที่อยู่อาศัยตามจริง สูงสุดไม่เกิน 100,000 บาท">i</span></label>
+                        <label>ดอกเบี้ยบ้าน <span class="info-icon" data-tooltip="ลดหย่อนดอกเบี้ยกู้ยืมเพื่อที่อยู่อาศัยตามที่จ่ายจริง สูงสุดไม่เกิน 100,000 บาทต่อปี">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_home" data-max="100000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Easy E-Receipt <span class="info-icon" data-tooltip="ลดหย่อนตามที่จ่ายจริง สูงสุดไม่เกิน 50,000 บาท (ต้องเป็น e-Tax Invoice/e-Receipt เท่านั้น)">i</span></label>
+                        <label>Easy E-Receipt <span class="info-icon" data-tooltip="ลดหย่อนตามที่จ่ายจริง สูงสุดไม่เกิน 50,000 บาท (ต้องใช้ใบกำกับภาษีเต็มรูปแบบอิเล็กทรอนิกส์ e-Tax Invoice/e-Receipt เท่านั้น)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_shop" data-max="50000" placeholder="0" oninput="formatAndCalc(this)">
                             <div class="warn-msg"></div>
@@ -516,17 +460,20 @@
                 </div>
 
                 <div class="deduct-group">
-                    <div class="group-header"><span class="group-title">❤️ กลุ่มเงินบริจาค</span></div>
-                    
+                    <div class="group-header">
+                        <span class="group-title">❤️ กลุ่มเงินบริจาค</span>
+                    </div>
+                    <div id="h_grp_don_badge" style="font-size: 0.85em; color: #b45309; margin-bottom: 8px; background: #fef3c7; padding: 6px 10px; border-radius: 4px; border: 1px solid #fde68a;">
+                        <!-- JS จะอัปเดตยอดเพดานบริจาคแบบ Real-time ตรงนี้ -->
+                    </div>
                     <div class="form-group">
-                        <label>บริจาค e-Donation <span class="info-icon" data-tooltip="ลดหย่อนได้ 2 เท่าของเงินบริจาคจริง (เช่น บริจาค รพ.รัฐ, การศึกษา) แต่รวมแล้วต้องไม่เกิน 10% ของเงินได้หลังหักค่าลดหย่อนอื่น">i</span></label>
+                        <label>บริจาค 2 เท่า (e-Donation) <span class="info-icon" data-tooltip="ได้สิทธิ 2 เท่า (เช่น บริจาค รพ.รัฐ, สถานศึกษา) เพดานสูงสุดคือ 10% ของเงินได้หลังหักค่าลดหย่อนข้ออื่นๆ ไปแล้วทั้งหมด (โปรแกรมจะคำนวณและแสดงเพดานให้ด้านบน)">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_don2" placeholder="0" oninput="formatAndCalc(this)">
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>บริจาคทั่วไป <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง แต่ต้องไม่เกิน 10% ของเงินได้หลังหักค่าลดหย่อนอื่นและหลังหัก e-Donation แล้ว">i</span></label>
+                        <label>บริจาคทั่วไป <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง เพดานสูงสุดคือ 10% ของเงินได้ที่เหลือจากการหักลดหย่อนทุกอย่าง รวมถึงหักการบริจาค 2 เท่าไปแล้ว">i</span></label>
                         <div class="input-wrapper">
                             <input type="text" inputmode="numeric" id="h_d_don1" placeholder="0" oninput="formatAndCalc(this)">
                         </div>
@@ -550,18 +497,14 @@
         <div class="tips-header">
             <div class="tips-title">📊 รายงานสรุปกลยุทธ์ภาษี (Tax Strategy Insight)</div>
             <div class="tips-search-bar">
-                <input type="text" id="taxKeyword" placeholder="🔍 ค้นหากลยุทธ์ (เช่น เงินเดือน, หมอ, กองทุน, บริจาค...)" onkeypress="if(event.key === 'Enter') fetchOnlineTips()">
+                <input type="text" id="taxKeyword" placeholder="🔍 ค้นหากลยุทธ์ (เช่น เงินเดือน, หมอ, กองทุน...)" onkeypress="if(event.key === 'Enter') fetchOnlineTips()">
                 <button class="refresh-btn" onclick="fetchOnlineTips()">ค้นหา / อัปเดตข้อมูล</button>
             </div>
         </div>
-        <div class="online-tips-content" id="online_tips_box">
-            <!-- Dynamic Content based on search -->
-        </div>
+        <div class="online-tips-content" id="online_tips_box"></div>
 
         <!-- Comparison Summary -->
-        <div class="comparison-box" id="comparison_box">
-            <!-- Populated by JS -->
-        </div>
+        <div class="comparison-box" id="comparison_box"></div>
         <div id="bestChoiceResult" class="best-choice"></div>
         
         <!-- Filing Option for Simulator -->
@@ -573,9 +516,7 @@
             </div>
         </div>
 
-        <div id="joint_bracket_info_top" style="display:none; background: #fff8e1; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f39c12; text-align:center; font-size: 1.1em; color: #d35400;">
-            <!-- Populated by JS -->
-        </div>
+        <div id="joint_bracket_info_top" style="display:none; background: #fff8e1; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f39c12; text-align:center; font-size: 1.1em; color: #d35400;"></div>
 
         <div class="grid-container">
             <!-- ซิมูเลเตอร์ ภรรยา -->
@@ -643,7 +584,6 @@
             </div>
         </div>
 
-        <!-- Joint Sim Result Box -->
         <div id="joint_sim_result_box" class="joint-sim-result" style="display:none;">
             <h3>📊 ผลการจำลองแบบยื่นรวมครอบครัว (Combined Result)</h3>
             <div style="font-size: 1.05em; color: #34495e; margin-bottom: 10px;">
@@ -656,7 +596,6 @@
                 🔥 สรุปภาษีครอบครัวที่ต้องชำระสุทธิ: <br><span id="joint_sim_final_tax">0 บาท</span>
             </div>
         </div>
-
     </div>
 
     <!-- ======================= ส่วน Footer ======================= -->
@@ -685,26 +624,23 @@
         let val = parseFloat(element.value.replace(/,/g, '')) || 0;
         
         let maxLimit = element.getAttribute('data-max');
-        let warnMsgDiv = element.nextElementSibling; // ดึง div.warn-msg ที่อยู่ติดกับ input
+        let warnMsgDiv = element.nextElementSibling;
 
         if (maxLimit) {
             maxLimit = parseFloat(maxLimit);
             if (val > maxLimit) {
-                // หากกรอกเกินค่า max ให้เปลี่ยนขอบเป็นสีแดงและโชว์ข้อความแจ้งเตือน
                 element.style.borderColor = '#e74c3c';
                 if (warnMsgDiv && warnMsgDiv.classList.contains('warn-msg')) {
                     warnMsgDiv.innerText = `*คำนวณสูงสุดที่ ${fmt(maxLimit)} บาท`;
                     warnMsgDiv.style.display = 'block';
                 }
             } else {
-                // กลับมาเป็นปกติ
                 element.style.borderColor = '#bdc3c7';
                 if (warnMsgDiv && warnMsgDiv.classList.contains('warn-msg')) {
                     warnMsgDiv.style.display = 'none';
                 }
             }
         }
-        
         calculate(); 
     }
 
@@ -731,7 +667,7 @@
         if (!skipCalc) calculate();
     }
 
-    // --- Data Upload & Export (CSV) ---
+    // --- CSV Mapping ---
     const csvMapping = [
         {cat: "Income", item: "40(1) Salary and Bonus", h: "h_inc1", w: "w_inc1"},
         {cat: "Income", item: "40(2) General Contract", h: "h_inc2", w: "w_inc2"},
@@ -769,13 +705,11 @@
                         let h_val = cols[2].trim(), w_val = cols[3].trim();
                         if (h_val !== "" && h_val !== "0") {
                             let elH = document.getElementById(mapItem.h);
-                            elH.value = applyComma(h_val);
-                            formatAndCalc(elH); // ให้เรียก validate ด้วย
+                            elH.value = applyComma(h_val); formatAndCalc(elH);
                         }
                         if (w_val !== "" && w_val !== "0") {
                             let elW = document.getElementById(mapItem.w);
-                            elW.value = applyComma(w_val);
-                            formatAndCalc(elW); // ให้เรียก validate ด้วย
+                            elW.value = applyComma(w_val); formatAndCalc(elW);
                         }
                     }
                 }
@@ -792,20 +726,14 @@
     function exportToCSV() {
         let csvContent = "Category,Item,Husband_Amount,Wife_Amount\n";
         csvMapping.forEach(row => {
-            let h_val = getRawV(row.h);
-            let w_val = getRawV(row.w);
+            let h_val = getRawV(row.h); let w_val = getRawV(row.w);
             csvContent += `${row.cat},${row.item},${h_val},${w_val}\n`;
         });
-        
         const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", "my_tax_plan.csv");
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const link = document.createElement("a"); const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url); link.setAttribute("download", "my_tax_plan.csv");
+        link.style.visibility = 'hidden'; document.body.appendChild(link);
+        link.click(); document.body.removeChild(link);
         
         document.getElementById('fileStatus').innerText = "✅ เซฟไฟล์ my_tax_plan.csv สำเร็จ! สามารถนำไปเป็น Template กรอกข้อมูลได้เลย";
         setTimeout(() => document.getElementById('fileStatus').innerText = "", 4000);
@@ -860,40 +788,55 @@
         let d_esg = Math.min(getV(prefix+'_d_esg') + simAdditions.esg, 300000); 
         let d_home = Math.min(getV(prefix+'_d_home'), 100000), d_shop = Math.min(getV(prefix+'_d_shop'), 50000);
 
-        // สรุปยอดกลุ่มลงใน UI Badges
-        updateGroupBadges(prefix, d_life + d_health, d_pvd + d_rmf, d_esg);
-
-        let sumDeductBase = d_personal + d_parents + d_ss + d_life_health + retirement_total + d_esg + d_home + d_shop;
-        let netBeforeDon = Math.max(0, totalInc - totalExp - sumDeductBase);
-        
-        let don2 = getV(prefix+'_d_don2') * 2, don1 = getV(prefix+'_d_don1');
-        let allowedDon2 = Math.min(don2, netBeforeDon * 0.10);
-        let netAfterDon2 = netBeforeDon - allowedDon2;
-        let allowedDon1 = Math.min(don1, netAfterDon2 * 0.10);
-        
-        let finalNet = Math.max(0, netAfterDon2 - allowedDon1);
-        let totalDeductAll = sumDeductBase + allowedDon2 + allowedDon1;
-
-        return { totalInc, totalExp, totalDeductAll, finalNet, baseTax: calcTaxBracket(finalNet) };
-    }
-
-    function updateGroupBadges(prefix, lifeSum, retireSum, esgSum) {
+        // Update Standard Group Badges
         let lifeBadge = document.getElementById(prefix + '_grp_life_badge');
         let retireBadge = document.getElementById(prefix + '_grp_retire_badge');
         let esgBadge = document.getElementById(prefix + '_grp_esg_badge');
 
         if (lifeBadge) {
-            lifeBadge.innerText = `ยอดรวม: ${fmt(lifeSum)} / 100,000 บาท`;
-            if (lifeSum >= 100000) lifeBadge.classList.add('capped'); else lifeBadge.classList.remove('capped');
+            lifeBadge.innerText = `ยอดรวม: ${fmt(d_life + d_health)} / 100k`;
+            if (d_life + d_health >= 100000) lifeBadge.classList.add('capped'); else lifeBadge.classList.remove('capped');
         }
         if (retireBadge) {
-            retireBadge.innerText = `ยอดรวม: ${fmt(retireSum)} / 500,000 บาท`;
-            if (retireSum >= 500000) retireBadge.classList.add('capped'); else retireBadge.classList.remove('capped');
+            retireBadge.innerText = `ยอดรวม: ${fmt(d_pvd + d_rmf)} / 500k`;
+            if (d_pvd + d_rmf >= 500000) retireBadge.classList.add('capped'); else retireBadge.classList.remove('capped');
         }
         if (esgBadge) {
-            esgBadge.innerText = `ยอดรวม: ${fmt(esgSum)} / 300,000 บาท`;
-            if (esgSum >= 300000) esgBadge.classList.add('capped'); else esgBadge.classList.remove('capped');
+            esgBadge.innerText = `ยอดรวม: ${fmt(d_esg)} / 300k`;
+            if (d_esg >= 300000) esgBadge.classList.add('capped'); else esgBadge.classList.remove('capped');
         }
+
+        // Calculate Donations & Dynamic Limits
+        let sumDeductBase = d_personal + d_parents + d_ss + d_life_health + retirement_total + d_esg + d_home + d_shop;
+        let netBeforeDon = Math.max(0, totalInc - totalExp - sumDeductBase);
+        
+        // Donation 2x Max (10% of net before any donation)
+        let maxAllowedDon2 = netBeforeDon * 0.10;
+        let don2 = getV(prefix+'_d_don2') * 2;
+        let allowedDon2 = Math.min(don2, maxAllowedDon2);
+        
+        // Donation 1x Max (10% of net after 2x donation is subtracted)
+        let netAfterDon2 = netBeforeDon - allowedDon2;
+        let maxAllowedDon1 = netAfterDon2 * 0.10;
+        let don1 = getV(prefix+'_d_don1');
+        let allowedDon1 = Math.min(don1, maxAllowedDon1);
+        
+        // Update Donation Badge UI
+        let donBadge = document.getElementById(prefix + '_grp_don_badge');
+        if (donBadge) {
+            if (totalInc > 0) {
+                donBadge.innerHTML = `💡 <b>สิทธิบริจาคสูงสุดของคุณ:</b><br>
+                                      • บริจาค 2 เท่า (e-Donation): เพดานลดหย่อนสูงสุด <b>${fmt(maxAllowedDon2)}</b> บาท<br>
+                                      • บริจาคทั่วไป (1 เท่า): เพดานลดหย่อนสูงสุด <b>${fmt(maxAllowedDon1)}</b> บาท`;
+            } else {
+                donBadge.innerHTML = "กรุณากรอกรายได้เพื่อคำนวณเพดานสิทธิเงินบริจาค 10%";
+            }
+        }
+
+        let finalNet = Math.max(0, netAfterDon2 - allowedDon1);
+        let totalDeductAll = sumDeductBase + allowedDon2 + allowedDon1;
+
+        return { totalInc, totalExp, totalDeductAll, finalNet, baseTax: calcTaxBracket(finalNet) };
     }
 
     let baseData = { w: null, h: null, joint: null };
@@ -925,13 +868,8 @@
         if (w.totalInc === 0 && h.totalInc === 0) { advicePanel.style.display = 'none'; return; }
         advicePanel.style.display = 'block';
 
-        // Update Comparison Box
-        compBox.innerHTML = `
-            <b>เปรียบเทียบข้อมูลเบื้องต้น:</b><br>
-            แยกยื่น เสียภาษีรวม <b style="color:#e74c3c; font-size:1.15em;">${fmt(totalSep)}</b> บาท 
-            <span style="color:#bdc3c7; margin: 0 10px;">|</span> 
-            ยื่นรวม เสียภาษีรวม <b style="color:#e74c3c; font-size:1.15em;">${fmt(jointTax)}</b> บาท
-        `;
+        compBox.innerHTML = `<b>เปรียบเทียบข้อมูลเบื้องต้น:</b><br>แยกยื่น เสียภาษีรวม <b style="color:#e74c3c; font-size:1.15em;">${fmt(totalSep)}</b> บาท 
+            <span style="color:#bdc3c7; margin: 0 10px;">|</span> ยื่นรวม เสียภาษีรวม <b style="color:#e74c3c; font-size:1.15em;">${fmt(jointTax)}</b> บาท`;
 
         if (totalSep < jointTax) {
             bestChoiceBox.innerHTML = `🌟 <b>ระบบแนะนำ: เลือก "แยกยื่น" <br>(ประหยัดกว่า ${fmt(jointTax - totalSep)} บาท)</b>`;
@@ -947,7 +885,7 @@
         initSimulator();
     }
 
-    // --- ระบบวาดหมุดอัจฉริยะ (Smart Staggering Anti-Overlap) ---
+    // --- Simulator Core ---
     const thresholds = [5000000, 2000000, 1000000, 750000, 500000, 300000, 150000];
 
     function drawMarkers(person, type, maxLimit, currentNet) {
@@ -955,8 +893,7 @@
         container.innerHTML = '';
         if (maxLimit <= 0) return;
 
-        let foundRecommend = false;
-        let placedMarkers = []; 
+        let foundRecommend = false; let placedMarkers = []; 
 
         thresholds.forEach(t => {
             if (currentNet > t) {
@@ -966,41 +903,27 @@
                     let targetRate = getBracketInfo(t - 1).rate;
                     
                     let marker = document.createElement('div');
-                    marker.className = 'sim-marker';
-                    marker.style.left = pct + '%';
+                    marker.className = 'sim-marker'; marker.style.left = pct + '%';
                     
                     let label = document.createElement('div');
-                    label.className = 'marker-label';
-                    label.title = 'คลิกเพื่อเลือกยอด ' + fmt(dropNeeded) + ' บาท';
-                    
-                    label.onclick = function() {
-                        let slider = document.getElementById(person + '_sim_' + type);
-                        slider.value = dropNeeded;
-                        runSimulator();
-                    };
+                    label.className = 'marker-label'; label.title = 'คลิกเพื่อเลือกยอด ' + fmt(dropNeeded) + ' บาท';
+                    label.onclick = function() { document.getElementById(person + '_sim_' + type).value = dropNeeded; runSimulator(); };
                     
                     let isRecommend = false;
                     if (!foundRecommend) {
-                        label.innerHTML = '⭐ คุ้มสุด (คลิก)<br>ลดเหลือ ' + targetRate + '%';
-                        label.classList.add('recommend');
-                        foundRecommend = true;
-                        isRecommend = true;
+                        label.innerHTML = '⭐ คุ้มสุด<br>ลดเหลือ ' + targetRate + '%';
+                        label.classList.add('recommend'); foundRecommend = true; isRecommend = true;
                     } else {
                         label.innerHTML = '📍 คลิก<br>ลดเหลือ ' + targetRate + '%';
                     }
 
-                    // --- Smart Staggering Logic ---
-                    let baseTop = isRecommend ? -55 : -40; 
-                    let finalTop = baseTop;
-                    
+                    let baseTop = isRecommend ? -55 : -40; let finalTop = baseTop;
                     let overlap = true;
                     while(overlap) {
                         overlap = false;
                         for (let pm of placedMarkers) {
                             if (Math.abs(pm.pct - pct) < 18 && Math.abs(pm.top - finalTop) < 30) {
-                                finalTop -= 35; 
-                                overlap = true;
-                                break;
+                                finalTop -= 35; overlap = true; break;
                             }
                         }
                     }
@@ -1010,9 +933,7 @@
                     let lineExt = Math.abs(finalTop) - 15;
                     marker.style.height = (lineExt > 15 ? lineExt : 15) + 'px';
                     marker.style.top = (finalTop + 15) + 'px';
-                    
-                    marker.appendChild(label);
-                    container.appendChild(marker);
+                    marker.appendChild(label); container.appendChild(marker);
                 }
             }
         });
@@ -1046,10 +967,8 @@
             document.getElementById('joint_sim_result_box').style.display = 'none';
             document.getElementById('joint_bracket_info_top').style.display = 'none';
 
-            drawMarkers('w', 'esg', wMaxEsg, baseData.w.finalNet);
-            drawMarkers('w', 'rmf', wMaxRmf, baseData.w.finalNet);
-            drawMarkers('h', 'esg', hMaxEsg, baseData.h.finalNet);
-            drawMarkers('h', 'rmf', hMaxRmf, baseData.h.finalNet);
+            drawMarkers('w', 'esg', wMaxEsg, baseData.w.finalNet); drawMarkers('w', 'rmf', wMaxRmf, baseData.w.finalNet);
+            drawMarkers('h', 'esg', hMaxEsg, baseData.h.finalNet); drawMarkers('h', 'rmf', hMaxRmf, baseData.h.finalNet);
         } else {
             document.getElementById('w_sim_title').innerText = "💡 ซื้อในชื่อภรรยา (ยื่นรวม)";
             document.getElementById('h_sim_title').innerText = "💡 ซื้อในชื่อสามี (ยื่นรวม)";
@@ -1064,156 +983,106 @@
             jointInfoTop.style.display = 'block';
             jointInfoTop.innerHTML = `💡 <b>ฐานภาษีปัจจุบัน (ยื่นรวม):</b> เงินได้สุทธิรวม <b>${fmt(baseData.joint.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.joint.finalNet).rate}%</b>)`;
 
-            drawMarkers('w', 'esg', wMaxEsg, baseData.joint.finalNet);
-            drawMarkers('w', 'rmf', wMaxRmf, baseData.joint.finalNet);
-            drawMarkers('h', 'esg', hMaxEsg, baseData.joint.finalNet);
-            drawMarkers('h', 'rmf', hMaxRmf, baseData.joint.finalNet);
+            drawMarkers('w', 'esg', wMaxEsg, baseData.joint.finalNet); drawMarkers('w', 'rmf', wMaxRmf, baseData.joint.finalNet);
+            drawMarkers('h', 'esg', hMaxEsg, baseData.joint.finalNet); drawMarkers('h', 'rmf', hMaxRmf, baseData.joint.finalNet);
         }
-
         runSimulator();
     }
 
     function runSimulator() {
-        let w_esg = parseFloat(document.getElementById('w_sim_esg').value) || 0;
-        let w_rmf = parseFloat(document.getElementById('w_sim_rmf').value) || 0;
-        let h_esg = parseFloat(document.getElementById('h_sim_esg').value) || 0;
-        let h_rmf = parseFloat(document.getElementById('h_sim_rmf').value) || 0;
+        let w_esg = parseFloat(document.getElementById('w_sim_esg').value) || 0; let w_rmf = parseFloat(document.getElementById('w_sim_rmf').value) || 0;
+        let h_esg = parseFloat(document.getElementById('h_sim_esg').value) || 0; let h_rmf = parseFloat(document.getElementById('h_sim_rmf').value) || 0;
 
-        document.getElementById('w_sim_esg_val').innerText = fmt(w_esg) + " บาท";
-        document.getElementById('w_sim_rmf_val').innerText = fmt(w_rmf) + " บาท";
-        document.getElementById('h_sim_esg_val').innerText = fmt(h_esg) + " บาท";
-        document.getElementById('h_sim_rmf_val').innerText = fmt(h_rmf) + " บาท";
+        document.getElementById('w_sim_esg_val').innerText = fmt(w_esg) + " บาท"; document.getElementById('w_sim_rmf_val').innerText = fmt(w_rmf) + " บาท";
+        document.getElementById('h_sim_esg_val').innerText = fmt(h_esg) + " บาท"; document.getElementById('h_sim_rmf_val').innerText = fmt(h_rmf) + " บาท";
 
         let mode = document.querySelector('input[name="filing_type"]:checked').value;
-        let simW = processPerson('w', {esg: w_esg, rmf: w_rmf});
-        let simH = processPerson('h', {esg: h_esg, rmf: h_rmf});
+        let simW = processPerson('w', {esg: w_esg, rmf: w_rmf}); let simH = processPerson('h', {esg: h_esg, rmf: h_rmf});
 
         if (mode === 'separate') {
-            let wTaxSaved = Math.max(0, baseData.w.baseTax - simW.baseTax);
             document.getElementById('w_sim_new_bracket').innerText = getBracketInfo(simW.finalNet).rate + "%";
-            document.getElementById('w_sim_tax_saved').innerText = fmt(wTaxSaved) + " บาท";
+            document.getElementById('w_sim_tax_saved').innerText = fmt(Math.max(0, baseData.w.baseTax - simW.baseTax)) + " บาท";
             document.getElementById('w_sim_final_tax').innerText = fmt(simW.baseTax) + " บาท";
 
-            let hTaxSaved = Math.max(0, baseData.h.baseTax - simH.baseTax);
             document.getElementById('h_sim_new_bracket').innerText = getBracketInfo(simH.finalNet).rate + "%";
-            document.getElementById('h_sim_tax_saved').innerText = fmt(hTaxSaved) + " บาท";
+            document.getElementById('h_sim_tax_saved').innerText = fmt(Math.max(0, baseData.h.baseTax - simH.baseTax)) + " บาท";
             document.getElementById('h_sim_final_tax').innerText = fmt(simH.baseTax) + " บาท";
         } else {
             let simJointNet = Math.max(0, (simW.totalInc + simH.totalInc) - (simW.totalExp + simH.totalExp) - (simW.totalDeductAll + simH.totalDeductAll));
             let simJointTax = calcTaxBracket(simJointNet);
-            let jointTaxSaved = Math.max(0, baseData.joint.baseTax - simJointTax);
-            
             document.getElementById('joint_sim_new_bracket').innerText = getBracketInfo(simJointNet).rate + "%";
-            document.getElementById('joint_sim_tax_saved').innerText = fmt(jointTaxSaved) + " บาท";
+            document.getElementById('joint_sim_tax_saved').innerText = fmt(Math.max(0, baseData.joint.baseTax - simJointTax)) + " บาท";
             document.getElementById('joint_sim_final_tax').innerText = fmt(simJointTax) + " บาท";
         }
     }
 
-    // --- Search Engine สำหรับข้อมูลการจัดการภาษีเชิงลึก ---
+    // --- Search Engine ---
     const taxDatabase = [
-        { 
-            category: "พนักงานเงินเดือน และ โบนัส", 
-            keywords: ["พนักงานเงินเดือน", "เงินเดือน", "พนักงานออฟฟิศ", "มนุษย์เงินเดือน", "40(1)", "โบนัส", "พนักงาน"], 
-            text: "<b>กลยุทธ์พนักงานเงินเดือน (40(1)):</b> เนื่องจากรายได้กลุ่มเงินเดือนและโบนัส ถูกจำกัดการหักค่าใช้จ่ายไว้สูงสุดเพียง 100,000 บาท (หัก 50%) การลดฐานภาษีจึงต้องพึ่งพา 'ค่าลดหย่อน' เป็นหลัก แนะนำให้เริ่มจากการหักเงินสะสมเข้ากองทุนสำรองเลี้ยงชีพ (PVD) ให้เต็มโควตาบริษัท เพราะเป็นการลงทุนที่ใช้เงินก่อนหักภาษี และควรประเมินฐานภาษีตัวเองก่อนซื้อกองทุนหรือประกันเพิ่มเติม" 
-        },
-        { 
-            category: "การยื่นภาษีคู่สมรส", 
-            keywords: ["คู่สมรส", "ยื่นรวม", "แยกยื่น", "แต่งงาน", "ผัวเมีย", "สามี", "ภรรยา"], 
-            text: "<b>รูปแบบการยื่นภาษี:</b> สำหรับคู่สมรสที่มีรายได้ทั้งคู่ (โดยเฉพาะอาชีพที่มีรายได้ 40(6) ควบคู่กับเงินเดือน) การ <b>'แยกยื่นภาษี'</b> มักเกิดประโยชน์สูงสุด เนื่องจากแต่ละฝ่ายสามารถใช้สิทธิหักค่าใช้จ่ายแบบเหมาได้เต็มจำนวน (สูงสุด 100,000 บาทต่อคน) ช่วยกระจายฐานเงินได้สุทธิไม่ให้ตกอยู่ในขั้นบันไดภาษีที่สูงเกินไป" 
-        },
-        { 
-            category: "กองทุนลดหย่อน", 
-            keywords: ["กองทุน", "esg", "thai esg", "rmf", "ssf", "หุ้น", "เกษียณ", "ลดหย่อน"], 
-            text: "<b>ลำดับการลดหย่อน (Tax Shield Priority):</b> ควรให้ความสำคัญกับการซื้อกองทุน <b>Thai ESG</b> เป็นอันดับแรก (หากยังมีโควตา 300,000 บาท) เนื่องจากมีระยะเวลาถือครองที่ยืดหยุ่นกว่า (เพียง 5 ปีนับจากวันที่ลงทุน) จากนั้นหากต้องการลดฐานภาษีเพิ่มเติม จึงค่อยพิจารณาลงทุนใน <b>RMF หรือ SSF</b>" 
-        },
-        { 
-            category: "เงินบริจาค", 
-            keywords: ["บริจาค", "e-donation", "โรงพยาบาล", "สถานพยาบาล", "มูลนิธิ", "ทำบุญ", "กาชาด"], 
-            text: "<b>การบริหารสัดส่วนเงินบริจาค:</b> เงินบริจาคผ่านระบบ e-Donation ให้กับสถานพยาบาลของรัฐ (เช่น รพ.ศิริราช, สภากาชาด) ได้รับสิทธิลดหย่อน 2 เท่า แนะนำให้ผู้ที่มี <b>'ฐานภาษีสูงกว่า'</b> เป็นผู้รับหน้าที่สแกนบริจาคผ่านแอปธนาคาร เพื่อให้ครอบครัวดึงเงินคืนจากภาษีได้มากที่สุด" 
-        },
-        { 
-            category: "อสังหาริมทรัพย์และบ้าน", 
-            keywords: ["บ้าน", "ดอกเบี้ย", "รีไฟแนนซ์", "อสังหา", "ที่อยู่อาศัย", "คอนโด", "กู้บ้าน"], 
-            text: "<b>เทคนิคดอกเบี้ยบ้าน:</b> หากมีการรีไฟแนนซ์ (Refinance) ในช่วงปีภาษีนี้ คุณสามารถนำใบเสร็จรับเงินที่ระบุดอกเบี้ยจ่ายจาก 'ทั้งธนาคารเก่าและธนาคารใหม่' มารวมกันเพื่อลดหย่อนได้ตามที่จ่ายจริง (รวมกันแล้วต้องไม่เกิน 100,000 บาท)" 
-        },
-        { 
-            category: "ประกันสุขภาพและประกันชีวิต", 
-            keywords: ["ประกัน", "สุขภาพ", "ชีวิต", "บำนาญ", "mrta", "เคลม"], 
-            text: "<b>ประกันสุขภาพและประกันชีวิต:</b> สามารถนำมาลดหย่อนรวมกันได้สูงสุด 100,000 บาท (โดยประกันสุขภาพลดหย่อนได้ตามจริง แต่ไม่เกิน 25,000 บาท) แนะนำให้ใช้สิทธิให้เต็มโควตาเพื่อป้องกันความเสี่ยงและลดภาษีไปในตัว" 
-        },
-        { 
-            category: "วิชาชีพอิสระ (แพทย์/ฟรีแลนซ์)", 
-            keywords: ["หมอ", "แพทย์", "วิชาชีพอิสระ", "รับเหมา", "ฟรีแลนซ์", "40(6)", "คลินิก"], 
-            text: "<b>การบริหารรายได้วิชาชีพอิสระ:</b> รายได้ 40(6) อย่างเช่นวิชาชีพเวชกรรม สามารถหักค่าใช้จ่ายเหมาได้สูงถึง 60% (ไม่มีเพดานสูงสุด) ซึ่งได้เปรียบกว่ารายได้ 40(1) หรือ 40(2) มาก หากมีการรับงานหลายประเภท ควรระบุประเภทเงินได้ในหนังสือรับรองการหักภาษี ณ ที่จ่าย (50 ทวิ) ให้ชัดเจน" 
-        },
-        { 
-            category: "กองทุนสำรองเลี้ยงชีพ (PVD)", 
-            keywords: ["pvd", "สำรองเลี้ยงชีพ", "บริษัท", "hr"], 
-            text: "<b>กองทุนสำรองเลี้ยงชีพ (PVD):</b> เป็นวิธีลดภาษีที่ง่ายที่สุดหากที่ทำงานมีสวัสดิการนี้ แนะนำให้แจ้ง HR เพื่อปรับเพิ่มอัตราหักสะสมเป็นเพดานสูงสุดที่ทำได้ (เช่น 15%) นอกจากประหยัดภาษีแล้วยังเหมือนได้เงินออมก้อนโตในอนาคต" 
-        }
+        { category: "พนักงานเงินเดือน และ โบนัส", keywords: ["พนักงานเงินเดือน", "เงินเดือน", "พนักงานออฟฟิศ", "มนุษย์เงินเดือน", "40(1)", "โบนัส"], text: "<b>กลยุทธ์พนักงานเงินเดือน (40(1)):</b> เนื่องจากรายได้กลุ่มเงินเดือน ถูกจำกัดการหักค่าใช้จ่ายไว้สูงสุดเพียง 100,000 บาท (หัก 50%) การลดฐานภาษีจึงต้องพึ่งพา 'ค่าลดหย่อน' เป็นหลัก แนะนำให้หัก PVD ให้เต็มโควตาบริษัท" },
+        { category: "การยื่นภาษีคู่สมรส", keywords: ["คู่สมรส", "ยื่นรวม", "แยกยื่น", "แต่งงาน", "สามี", "ภรรยา"], text: "<b>รูปแบบการยื่นภาษี:</b> คู่สมรสที่มีรายได้ทั้งคู่ (โดยเฉพาะอาชีพ 40(6) ควบคู่เงินเดือน) การ <b>'แยกยื่นภาษี'</b> มักเกิดประโยชน์สูงสุด เพราะแต่ละฝ่ายใช้สิทธิหักค่าใช้จ่ายเหมาได้เต็มจำนวน" },
+        { category: "กองทุนลดหย่อน", keywords: ["กองทุน", "esg", "thai esg", "rmf", "ssf", "ลดหย่อน"], text: "<b>ลำดับการลดหย่อน:</b> ควรซื้อกองทุน <b>Thai ESG</b> เป็นอันดับแรก (หากยังมีโควตา 300,000) เนื่องจากถือครองเพียง 5 ปี จากนั้นจึงพิจารณาลงทุนใน <b>RMF หรือ SSF</b>" },
+        { category: "วิชาชีพอิสระ", keywords: ["หมอ", "แพทย์", "วิชาชีพอิสระ", "รับเหมา", "ฟรีแลนซ์", "40(6)"], text: "<b>การบริหารรายได้วิชาชีพอิสระ:</b> รายได้ 40(6) อย่างเช่นวิชาชีพเวชกรรม หักค่าใช้จ่ายเหมาได้ 60% (ไม่มีเพดานสูงสุด) ซึ่งได้เปรียบกว่ารายได้ 40(1) มาก" }
     ];
 
     function fetchOnlineTips() {
         let keyword = document.getElementById('taxKeyword').value.trim().toLowerCase();
         let box = document.getElementById('online_tips_box');
-        box.innerHTML = '<span style="font-size:1.2em;">⏳</span> กำลังค้นหาและประมวลผลข้อมูล...';
+        box.innerHTML = '<span style="font-size:1.2em;">⏳</span> กำลังค้นหาข้อมูล...';
         
         setTimeout(() => {
-            let timeStr = new Date().toLocaleTimeString('th-TH');
-            let dateStr = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
-            
             let resultHTML = "";
-            
             if (keyword === "") {
-                resultHTML = `
-                    <div style="font-size: 1.05em; margin-bottom: 12px; color: #2c3e50;">
-                        <b>รายงานสรุปกลยุทธ์ภาษีสำหรับคู่สมรส และวิชาชีพอิสระ (ฉบับอัปเดต 2026)</b>
-                    </div>
-                    <p style="margin-top:0; color: #34495e;">จากการวิเคราะห์โครงสร้างภาษี ขอแนะนำแนวทางในการบริหารจัดการเพื่อความคุ้มค่าสูงสุดดังนี้:</p>
-                    <ul style="padding-left: 20px; color: #34495e;">
-                        <li style="margin-bottom: 10px;">${taxDatabase[1].text}</li>
-                        <li style="margin-bottom: 10px;">${taxDatabase[2].text}</li>
-                        <li style="margin-bottom: 10px;">${taxDatabase[3].text}</li>
-                        <li>${taxDatabase[4].text}</li>
-                    </ul>
-                `;
+                resultHTML = `<div style="font-size: 1.05em; margin-bottom: 12px; color: #2c3e50;"><b>รายงานสรุปกลยุทธ์ภาษี (ฉบับอัปเดต 2026)</b></div>
+                    <ul style="padding-left: 20px; color: #34495e;"><li>${taxDatabase[1].text}</li><li>${taxDatabase[2].text}</li><li>${taxDatabase[3].text}</li></ul>`;
             } else {
-                let matchedTips = taxDatabase.filter(item => 
-                    item.keywords.some(k => k.includes(keyword) || keyword.includes(k)) || 
-                    item.text.toLowerCase().includes(keyword) ||
-                    item.category.toLowerCase().includes(keyword)
-                );
-                
+                let matchedTips = taxDatabase.filter(item => item.keywords.some(k => k.includes(keyword) || keyword.includes(k)) || item.text.toLowerCase().includes(keyword));
                 if (matchedTips.length > 0) {
-                    resultHTML = `
-                        <div style="font-size: 1.05em; margin-bottom: 12px; color: #2980b9;">
-                            <b>🎯 ผลการค้นหากลยุทธ์สำหรับคีย์เวิร์ด: "${keyword}"</b>
-                        </div>
-                        <ul style="padding-left: 20px; color: #34495e;">
-                            ${matchedTips.map(item => `<li style="margin-bottom: 10px;">${item.text}</li>`).join('')}
-                        </ul>
-                    `;
+                    resultHTML = `<div style="font-size: 1.05em; margin-bottom: 12px; color: #2980b9;"><b>🎯 ผลการค้นหา: "${keyword}"</b></div>
+                        <ul style="padding-left: 20px; color: #34495e;">${matchedTips.map(item => `<li>${item.text}</li>`).join('')}</ul>`;
                 } else {
-                    resultHTML = `
-                        <div style="text-align: center; padding: 15px; color: #e74c3c;">
-                            <span style="font-size: 1.5em;">🔍</span><br>
-                            <b>ไม่พบข้อมูลกลยุทธ์ที่ตรงกับคำว่า "${keyword}"</b><br>
-                            <span style="font-size: 0.9em; color: #7f8c8d;">ลองค้นหาด้วยคำอื่น เช่น เงินเดือน, กองทุน, บริจาค, ประกัน, บ้าน, คู่สมรส, แพทย์</span>
-                        </div>
-                    `;
+                    resultHTML = `<div style="text-align: center; padding: 15px; color: #e74c3c;"><b>ไม่พบข้อมูลกลยุทธ์ที่ตรงกับ "${keyword}"</b></div>`;
                 }
             }
-            
-            box.innerHTML = `
-                ${resultHTML}
-                <div style="text-align: right; font-size: 0.85em; color: #7f8c8d; margin-top: 15px; border-top: 1px dashed #bdc3c7; padding-top: 10px;">
-                    🔄 อัปเดตข้อมูลล่าสุดเมื่อ: ${dateStr} เวลา ${timeStr}
-                </div>
-            `;
+            box.innerHTML = resultHTML;
         }, 500);
     }
 
+    // --- การสร้าง Tooltip สำหรับมือถือ (JS Click/Touch Event) ---
+    function initMobileTooltips() {
+        const icons = document.querySelectorAll('.info-icon');
+        
+        // แปลง data-tooltip ให้กลายเป็นกล่องข้อความจริงๆ ซ่อนไว้ข้างใน
+        icons.forEach(icon => {
+            if (!icon.querySelector('.tooltip-text')) {
+                let text = icon.getAttribute('data-tooltip');
+                let tooltipDiv = document.createElement('div');
+                tooltipDiv.className = 'tooltip-text';
+                tooltipDiv.innerHTML = text;
+                icon.appendChild(tooltipDiv);
+            }
+
+            // เพิ่ม Event กดเพื่อเปิด/ปิด กล่องข้อความ
+            icon.addEventListener('click', function(e) {
+                e.stopPropagation(); // ป้องกันไม่ให้ Event วิ่งไปที่ document
+                // ปิดอันอื่นที่กำลังเปิดอยู่
+                document.querySelectorAll('.info-icon.active').forEach(activeIcon => {
+                    if (activeIcon !== this) activeIcon.classList.remove('active');
+                });
+                // สลับสถานะเปิด/ปิดของตัวที่เพิ่งกด
+                this.classList.toggle('active');
+            });
+        });
+
+        // ถ้ากดที่อื่นบนหน้าจอ ให้ปิด Tooltip ให้หมด
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.info-icon.active').forEach(activeIcon => {
+                activeIcon.classList.remove('active');
+            });
+        });
+    }
+
     window.onload = function() {
+        initMobileTooltips(); // เรียกใช้ระบบ Tooltip
         calculate();
         fetchOnlineTips(); 
     };
