@@ -50,14 +50,14 @@
         .grid-container.single-mode-active .bracket-box {
             max-width: 750px; 
             flex: 1 1 100%;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08); /* เพิ่มมิติให้การ์ดเดี่ยว */
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08); 
             border: 1px solid #d1d5db;
         }
 
         .tabs { display: flex; background: #f8f9fa; border-bottom: 2px solid #2980b9; }
         .tab-button { flex: 1; padding: 12px 10px; text-align: center; background: none; border: none; font-size: 0.95em; font-weight: bold; cursor: pointer; color: #95a5a6; transition: 0.3s; }
         .tab-button.active { background: #2980b9; color: #fff; }
-        .tab-content { display: none; padding: 15px; height: 680px; overflow-y: auto; }
+        .tab-content { display: none; padding: 15px; height: 740px; overflow-y: auto; }
         .tab-content.active { display: block; }
         
         /* ================= Deduction Groups ================= */
@@ -66,6 +66,10 @@
         .group-title { color: #1e3a8a; }
         .group-badge { font-size: 0.82em; color: #1e40af; background: #dbeafe; padding: 3px 8px; border-radius: 4px; border: 1px solid #bfdbfe; font-weight: 600; white-space: nowrap; }
         .group-badge.capped { color: #065f46; background: #d1fae5; border-color: #a7f3d0; }
+
+        /* การหักภาษี ณ ที่จ่าย (Withholding Tax Group) */
+        .withholding-group { background: #fffcf0; border: 1px solid #f9e28f; border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(243,156,18,0.1); }
+        .withholding-group .group-title { color: #b97a00; }
 
         /* Tooltips */
         .info-icon { display: inline-flex; justify-content: center; align-items: center; width: 18px; height: 18px; border-radius: 50%; background: #95a5a6; color: #fff; font-size: 11px; font-weight: bold; cursor: pointer; margin-left: 5px; position: relative; transition: background 0.2s; -webkit-tap-highlight-color: transparent;}
@@ -96,9 +100,16 @@
         summary.sub-summary { font-weight: bold; color: #2980b9; cursor: pointer; outline: none; padding: 5px 0; }
         .section-title { font-weight: bold; color: #2980b9; margin-top: 10px; margin-bottom: 8px; font-size: 0.95em; padding-bottom: 4px; border-bottom: 2px solid #eaf2f8; }
         
+        /* ================= Results Panel ================= */
         .result-panel { background: #f8f9fa; padding: 15px; border-top: 1px solid #e1e8ed; }
         .res-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95em; color: #34495e; }
-        .res-row.highlight { font-weight: bold; font-size: 1.1em; color: #c0392b; margin-top: 10px; padding-top: 10px; border-top: 1px solid #bdc3c7; }
+        .res-row.highlight { font-weight: bold; font-size: 1.05em; color: #2c3e50; margin-top: 10px; padding-top: 10px; border-top: 1px solid #bdc3c7; }
+        
+        /* Net Payable/Refund Box */
+        .net-result-box { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; margin-top: 12px; border-radius: 6px; font-size: 1.1em; font-weight: bold; border: 1px solid #bdc3c7; background: #fff;}
+        .net-result-box.refund { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .net-result-box.pay { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .net-result-box.neutral { background: #e2e3e5; border-color: #d6d8db; color: #383d41; }
         
         /* ================= Recommendation & Search ================= */
         .advice-panel { background: #fff; border-left: 6px solid #f39c12; padding: 20px; margin-top: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -127,12 +138,16 @@
         input[type="range"] { position: absolute; width: 100%; top: 5px; margin: 0; z-index: 2; cursor: pointer; }
         .sim-marker { position: absolute; top: 0px; width: 2px; background: #e74c3c; pointer-events: none; transition: height 0.3s;}
         .marker-label { position: absolute; left: 50%; transform: translateX(-50%); font-size: 0.75em; background: #fff; border: 1px solid #e74c3c; color: #e74c3c; padding: 4px 8px; border-radius: 4px; white-space: nowrap; pointer-events: auto; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .marker-label:hover { background: #fdfae6; transform: translateX(-50%) scale(1.05); z-index: 10; }
+        .marker-label:hover { background: #fdfae6; transform: translateX(-50%) scale(1.05); box-shadow: 0 4px 8px rgba(0,0,0,0.15); z-index: 10; }
         .marker-label.recommend { background: #fff8e1; border-color: #f39c12; color: #d35400; font-weight: bold; border-width: 2px; z-index: 3; }
 
         .sim-result-box { background: #eaf2f8; padding: 15px; border-radius: 6px; text-align: center; margin-top: 15px; border: 1px solid #bee5eb; }
         .sim-save-amt { font-size: 1.2em; font-weight: bold; color: #27ae60; }
-        .sim-final-tax { font-size: 1.2em; font-weight: bold; color: #c0392b; margin-top: 10px; border-top: 1px dashed #bdc3c7; padding-top: 10px; }
+        .sim-final-tax { font-size: 1.15em; font-weight: bold; color: #2c3e50; margin-top: 10px; border-top: 1px dashed #bdc3c7; padding-top: 10px; }
+        
+        .sim-net-box { padding: 10px; margin-top: 10px; border-radius: 6px; font-weight: bold; font-size: 1.2em;}
+        .sim-net-box.refund { background: #d4edda; color: #155724; border: 1px solid #c3e6cb;}
+        .sim-net-box.pay { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
 
         .joint-sim-result { background: #eaf2f8; border: 2px solid #3498db; padding: 20px; border-radius: 8px; text-align: center; margin-top: 20px; box-shadow: 0 4px 10px rgba(52,152,219,0.1); }
         .joint-sim-result h3 { margin-top: 0; color: #2c3e50; margin-bottom: 15px; font-size: 1.2em;}
@@ -165,17 +180,13 @@
 <body>
 
 <div class="container">
-    <h2>โปรแกรมวางแผนภาษีคนสร้างตัว<br><span class="version-text">เวอร์ชัน 1.2.1</span></h2>
+    <h2>โปรแกรมวางแผนภาษีคนสร้างตัว<br><span class="version-text">เวอร์ชัน 1.2.2</span></h2>
 
     <!-- ตัวเลือกรูปแบบการยื่น -->
     <div class="person-count-selector">
         <span>👤 รูปแบบการวางแผน:</span>
-        <label>
-            <input type="radio" name="person_count" value="1" checked onchange="togglePersonCount()"> 🧍 ยื่นคนเดียว
-        </label>
-        <label>
-            <input type="radio" name="person_count" value="2" onchange="togglePersonCount()"> 🧑‍🤝‍🧑 ยื่น 2 คน (คู่สมรส)
-        </label>
+        <label><input type="radio" name="person_count" value="1" checked onchange="togglePersonCount()"> 🧍 ยื่นคนเดียว</label>
+        <label><input type="radio" name="person_count" value="2" onchange="togglePersonCount()"> 🧑‍🤝‍🧑 ยื่น 2 คน</label>
     </div>
 
     <!-- คู่มือการใช้งาน -->
@@ -183,7 +194,7 @@
         <summary>📖 คู่มือการใช้งานเบื้องต้น (คลิกเพื่ออ่าน)</summary>
         <div class="guide-content">
             <h4>💡 วิธีที่ 1: กรอกข้อมูลโดยตรง (Manual)</h4>
-            <p>คุณสามารถสลับแท็บ "หมวดรายได้" และ "หมวดลดหย่อน" แล้วกรอกตัวเลขลงไปได้เลย ระบบจะบันทึกและคำนวณภาษีให้อัตโนมัติที่ด้านล่าง</p>
+            <p>คุณสามารถสลับแท็บ "หมวดรายได้" และ "หมวดลดหย่อน" แล้วกรอกตัวเลขลงไปได้เลย ระบบจะบันทึกและคำนวณภาษีสุทธิ (ต้องจ่ายเพิ่ม หรือ ได้คืน) ให้อัตโนมัติที่ด้านล่างของการ์ด</p>
             
             <h4 style="margin-top: 15px;">💡 วิธีที่ 2: นำเข้าผ่านไฟล์ CSV (รวดเร็ว)</h4>
             <ol>
@@ -194,7 +205,7 @@
             </ol>
             
             <h4 style="margin-top: 15px;">🎯 วิธีใช้ Simulator (จำลองการซื้อลดหย่อนเพิ่ม)</h4>
-            <p>ให้เลื่อนลงไปที่ <b>แผงจำลองลดหย่อนเพิ่ม</b> ด้านล่าง จากนั้นเลื่อนแถบ Slider เพื่อดูว่าควรซื้อกองทุน Thai ESG หรือ RMF/SSF เพิ่มอีกกี่บาท จึงจะประหยัดคุ้มที่สุด (แนะนำให้คลิกที่ป้าย <b>"⭐ คุ้มสุด"</b> เพื่อให้ระบบล็อกยอดซื้อในจุดที่ฐานภาษีลดลงพอดี!)</p>
+            <p>ให้เลื่อนลงไปที่ <b>แผงจำลองลดหย่อนเพิ่ม</b> ด้านล่าง เลื่อนแถบ Slider เพื่อดูว่าควรซื้อกองทุน Thai ESG หรือ RMF/SSF เพิ่มอีกกี่บาท เพื่อเปลี่ยนสถานะจาก <b>"ต้องจ่ายเพิ่ม"</b> เป็น <b>"ได้เงินคืน"</b> (แนะนำให้คลิกที่ป้าย <b>"⭐ คุ้มสุด"</b> เพื่อล็อกเป้าฐานภาษี)</p>
         </div>
     </details>
 
@@ -235,6 +246,7 @@
                 </details>
             </div>
 
+            <!-- Tab ค่าลดหย่อน บุคคลที่ 1 -->
             <div id="w_deduct" class="tab-content w-content">
                 <div class="deduct-group">
                     <div class="group-header"><span class="group-title">👨‍👩‍👧 กลุ่มส่วนตัวและครอบครัว</span></div>
@@ -247,16 +259,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="deduct-group">
-                    <div class="group-header"><span class="group-title">💼 กลุ่มประกันสังคม</span></div>
-                    <div class="form-group">
-                        <label>ประกันสังคม <span class="info-icon" data-tooltip="ลดหย่อนได้ตามที่จ่ายจริง สูงสุดไม่เกิน 9,000 บาทต่อปี (ไม่นับรวมในเพดานประกันชีวิต)">i</span></label>
-                        <div class="input-wrapper">
-                            <input type="text" inputmode="numeric" id="w_d_ss" data-max="9000" placeholder="0" oninput="formatAndCalc(this)">
-                            <div class="warn-msg"></div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="deduct-group">
                     <div class="group-header">
                         <span class="group-title">🛡️ กลุ่มประกันชีวิตและสุขภาพ</span>
@@ -318,19 +321,35 @@
                         <div class="input-wrapper"><input type="text" inputmode="numeric" id="w_d_don1" placeholder="0" oninput="formatAndCalc(this)"></div>
                     </div>
                 </div>
+
+                <!-- ภาษีหัก ณ ที่จ่าย -->
+                <div class="withholding-group">
+                    <div class="group-header"><span class="group-title">💸 ภาษีที่ถูกหักล่วงหน้า</span></div>
+                    <div class="form-group">
+                        <label>ภาษีหัก ณ ที่จ่าย (สะสมทั้งปี) <span class="info-icon" data-tooltip="ดูจากหนังสือรับรอง 50 ทวิ ที่บริษัทหรือผู้ว่าจ้างออกให้ เพื่อนำมาหักลบกับภาษีที่คำนวณได้">i</span></label>
+                        <div class="input-wrapper"><input type="text" inputmode="numeric" id="w_withholding" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    </div>
+                </div>
             </div>
             
             <div class="result-panel">
                 <div class="res-row"><span>รวมรายได้:</span> <span id="w_res_inc">0</span></div>
                 <div class="res-row"><span>หักลดหย่อนทั้งหมด:</span> <span id="w_res_ded">0</span></div>
                 <div class="res-row"><span>เงินได้สุทธิ:</span> <span id="w_res_net">0</span></div>
-                <div class="res-row highlight"><span>ภาษีคำนวณเบื้องต้น:</span> <span id="w_res_tax">0</span></div>
+                <div class="res-row highlight"><span>ภาษีที่ต้องจ่าย (ประเมิน):</span> <span id="w_res_tax">0</span></div>
+                <div class="res-row" style="color:#b97a00; font-size: 0.9em; margin-top: 5px;"><span>หัก ภาษี ณ ที่จ่าย:</span> <span id="w_res_withheld">0</span></div>
+                
+                <!-- กล่องสรุป จ่ายเพิ่ม/ได้คืน -->
+                <div id="w_net_result_box" class="net-result-box neutral">
+                    <span id="w_net_label">สถานะภาษี:</span>
+                    <span id="w_net_amount">0 บาท</span>
+                </div>
             </div>
         </div>
 
         <!-- ======================= ส่วนของผู้ยื่นลำดับ 2 ======================= -->
         <div class="person-card" id="card_p2" style="display: none;">
-            <div class="person-header" id="header_p2">คู่สมรส ลำดับที่ 2 (ข้อมูลปัจจุบัน)</div>
+            <div class="person-header" id="header_p2">ข้อมูลผู้ยื่นลำดับที่ 2</div>
             <div class="tabs">
                 <button class="tab-button h-tab active" onclick="openTab('h', 'income')">💵 หมวดรายได้</button>
                 <button class="tab-button h-tab" onclick="openTab('h', 'deduct')">🛡️ หมวดลดหย่อน</button>
@@ -434,13 +453,29 @@
                         <div class="input-wrapper"><input type="text" inputmode="numeric" id="h_d_don1" placeholder="0" oninput="formatAndCalc(this)"></div>
                     </div>
                 </div>
+
+                <!-- ภาษีหัก ณ ที่จ่าย -->
+                <div class="withholding-group">
+                    <div class="group-header"><span class="group-title">💸 ภาษีที่ถูกหักล่วงหน้า</span></div>
+                    <div class="form-group">
+                        <label>ภาษีหัก ณ ที่จ่าย (สะสมทั้งปี) <span class="info-icon" data-tooltip="ดูจากหนังสือรับรอง 50 ทวิ ที่บริษัทหรือผู้ว่าจ้างออกให้ เพื่อนำมาหักลบกับภาษีที่คำนวณได้">i</span></label>
+                        <div class="input-wrapper"><input type="text" inputmode="numeric" id="h_withholding" placeholder="0" oninput="formatAndCalc(this)"></div>
+                    </div>
+                </div>
             </div>
             
             <div class="result-panel">
                 <div class="res-row"><span>รวมรายได้:</span> <span id="h_res_inc">0</span></div>
                 <div class="res-row"><span>หักลดหย่อนทั้งหมด:</span> <span id="h_res_ded">0</span></div>
                 <div class="res-row"><span>เงินได้สุทธิ:</span> <span id="h_res_net">0</span></div>
-                <div class="res-row highlight"><span>ภาษีคำนวณเบื้องต้น:</span> <span id="h_res_tax">0</span></div>
+                <div class="res-row highlight"><span>ภาษีที่ต้องจ่าย (ประเมิน):</span> <span id="h_res_tax">0</span></div>
+                <div class="res-row" style="color:#b97a00; font-size: 0.9em; margin-top: 5px;"><span>หัก ภาษี ณ ที่จ่าย:</span> <span id="h_res_withheld">0</span></div>
+                
+                <!-- กล่องสรุป จ่ายเพิ่ม/ได้คืน -->
+                <div id="h_net_result_box" class="net-result-box neutral">
+                    <span id="h_net_label">สถานะภาษี:</span>
+                    <span id="h_net_amount">0 บาท</span>
+                </div>
             </div>
         </div>
     </div>
@@ -471,8 +506,9 @@
         <div id="joint_bracket_info_top" style="display:none; background: #fff8e1; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f39c12; text-align:center; font-size: 1.1em; color: #d35400;"></div>
 
         <div class="grid-container" id="sim_grid">
+            <!-- ซิมูเลเตอร์ ลำดับที่ 1 -->
             <div class="bracket-box" id="w_sim_container">
-                <div class="bracket-title" id="w_sim_title">💡 จำลองลดหย่อนเพิ่ม</div>
+                <div class="bracket-title" id="w_sim_title">💡 จำลองลดหย่อนเพิ่ม (บุคคลที่ 1)</div>
                 <div id="w_bracket_info" style="margin-bottom: 10px; font-size: 0.95em;"></div>
                 
                 <div class="sim-section">
@@ -495,13 +531,20 @@
                     </div>
 
                     <div id="w_sim_result_box" class="sim-result-box">
-                        <div style="font-size: 0.9em; color: #34495e;">หากซื้อตามแผน ฐานภาษีจะกลายเป็น: <b id="w_sim_new_bracket" style="color: #d35400;">0%</b></div>
-                        <div style="margin-top: 5px;">ประหยัดภาษีได้เพิ่มขึ้นอีก: <span class="sim-save-amt" id="w_sim_tax_saved">0 บาท</span></div>
-                        <div class="sim-final-tax">🔥 สรุปภาษีที่ต้องชำระสุทธิ:<br><span id="w_sim_final_tax">0 บาท</span></div>
+                        <div style="font-size: 0.9em; color: #34495e; border-bottom: 1px dashed #bdc3c7; padding-bottom: 8px; margin-bottom: 8px;">
+                            หากซื้อตามแผน ฐานภาษีจะกลายเป็น: <b id="w_sim_new_bracket" style="color: #d35400;">0%</b><br>
+                            ประหยัดภาษีเพิ่มขึ้น: <span style="color: #27ae60; font-weight: bold;" id="w_sim_tax_saved">0 บาท</span>
+                        </div>
+                        
+                        <div style="font-size: 0.95em;">รวมกับภาษีหัก ณ ที่จ่ายแล้ว:</div>
+                        <div id="w_sim_net_result" class="sim-net-box neutral">
+                            <!-- JS Inject -->
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- ซิมูเลเตอร์ ลำดับที่ 2 -->
             <div class="bracket-box" id="h_sim_container">
                 <div class="bracket-title" id="h_sim_title">💡 จำลองลดหย่อนเพิ่ม (บุคคลที่ 2)</div>
                 <div id="h_bracket_info" style="margin-bottom: 10px; font-size: 0.95em;"></div>
@@ -526,24 +569,33 @@
                     </div>
 
                     <div id="h_sim_result_box" class="sim-result-box">
-                        <div style="font-size: 0.9em; color: #34495e;">หากซื้อตามแผน ฐานภาษีจะกลายเป็น: <b id="h_sim_new_bracket" style="color: #d35400;">0%</b></div>
-                        <div style="margin-top: 5px;">ประหยัดภาษีได้เพิ่มขึ้นอีก: <span class="sim-save-amt" id="h_sim_tax_saved">0 บาท</span></div>
-                        <div class="sim-final-tax">🔥 สรุปภาษีที่ต้องชำระสุทธิ:<br><span id="h_sim_final_tax">0 บาท</span></div>
+                        <div style="font-size: 0.9em; color: #34495e; border-bottom: 1px dashed #bdc3c7; padding-bottom: 8px; margin-bottom: 8px;">
+                            หากซื้อตามแผน ฐานภาษีจะกลายเป็น: <b id="h_sim_new_bracket" style="color: #d35400;">0%</b><br>
+                            ประหยัดภาษีเพิ่มขึ้น: <span style="color: #27ae60; font-weight: bold;" id="h_sim_tax_saved">0 บาท</span>
+                        </div>
+                        
+                        <div style="font-size: 0.95em;">รวมกับภาษีหัก ณ ที่จ่ายแล้ว:</div>
+                        <div id="h_sim_net_result" class="sim-net-box neutral">
+                            <!-- JS Inject -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Joint Sim Result Box -->
         <div id="joint_sim_result_box" class="joint-sim-result" style="display:none;">
             <h3>📊 ผลการจำลองแบบยื่นรวม (Combined Result)</h3>
             <div style="font-size: 1.05em; color: #34495e; margin-bottom: 10px;">
-                หากซื้อตามแผนรวม ฐานภาษีจะกลายเป็น: <br><b id="joint_sim_new_bracket" style="color: #d35400; font-size: 1.3em;">0%</b>
+                หากซื้อตามแผนรวม ฐานภาษีจะกลายเป็น: <b id="joint_sim_new_bracket" style="color: #d35400; font-size: 1.1em;">0%</b><br>
+                ประหยัดภาษีรวมได้เพิ่มขึ้นอีก: <b style="color: #27ae60; font-size: 1.1em;" id="joint_sim_tax_saved">0 บาท</b>
             </div>
-            <div style="margin-bottom: 15px;">
-                ประหยัดภาษีรวมได้เพิ่มขึ้นอีก: <br><span class="sim-save-amt" id="joint_sim_tax_saved" style="font-size: 1.5em;">0 บาท</span>
-            </div>
-            <div class="sim-final-tax" style="border-top: 2px dashed #bdc3c7; padding-top: 15px;">
-                🔥 สรุปภาษีรวมที่ต้องชำระสุทธิ: <br><span id="joint_sim_final_tax">0 บาท</span>
+            
+            <div style="border-top: 2px dashed #bdc3c7; padding-top: 15px; margin-top: 10px;">
+                <div style="font-size: 1.05em; margin-bottom: 8px;">🔥 รวมกับภาษีหัก ณ ที่จ่ายของทั้งคู่แล้ว:</div>
+                <div id="joint_sim_net_result" class="sim-net-box neutral" style="display:inline-block; padding: 12px 25px; font-size: 1.3em;">
+                    <!-- JS Inject -->
+                </div>
             </div>
         </div>
     </div>
@@ -599,7 +651,6 @@
         let parts = num.split("."); parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); return parts.join(".");
     }
     
-    // --- ฟังก์ชัน Validation ตรวจสอบค่าสูงสุด ---
     function formatAndCalc(element) { 
         element.value = applyComma(element.value); 
         let val = parseFloat(element.value.replace(/,/g, '')) || 0;
@@ -610,7 +661,6 @@
 
         if (maxLimitStr) {
             let maxLimit = parseFloat(maxLimitStr);
-            // กรณีคนเดียว ลดหย่อนบิดามารดาสูงสุด 60,000 (พ่อ 1 แม่ 1) แต่ถ้ามีคู่จะ 120,000
             if (element.id === 'w_d_parents' || element.id === 'h_d_parents') {
                 maxLimit = countMode === '1' ? 60000 : 120000;
             }
@@ -635,7 +685,6 @@
     function fmt(num) { return num.toLocaleString('th-TH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }); }
     function getRawV(id) { let el = document.getElementById(id); return (el && el.value) ? el.value.replace(/,/g, '') : "0"; }
 
-    // --- แปลงรายเดือน <-> รายปี ---
     function calcY(person, type) {
         let elM = document.getElementById(person + '_inc' + type + '_m'); elM.value = applyComma(elM.value);
         let elB = document.getElementById(person + '_inc' + type + '_b'); if(elB) elB.value = applyComma(elB.value);
@@ -674,7 +723,8 @@
         {cat: "Deduction", item: "Home Loan Interest", h: "h_d_home", w: "w_d_home"},
         {cat: "Deduction", item: "Easy E-Receipt", h: "h_d_shop", w: "w_d_shop"},
         {cat: "Deduction", item: "e-Donation (Actual Paid)", h: "h_d_don2", w: "w_d_don2"},
-        {cat: "Deduction", item: "General Donation", h: "h_d_don1", w: "w_d_don1"}
+        {cat: "Deduction", item: "General Donation", h: "h_d_don1", w: "w_d_don1"},
+        {cat: "Withholding", item: "Tax Withheld", h: "h_withholding", w: "w_withholding"} // เพิ่ม mapping ภาษีหัก ณ ที่จ่าย
     ];
 
     function handleFileUpload(event) {
@@ -697,11 +747,11 @@
                         
                         if (val_p1 !== "" && val_p1 !== "0") {
                             let elW = document.getElementById(mapItem.w);
-                            elW.value = applyComma(val_p1); formatAndCalc(elW);
+                            if(elW){ elW.value = applyComma(val_p1); formatAndCalc(elW); }
                         }
                         if (val_p2 !== "" && val_p2 !== "0") {
                             let elH = document.getElementById(mapItem.h);
-                            elH.value = applyComma(val_p2); formatAndCalc(elH);
+                            if(elH){ elH.value = applyComma(val_p2); formatAndCalc(elH); }
                         }
                     }
                 }
@@ -761,6 +811,31 @@
         return Math.floor(tax);
     }
 
+    // อัปเดตกล่องสถานะ ได้คืน/จ่ายเพิ่ม (UI)
+    function updateNetResultUI(boxId, labelId, amountId, taxCalculated, taxWithheld) {
+        let box = document.getElementById(boxId);
+        let label = document.getElementById(labelId);
+        let amount = document.getElementById(amountId);
+        
+        box.classList.remove('neutral', 'refund', 'pay');
+        
+        if (taxCalculated === 0 && taxWithheld === 0) {
+            box.classList.add('neutral');
+            label.innerText = 'สถานะภาษี:';
+            amount.innerText = '0 บาท';
+        } else if (taxCalculated > taxWithheld) {
+            let payMore = taxCalculated - taxWithheld;
+            box.classList.add('pay');
+            label.innerText = '🚨 สุทธิ ต้องชำระเพิ่ม:';
+            amount.innerText = `${fmt(payMore)} บาท`;
+        } else {
+            let refund = taxWithheld - taxCalculated;
+            box.classList.add('refund');
+            label.innerText = '🎉 สุทธิ ขอเงินคืนได้:';
+            amount.innerText = `${fmt(refund)} บาท`;
+        }
+    }
+
     function processPerson(prefix, simAdditions = { esg: 0, rmf: 0 }) {
         let inc12 = getV(prefix+'_inc1') + getV(prefix+'_inc2'), inc3 = getV(prefix+'_inc3'), inc4 = getV(prefix+'_inc4');
         let inc5 = getV(prefix+'_inc5'), inc6 = getV(prefix+'_inc6'), inc78 = getV(prefix+'_inc7') + getV(prefix+'_inc8');
@@ -804,8 +879,8 @@
         if (donBadge) {
             if (totalInc > 0) {
                 donBadge.innerHTML = `💡 <b>สิทธิบริจาคสูงสุดของคุณ:</b><br>
-                                      • บริจาค 2 เท่า (e-Donation): เพดานลดหย่อนสูงสุด <b>${fmt(maxAllowedDon2)}</b> บาท<br>
-                                      • บริจาคทั่วไป (1 เท่า): เพดานลดหย่อนสูงสุด <b>${fmt(maxAllowedDon1)}</b> บาท`;
+                                      • บริจาค 2 เท่า: เพดานลดหย่อน <b>${fmt(maxAllowedDon2)}</b> บาท<br>
+                                      • บริจาคทั่วไป (1 เท่า): เพดานลดหย่อน <b>${fmt(maxAllowedDon1)}</b> บาท`;
             } else {
                 donBadge.innerHTML = "กรุณากรอกรายได้เพื่อคำนวณเพดานสิทธิเงินบริจาค 10%";
             }
@@ -813,8 +888,10 @@
 
         let finalNet = Math.max(0, netAfterDon2 - allowedDon1);
         let totalDeductAll = sumDeductBase + allowedDon2 + allowedDon1;
+        let baseTax = calcTaxBracket(finalNet);
+        let withheldTax = getV(prefix+'_withholding');
 
-        return { totalInc, totalExp, totalDeductAll, finalNet, baseTax: calcTaxBracket(finalNet) };
+        return { totalInc, totalExp, totalDeductAll, finalNet, baseTax: baseTax, withheldTax: withheldTax };
     }
 
     function updateGroupBadges(prefix, lifeSum, retireSum, esgSum) {
@@ -844,27 +921,34 @@
         let h = processPerson('h');
         
         if (countMode === '1') {
-            h = { totalInc: 0, totalExp: 0, totalDeductAll: 0, finalNet: 0, baseTax: 0 };
+            h = { totalInc: 0, totalExp: 0, totalDeductAll: 0, finalNet: 0, baseTax: 0, withheldTax: 0 };
         }
         
         let jointInc = w.totalInc + h.totalInc, jointExp = w.totalExp + h.totalExp;
         let jointDeduct = w.totalDeductAll + h.totalDeductAll;
         let jointNet = Math.max(0, jointInc - jointExp - jointDeduct);
         let jointTax = calcTaxBracket(jointNet);
+        let jointWithheld = w.withheldTax + h.withheldTax;
         
         baseData = {
             w: w, h: h,
-            joint: { totalInc: jointInc, totalExp: jointExp, totalDeductAll: jointDeduct, finalNet: jointNet, baseTax: jointTax }
+            joint: { totalInc: jointInc, totalExp: jointExp, totalDeductAll: jointDeduct, finalNet: jointNet, baseTax: jointTax, withheldTax: jointWithheld }
         };
         
         let totalSep = w.baseTax + h.baseTax;
 
+        // อัปเดต UI P1
         document.getElementById('w_res_inc').innerText = fmt(w.totalInc); document.getElementById('w_res_ded').innerText = fmt(w.totalDeductAll);
         document.getElementById('w_res_net').innerText = fmt(w.finalNet); document.getElementById('w_res_tax').innerText = fmt(w.baseTax);
+        document.getElementById('w_res_withheld').innerText = fmt(w.withheldTax);
+        updateNetResultUI('w_net_result_box', 'w_net_label', 'w_net_amount', w.baseTax, w.withheldTax);
         
+        // อัปเดต UI P2
         if (countMode === '2') {
             document.getElementById('h_res_inc').innerText = fmt(h.totalInc); document.getElementById('h_res_ded').innerText = fmt(h.totalDeductAll);
             document.getElementById('h_res_net').innerText = fmt(h.finalNet); document.getElementById('h_res_tax').innerText = fmt(h.baseTax);
+            document.getElementById('h_res_withheld').innerText = fmt(h.withheldTax);
+            updateNetResultUI('h_net_result_box', 'h_net_label', 'h_net_amount', h.baseTax, h.withheldTax);
         }
 
         let advicePanel = document.getElementById('advicePanel');
@@ -977,8 +1061,8 @@
         });
 
         if (mode === 'separate') {
-            document.getElementById('w_sim_title').innerText = countMode === '1' ? "💡 จำลองลดหย่อนเพิ่ม" : "💡 จำลองลดหย่อนเพิ่ม (บุคคลที่ 1 - ยื่นแยก)";
-            document.getElementById('h_sim_title').innerText = "💡 จำลองลดหย่อนเพิ่ม (บุคคลที่ 2 - ยื่นแยก)";
+            document.getElementById('w_sim_title').innerText = countMode === '1' ? "💡 จำลองลดหย่อนเพิ่ม" : "💡 จำลองลดหย่อนเพิ่ม (บุคคลที่ 1)";
+            document.getElementById('h_sim_title').innerText = "💡 จำลองลดหย่อนเพิ่ม (บุคคลที่ 2)";
             document.getElementById('w_bracket_info').innerHTML = `เงินได้สุทธิปัจจุบัน: <b>${fmt(baseData.w.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.w.finalNet).rate}%</b>)`;
             document.getElementById('h_bracket_info').innerHTML = `เงินได้สุทธิปัจจุบัน: <b>${fmt(baseData.h.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.h.finalNet).rate}%</b>)`;
             
@@ -994,8 +1078,8 @@
         } else {
             document.getElementById('w_sim_title').innerText = "💡 ซื้อในชื่อบุคคลที่ 1 (ยื่นรวม)";
             document.getElementById('h_sim_title').innerText = "💡 ซื้อในชื่อบุคคลที่ 2 (ยื่นรวม)";
-            document.getElementById('w_bracket_info').innerHTML = `<span style="color:#7f8c8d;">(ยอดซื้อจะถูกนำไปคำนวณหักในฐานภาษีรวม)</span>`;
-            document.getElementById('h_bracket_info').innerHTML = `<span style="color:#7f8c8d;">(ยอดซื้อจะถูกนำไปคำนวณหักในฐานภาษีรวม)</span>`;
+            document.getElementById('w_bracket_info').innerHTML = `<span style="color:#7f8c8d;">(ยอดซื้อจะถูกนำไปหักในฐานภาษีรวม)</span>`;
+            document.getElementById('h_bracket_info').innerHTML = `<span style="color:#7f8c8d;">(ยอดซื้อจะถูกนำไปหักในฐานภาษีรวม)</span>`;
             
             document.getElementById('w_sim_result_box').style.display = 'none';
             document.getElementById('h_sim_result_box').style.display = 'none';
@@ -1003,7 +1087,7 @@
             
             let jointInfoTop = document.getElementById('joint_bracket_info_top');
             jointInfoTop.style.display = 'block';
-            jointInfoTop.innerHTML = `💡 <b>ฐานภาษีปัจจุบัน (ยื่นรวม):</b> เงินได้สุทธิรวม <b>${fmt(baseData.joint.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.joint.finalNet).rate}%</b>)`;
+            jointInfoTop.innerHTML = `💡 <b>ฐานภาษีรวมครอบครัว:</b> เงินได้สุทธิรวม <b>${fmt(baseData.joint.finalNet)}</b> บาท (ฐาน <b>${getBracketInfo(baseData.joint.finalNet).rate}%</b>)`;
 
             drawMarkers('w', 'esg', wMaxEsg, baseData.joint.finalNet); drawMarkers('w', 'rmf', wMaxRmf, baseData.joint.finalNet);
             drawMarkers('h', 'esg', hMaxEsg, baseData.joint.finalNet); drawMarkers('h', 'rmf', hMaxRmf, baseData.joint.finalNet);
@@ -1024,21 +1108,56 @@
         let simH = processPerson('h', {esg: h_esg, rmf: h_rmf});
 
         if (mode === 'separate') {
+            // อัปเดตกล่องภรรยา (P1)
             document.getElementById('w_sim_new_bracket').innerText = getBracketInfo(simW.finalNet).rate + "%";
             document.getElementById('w_sim_tax_saved').innerText = fmt(Math.max(0, baseData.w.baseTax - simW.baseTax)) + " บาท";
-            document.getElementById('w_sim_final_tax').innerText = fmt(simW.baseTax) + " บาท";
+            updateNetResultUI('w_sim_net_result', null, null, simW.baseTax, baseData.w.withheldTax);
 
+            // อัปเดตกล่องสามี (P2)
             if (countMode === '2') {
                 document.getElementById('h_sim_new_bracket').innerText = getBracketInfo(simH.finalNet).rate + "%";
                 document.getElementById('h_sim_tax_saved').innerText = fmt(Math.max(0, baseData.h.baseTax - simH.baseTax)) + " บาท";
-                document.getElementById('h_sim_final_tax').innerText = fmt(simH.baseTax) + " บาท";
+                updateNetResultUI('h_sim_net_result', null, null, simH.baseTax, baseData.h.withheldTax);
             }
         } else {
+            // อัปเดตกล่องรวม
             let simJointNet = Math.max(0, (simW.totalInc + simH.totalInc) - (simW.totalExp + simH.totalExp) - (simW.totalDeductAll + simH.totalDeductAll));
             let simJointTax = calcTaxBracket(simJointNet);
+            
             document.getElementById('joint_sim_new_bracket').innerText = getBracketInfo(simJointNet).rate + "%";
             document.getElementById('joint_sim_tax_saved').innerText = fmt(Math.max(0, baseData.joint.baseTax - simJointTax)) + " บาท";
-            document.getElementById('joint_sim_final_tax').innerText = fmt(simJointTax) + " บาท";
+            updateNetResultUI('joint_sim_net_result', null, null, simJointTax, baseData.joint.withheldTax);
+        }
+    }
+
+    // Reuse UI Updater สำหรับกล่อง Simulator 
+    // โดยส่งค่า null ไปแทน id ของ label, amount เพราะใน simulator เราจะเขียน HTML เข้าไปตรงๆ เลย
+    function updateNetResultUI(boxId, labelId, amountId, taxCalculated, taxWithheld) {
+        let box = document.getElementById(boxId);
+        
+        box.classList.remove('neutral', 'refund', 'pay');
+        let htmlStr = "";
+        
+        if (taxCalculated === 0 && taxWithheld === 0) {
+            box.classList.add('neutral');
+            htmlStr = "สถานะภาษี: 0 บาท";
+        } else if (taxCalculated > taxWithheld) {
+            box.classList.add('pay');
+            htmlStr = `🚨 ต้องชำระเพิ่ม: ${fmt(taxCalculated - taxWithheld)} บาท`;
+        } else {
+            box.classList.add('refund');
+            htmlStr = `🎉 ขอเงินคืนได้: ${fmt(taxWithheld - taxCalculated)} บาท`;
+        }
+
+        if (labelId === null && amountId === null) {
+            box.innerHTML = htmlStr; // ใช้กับ Simulator
+        } else {
+            // ใช้กับกล่อง Result หลัก
+            let label = document.getElementById(labelId);
+            let amount = document.getElementById(amountId);
+            let parts = htmlStr.split(':');
+            label.innerText = parts[0] + ':';
+            amount.innerText = parts[1].trim();
         }
     }
 
@@ -1101,7 +1220,7 @@
 
     window.onload = function() {
         initMobileTooltips(); 
-        togglePersonCount(); // รัน 1 ครั้งตอนโหลดเพื่อซ่อนคนที่ 2 และจัดการ UI
+        togglePersonCount(); 
         fetchOnlineTips(); 
     };
 </script>
